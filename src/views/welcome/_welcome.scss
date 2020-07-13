@@ -1,0 +1,13 @@
+.welcome-wrapper {
+    background-color: $primary;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
