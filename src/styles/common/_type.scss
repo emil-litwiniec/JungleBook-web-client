@@ -3,32 +3,35 @@ h2,
 h3,
 h4,
 h5,
-p {
-    font-family: "Nunito", sans-serif;
-    padding: 0;
-    margin: 0;
+p,
+span,
+article,
+a,
+ol,
+ul,
+li {
+	font-family: $font-primary;
 }
 
-
 .logotype {
-    margin: 30px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    
-    &__base {
-        font-family: $font-logotype;
-        color: $bg-main;
-        font-size: 48px;
-    }
+	margin: 30px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
 
-    &__phrase {
-        font-family: $font-logotype;
-        color: $bg-main;
-        font-size: 13px;
-        width: max-content;
-        position: absolute;
-        bottom: -12px;
-        right: -15px;    
-    }   
+	&__base {
+		font-family: $font-logotype;
+		color: $bg-main;
+		font-size: 48px;
+	}
+
+	&__phrase {
+		font-family: $font-logotype;
+		color: $bg-main;
+		font-size: 13px;
+		width: max-content;
+		position: absolute;
+		bottom: -12px;
+		right: -15px;
+	}
 }

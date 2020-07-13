@@ -1,27 +1,59 @@
-.login-box {
-    width: 30vw;
-    max-width: 30rem;
-    min-width: 320px;
-    height: 30vh;
-    max-height: 25rem;
-    min-height: 175px;
-    background-color: $bg-main;
-    border-radius: 30px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    
-    &::before {
-        content: '';
-    
-        $border-inset: 2px;
-        position: absolute;
-        top: $border-inset;
-        bottom: $border-inset;
-        left: $border-inset;
-        right: $border-inset;
-    
-        border: 2px solid $primary;
+.login {
+    &__box {
+        width: 30vw;
+        max-width: 30rem;
+        min-width: 320px;
+        height: 225px;
+        max-height: 25rem;
+        min-height: 175px;
+        background-color: $bg-main;
         border-radius: 30px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;;
+        
+        &::before {
+            content: '';
+            pointer-events: none;
+            $border-inset: 2px;
+            position: absolute;
+            top: $border-inset;
+            bottom: $border-inset;
+            left: $border-inset;
+            right: $border-inset;
+        
+            border: 2px solid $primary;
+            border-radius: 30px;
+        }
+    }
+
+    &__btn {
+        border-style: none;
+        background: none;
+        font-family: $font-primary;
+        font-weight: 600;
+        font-size: 24px;
+        color: $primary;
+        width: 85%;
+        height: 50px;
+        border-radius: 15px;
+        border: 2px solid $primary;
+        background-color: $bg-main;
+        cursor: pointer;
+        box-shadow: 0 7px 21px rgba(0,0,0, 0.05);
+        transition: all 0.1s ease-in-out;
+
+        &:hover {
+            transform: scale(1.02)
+        }
+
+        &:active {
+            transform: translateY(3px);
+            box-shadow: 0 10px 21px rgba(0,0,0, 0.08);
+            background-color: darken($color: $bg-main, $amount: 5);
+        }
+
     }
 }

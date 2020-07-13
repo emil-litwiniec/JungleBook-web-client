@@ -2,3 +2,8 @@ body {
     background-color: $bg-main;
     margin: 0;
 }
+
+::selection {
+    color: $bg-main;
+    background: $primary;
+  }
