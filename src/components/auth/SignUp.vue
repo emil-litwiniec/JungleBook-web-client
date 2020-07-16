@@ -1,7 +1,6 @@
 <template>
 	<div class="auth__box auth__box--sign-up">
 		<h2>Sign Up</h2>
-
 		<form @submit.prevent="submitForm" class="auth__form">
 			<div class="auth__input">
 				<label for="email">Email</label>
@@ -9,34 +8,34 @@
 				<small v-if="errors.email">{{errors.email}}</small>
 			</div>
 			<div class="auth__input">
-				<label for="email">Password</label>
+				<label for="password">Password</label>
 				<input type="password" id="password" v-model="formData.password" />
 				<small v-if="errors.password">{{errors.password}}</small>
 			</div>
 			<div class="auth__input">
-				<label for="email">Repeat Password</label>
+				<label for="confirmPassword">Confirm Password</label>
 				<input type="password" id="confirmPassword" v-model="formData.confirmPassword" />
 				<small v-if="errors.confirmPassword">{{errors.confirmPassword}}</small>
 			</div>
 		</form>
-		<button type="submit" class="auth__btn">Sign Up</button>
+		<button @click="submitForm" class="auth__btn">Sign Up</button>
 		<button @click="signUpWithGoogle" class="auth__btn">Sign Up with Google</button>
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import {
+	validateEmail,
+	validatePassword,
+	validateConfirmPassword
+} from "@/utils/validation";
+
 interface SignUpFormData {
 	email: string;
 	password: string;
 	confirmPassword: string;
 }
-
-// TODO: move regexes to separate module
-const emailRegex = new RegExp(
-	/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-);
-const passwordRegex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/);
 
 @Component
 export default class Login extends Vue {
@@ -56,55 +55,58 @@ export default class Login extends Vue {
 		deep: true
 	})
 	validateForm(currData: SignUpFormData, prevData: SignUpFormData) {
-		if (currData.email.length !== 0 || currData.email !== prevData.email) {
-			this.validateEmail(currData.email);
-		}
-		if (
-			currData.password.length !== 0 ||
-			currData.password !== prevData.password
-		) {
-			this.validatePassword(currData.password);
-		}
-		if (
+		const shouldValidateEmail =
+			currData.email.length !== 0 || currData.email !== prevData.email;
+
+		const shouldValidatePassword =
+			currData.password.length !== 0 || currData.password !== prevData.password;
+
+		const shouldValidateConfirmPassword =
 			currData.confirmPassword.length !== 0 ||
-			currData.confirmPassword !== prevData.confirmPassword
-		) {
-			this.validateConfirmedPassword(currData.email);
-		}
+			currData.confirmPassword !== prevData.confirmPassword;
+
+		shouldValidateEmail && this.handleEmailValidation(currData.email);
+		shouldValidatePassword && this.handlePasswordValidation(currData.password);
+		shouldValidateConfirmPassword &&
+			this.handlePasswordConfirmValidation(currData.confirmPassword);
 	}
 
-	validateEmail(email: string) {
-		const emailTest = emailRegex.test(email);
-
-		const error = !emailTest ? "Email is not valid" : "";
-
-		this.errors.email = error;
+	handleEmailValidation(email: string) {
+		this.errors.email = validateEmail(email);
 	}
 
-	validatePassword(password: string) {
-		const passwordTest = passwordRegex.test(password);
-
-		const error = !passwordTest
-			? "Password should contain minimum eight characters, at least one letter and one number"
-			: "";
-
-		this.errors.password = error;
+	handlePasswordValidation(password: string) {
+		this.errors.password = validatePassword(password);
 	}
 
-	validateConfirmedPassword(password: string) {
-		const error =
-			this.formData.password !== this.formData.confirmPassword
-				? "Password doesn't match"
-				: "";
-
-		this.errors.confirmPassword = error;
+	handlePasswordConfirmValidation(confirmPassword: string) {
+		this.errors.confirmPassword = validateConfirmPassword(
+			this.formData.password,
+			confirmPassword
+		);
 	}
 
 	submitForm() {
+		const errorValues = Object.values(this.errors);
+		const hasError = errorValues.some(error => error.trim().length);
+
+		if (hasError) {
+			// handle error message
+			console.log('Provided credentials have incorrect format')
+			return; 
+		}
+		
 		// make call to api module
-		// signUp().then().catch();
+		// signUp().then(() => {
+
+			this.$router.push('dashboard')
+		// }).catch((e) => {
+		// 	console.log(e);
+		// });
 	}
 
-	signUpWithGoogle() {}
+	signUpWithGoogle() {
+		return;
+	}
 }
 </script>
