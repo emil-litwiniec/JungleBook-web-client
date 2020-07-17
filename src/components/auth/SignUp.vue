@@ -1,6 +1,5 @@
 <template>
 	<div class="auth__box auth__box--sign-up">
-		<h2>Sign Up</h2>
 		<form @submit.prevent="submitForm" class="auth__form">
 			<div class="auth__input">
 				<label for="email">Email</label>
@@ -55,15 +54,17 @@ export default class Login extends Vue {
 		deep: true
 	})
 	validateForm(currData: SignUpFormData, prevData: SignUpFormData) {
+		const realPrevData = JSON.parse(JSON.stringify({prevData : prevData}));
+
 		const shouldValidateEmail =
-			currData.email.length !== 0 || currData.email !== prevData.email;
+			currData.email.length !== 0 || currData.email !== realPrevData.email;
 
 		const shouldValidatePassword =
-			currData.password.length !== 0 || currData.password !== prevData.password;
+			currData.password.length !== 0 || currData.password !== realPrevData.password;
 
 		const shouldValidateConfirmPassword =
 			currData.confirmPassword.length !== 0 ||
-			currData.confirmPassword !== prevData.confirmPassword;
+			currData.confirmPassword !== realPrevData.confirmPassword;
 
 		shouldValidateEmail && this.handleEmailValidation(currData.email);
 		shouldValidatePassword && this.handlePasswordValidation(currData.password);

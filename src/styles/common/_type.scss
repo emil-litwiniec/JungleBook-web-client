@@ -21,13 +21,13 @@ li {
 
 	&__base {
 		font-family: $font-logotype;
-		color: $bg-main;
+		color: $color-bg-main;
 		font-size: 48px;
 	}
 
 	&__phrase {
 		font-family: $font-logotype;
-		color: $bg-main;
+		color: $color-bg-main;
 		font-size: 13px;
 		width: max-content;
 		position: absolute;

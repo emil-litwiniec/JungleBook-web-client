@@ -1,8 +1,5 @@
 <template>
-	<div
-		ref="auth-box"
-		class="auth__box"
-	>
+	<div class="auth__box">
 		<button @click="$router.push('signIn')" class="auth__btn">Sign In</button>
 		<button @click="$router.push('signUp')" class="auth__btn">Sign Up</button>
 	</div>

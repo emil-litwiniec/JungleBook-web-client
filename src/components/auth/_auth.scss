@@ -1,18 +1,19 @@
 .auth {
     &__box {
         width: 30vw;
-        max-width: 30rem;
+        max-width: 20rem;
         min-width: 320px;
-        height: 225px;
-        max-height: 25rem;
-        min-height: 175px;
-        background-color: $bg-main;
+        height: max-content;
+        max-height: 35rem;
+        min-height: 125px;
+        background-color: $color-bg-main;
         border-radius: 30px;
         position: relative;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;;
+        justify-content: space-between;
+        align-items: center;
+        padding:30px;
         
         &::before {
             content: '';
@@ -24,8 +25,24 @@
             left: $border-inset;
             right: $border-inset;
         
-            border: 2px solid $primary;
+            border: 2px solid $color-primary;
             border-radius: 30px;
+        }
+
+        &--sign-in {
+            .auth {
+                &__btn:first-of-type {
+                    margin-bottom: 20px;
+                }
+            }
+        }
+
+        &--sign-up {
+            .auth {
+                &__btn:first-of-type {
+                    margin-bottom: 20px;
+                }
+            }
         }
     }
 
@@ -35,12 +52,12 @@
         font-family: $font-primary;
         font-weight: 600;
         font-size: 24px;
-        color: $primary;
-        width: 85%;
+        color: $color-primary;
+        width: 100%;
         height: 50px;
         border-radius: 15px;
-        border: 2px solid $primary;
-        background-color: $bg-main;
+        border: 2px solid $color-primary;
+        background-color: $color-bg-main;
         cursor: pointer;
         box-shadow: 0 7px 21px rgba(0,0,0, 0.05);
         transition: all 0.1s ease-in-out;
@@ -52,8 +69,75 @@
         &:active {
             transform: translateY(3px);
             box-shadow: 0 10px 21px rgba(0,0,0, 0.08);
-            background-color: darken($color: $bg-main, $amount: 5);
+            background-color: darken($color: $color-bg-main, $amount: 5);
         }
 
     }
+
+    &__form {
+        width: 85%;
+    }
+
+    &__input {
+        font-family: $font-primary;
+        position: relative;
+        height: 50px;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+        margin-top: 24px;
+        margin-bottom: 30px;
+
+        label {
+            position: absolute;
+            top: -11px;
+            font-size: 12px;
+            color: $color-primary;
+        }
+        
+        input {
+            font-size: 19px;
+            width: 100%;
+            background: none;
+            border-style: none;
+            border-bottom: dotted 2px $color-primary;
+            color: $color-gray-middle;
+            margin-top: 15px;
+        }
+
+        small {
+            text-align: right;
+            font-size: 10px;
+            margin-top: 5px;
+            color: $color-red;
+            position: absolute;
+            bottom: -14px;
+            right: 5px;
+        }
+    }
 }
+
+.shake {
+    animation: shake 0.42s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  @keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+  
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }

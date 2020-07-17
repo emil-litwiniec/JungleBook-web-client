@@ -1,7 +1,5 @@
 <template>
-	<div class="auth__box auth__box--sign-in">
-		<h2>Sign In</h2>
-
+	<div class="auth__box auth__box--sign-in" ref="authBox">
 		<form @submit.prevent="submitForm" class="auth__form">
 			<div class="auth__input">
 				<label for="email">Email</label>
@@ -19,8 +17,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch, Ref } from "vue-property-decorator";
 import { validateEmail } from "@/utils/validation";
+import { gsap } from "gsap";
 
 interface SignInFormData {
 	email: string;
@@ -39,12 +38,14 @@ export default class Login extends Vue {
 		password: ""
 	};
 
+	@Ref("authBox") readonly authBox!: HTMLDivElement;
+
 	@Watch("formData", {
 		deep: true
 	})
 	validateForm(currData: SignInFormData, prevData: SignInFormData) {
-		const shouldValidateEmail =
-			currData.email.length !== 0 || currData.email !== prevData.email;
+		const realPrevData = JSON.parse(JSON.stringify({ prevData: prevData }));
+		const shouldValidateEmail = currData.email !== realPrevData.email;
 
 		shouldValidateEmail && this.handleEmailValidation(currData.email);
 	}
@@ -53,12 +54,24 @@ export default class Login extends Vue {
 		this.errors.email = validateEmail(email);
 	}
 
+	animateReject() {
+		gsap.timeline({
+			onStart: () => this.authBox.classList.add("shake")
+		}).call(
+			() => {
+				this.authBox.classList.remove("shake");
+			},
+			undefined,
+			0.5
+		);
+	}
+
 	submitForm() {
 		const errorValues = Object.values(this.errors);
 		const hasError = errorValues.some(error => error.trim().length);
-
 		if (hasError) {
 			// handle error message
+			this.animateReject();
 			console.log("Provided credentials have incorrect format");
 			return;
 		}
@@ -66,7 +79,7 @@ export default class Login extends Vue {
 		// make call to api module
 		// signUp().then(() => {
 
-		this.$router.push("dashboard");
+		// this.$router.push("dashboard");
 		// }).catch((e) => {
 		// 	console.log(e);
 		// });
