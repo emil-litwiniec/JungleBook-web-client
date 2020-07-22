@@ -20,6 +20,7 @@
 import { Component, Prop, Vue, Watch, Ref } from "vue-property-decorator";
 import { validateEmail } from "@/utils/validation";
 import { gsap } from "gsap";
+import user from "@/store/modules/user";
 
 interface SignInFormData {
 	email: string;
@@ -30,18 +31,18 @@ interface SignInFormData {
 export default class Login extends Vue {
 	private formData: SignInFormData = {
 		email: "",
-		password: ""
+		password: "",
 	};
 
 	private errors: SignInFormData = {
 		email: "",
-		password: ""
+		password: "",
 	};
 
 	@Ref("authBox") readonly authBox!: HTMLDivElement;
 
 	@Watch("formData", {
-		deep: true
+		deep: true,
 	})
 	validateForm(currData: SignInFormData, prevData: SignInFormData) {
 		const realPrevData = JSON.parse(JSON.stringify({ prevData: prevData }));
@@ -56,7 +57,7 @@ export default class Login extends Vue {
 
 	animateReject() {
 		gsap.timeline({
-			onStart: () => this.authBox.classList.add("shake")
+			onStart: () => this.authBox.classList.add("shake"),
 		}).call(
 			() => {
 				this.authBox.classList.remove("shake");
@@ -68,21 +69,24 @@ export default class Login extends Vue {
 
 	submitForm() {
 		const errorValues = Object.values(this.errors);
-		const hasError = errorValues.some(error => error.trim().length);
-		if (hasError) {
-			// handle error message
+		const formDataValues = Object.values(this.formData);
+
+		const hasError = errorValues.some((error) => error.trim().length);
+		const isEmpty = formDataValues.some((value) => !value);
+
+		if (hasError || isEmpty) {
+			//TODO:  display error
 			this.animateReject();
-			console.log("Provided credentials have incorrect format");
 			return;
 		}
 
-		// make call to api module
-		// signUp().then(() => {
-
-		// this.$router.push("dashboard");
-		// }).catch((e) => {
-		// 	console.log(e);
-		// });
+		user.signIn(this.formData)
+			.then((data) => {
+				this.$router.push("dashboard");
+			})
+			.catch((error) => {
+				console.log(error.response.data.message);
+			});
 	}
 
 	signInWithGoogle() {
