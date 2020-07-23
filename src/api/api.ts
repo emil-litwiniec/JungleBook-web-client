@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SignInRequest, SignInResponse, SignUpRequest} from "@/api/models";
+import { SignInRequest, SignInResponse, SignUpRequest} from "@/api/types";
 
 export const API = axios.create({
     baseURL: process.env.VUE_APP_API_BASE_URL || "http://localhost:5000/api/",

@@ -4,7 +4,7 @@
 			<div class="auth__input">
 				<label for="email">Email</label>
 				<input type="email" id="email" v-model="formData.email" />
-				<small v-if="errors.email">{{errors.email}}</small>
+				<small v-if="errors.email" class="auth__error">{{errors.email}}</small>
 			</div>
 			<div class="auth__input">
 				<label for="email">Password</label>
@@ -13,6 +13,7 @@
 		</form>
 		<button @click="submitForm" class="auth__btn">Sign In</button>
 		<button @click="signInWithGoogle" class="auth__btn">Sign In with Google</button>
+		<small class="auth__error auth__error--main" v-if="authError">{{authError}}</small>
 	</div>
 </template>
 
@@ -38,6 +39,8 @@ export default class Login extends Vue {
 		email: "",
 		password: "",
 	};
+
+	private authError = "";
 
 	@Ref("authBox") readonly authBox!: HTMLDivElement;
 
@@ -75,21 +78,35 @@ export default class Login extends Vue {
 		const isEmpty = formDataValues.some((value) => !value);
 
 		if (hasError || isEmpty) {
-			//TODO:  display error
+			this.authError = "Invalid data format.";
 			this.animateReject();
 			return;
 		}
+
+		// TODO: implement loader animation
 
 		user.signIn(this.formData)
 			.then((data) => {
 				this.$router.push("dashboard");
 			})
 			.catch((error) => {
-				console.log(error.response.data.message);
+				this.animateReject();
+				const errorMessage = error.response.data.message;
+				this.authError = errorMessage;
+			})
+			.finally(() => {
+				// hide loader
 			});
 	}
 
 	signInWithGoogle() {
+		user.signOut()
+			.then(() => {
+				this.$router.push("/");
+			})
+			.finally(() => {
+				// hide loader
+			});
 		return;
 	}
 }

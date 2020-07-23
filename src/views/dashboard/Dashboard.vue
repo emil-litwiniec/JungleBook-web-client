@@ -12,11 +12,9 @@
 
 <script>
 import { Component, Prop, Vue } from "vue-property-decorator";
-import user from "@/store/modules/user";
 
 @Component({
-	name: "Welcome",
+	name: "Dashboard",
 })
-export default class Welcome extends Vue {
-}
+export default class Dashboard extends Vue {}
 </script>
