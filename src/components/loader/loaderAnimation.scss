@@ -1,0 +1,35 @@
+.loader {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+
+    &--light {
+        background-color: $color-primary;
+        .loader__group > * {
+            stroke: $color-bg-main;
+        }
+    }
+
+    &--dark {
+        background-color: $color-bg-main;
+        .loader__group > * {
+            stroke: $color-primary;
+        }
+    }
+
+    &__leaf {
+        opacity: 0;
+        transform-origin: 5px 5px;
+    }
+
+    &__stalk {
+        stroke-dasharray: 180 700;
+        fill: none;
+    }
+}
