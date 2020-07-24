@@ -18,5 +18,19 @@ import user from "@/store/modules/user";
 	name: "Welcome",
 })
 export default class Welcome extends Vue {
+	
+	mounted() {
+			this.fetchData();
+	}
+	
+	fetchData() {
+        user.fetchUserData()
+            .then((data) => {
+				this.$router.push("/dashboard");
+            })
+            .finally(() => {
+                // hide loader
+            }) 
+    }
 }
 </script>

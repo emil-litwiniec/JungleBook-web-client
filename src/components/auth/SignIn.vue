@@ -20,7 +20,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch, Ref } from "vue-property-decorator";
 import { validateEmail } from "@/utils/validation";
-import { gsap } from "gsap";
+import { animateReject } from "@/utils/animations";
 import user from "@/store/modules/user";
 
 interface SignInFormData {
@@ -58,18 +58,6 @@ export default class Login extends Vue {
 		this.errors.email = validateEmail(email);
 	}
 
-	animateReject() {
-		gsap.timeline({
-			onStart: () => this.authBox.classList.add("shake"),
-		}).call(
-			() => {
-				this.authBox.classList.remove("shake");
-			},
-			undefined,
-			0.5
-		);
-	}
-
 	submitForm() {
 		const errorValues = Object.values(this.errors);
 		const formDataValues = Object.values(this.formData);
@@ -78,19 +66,17 @@ export default class Login extends Vue {
 		const isEmpty = formDataValues.some((value) => !value);
 
 		if (hasError || isEmpty) {
-			this.authError = "Invalid data format.";
-			this.animateReject();
+			this.authError = "Invalid data format";
+			animateReject(this.authBox);
 			return;
 		}
-
-		// TODO: implement loader animation
 
 		user.signIn(this.formData)
 			.then((data) => {
 				this.$router.push("dashboard");
 			})
 			.catch((error) => {
-				this.animateReject();
+				animateReject(this.authBox);
 				const errorMessage = error.response.data.message;
 				this.authError = errorMessage;
 			})
@@ -100,14 +86,7 @@ export default class Login extends Vue {
 	}
 
 	signInWithGoogle() {
-		user.signOut()
-			.then(() => {
-				this.$router.push("/");
-			})
-			.finally(() => {
-				// hide loader
-			});
-		return;
+		// sign in with google oauth
 	}
 }
 </script>

@@ -8,18 +8,36 @@ export interface SignUpRequest {
     password: string;
 }
 
-export interface SignInResponse {
+export interface AuthResponse {
     'access-token': string;
-    data: {
-        id: number;
-        email: string;
-        first_name: string;
-        last_name: string;
-        avatar_image: string | null;
-        settings: null;
-        books: [];
-        plants: [];
-        created_at: Date;
-        last_update: Date;
-    }
+    data: UserData;
+}
+
+export interface UserData {
+    id: number;
+    email: string;
+    first_name: string;
+    last_name: string;
+    avatar_image: string | null;
+    settings: null;
+    books: Book[];
+    plants: Plant[];
+    created_at: Date;
+    last_update: Date;
+}
+
+export interface Book {
+
+}
+
+export interface Plant {
+
+}
+
+export interface Moment {
+
+}
+
+export interface Settings {
+
 }

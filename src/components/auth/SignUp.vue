@@ -1,34 +1,39 @@
 <template>
-	<div class="auth__box auth__box--sign-up">
+	<div class="auth__box auth__box--sign-up" ref="authBox">
 		<form @submit.prevent="submitForm" class="auth__form">
 			<div class="auth__input">
 				<label for="email">Email</label>
 				<input type="email" id="email" v-model="formData.email" />
-				<small v-if="errors.email">{{errors.email}}</small>
+				<small v-if="errors.email" class="auth__error">{{errors.email}}</small>
 			</div>
 			<div class="auth__input">
 				<label for="password">Password</label>
 				<input type="password" id="password" v-model="formData.password" />
-				<small v-if="errors.password">{{errors.password}}</small>
+				<small v-if="errors.password" class="auth__error">{{errors.password}}</small>
 			</div>
 			<div class="auth__input">
 				<label for="confirmPassword">Confirm Password</label>
 				<input type="password" id="confirmPassword" v-model="formData.confirmPassword" />
-				<small v-if="errors.confirmPassword">{{errors.confirmPassword}}</small>
+				<small v-if="errors.confirmPassword" class="auth__error">{{errors.confirmPassword}}</small>
 			</div>
 		</form>
 		<button @click="submitForm" class="auth__btn">Sign Up</button>
 		<button @click="signUpWithGoogle" class="auth__btn">Sign Up with Google</button>
+		<small class="auth__error auth__error--main" v-if="authError">{{authError}}</small>
 	</div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch, Ref } from "vue-property-decorator";
 import {
 	validateEmail,
 	validatePassword,
-	validateConfirmPassword
+	validateConfirmPassword,
 } from "@/utils/validation";
+
+import { animateReject } from "@/utils/animations";
+
+import user from "@/store/modules/user";
 
 interface SignUpFormData {
 	email: string;
@@ -41,33 +46,36 @@ export default class Login extends Vue {
 	private formData: SignUpFormData = {
 		email: "",
 		password: "",
-		confirmPassword: ""
+		confirmPassword: "",
 	};
 
 	private errors: SignUpFormData = {
 		email: "",
 		password: "",
-		confirmPassword: ""
+		confirmPassword: "",
 	};
 
+	private authError = "";
+
+	@Ref("authBox") readonly authBox!: HTMLDivElement;
+
 	@Watch("formData", {
-		deep: true
+		deep: true,
 	})
 	validateForm(currData: SignUpFormData, prevData: SignUpFormData) {
-		const realPrevData = JSON.parse(JSON.stringify({prevData : prevData}));
+		const realPrevData = JSON.parse(JSON.stringify({ prevData: prevData }));
 
-		const shouldValidateEmail =
-			currData.email.length !== 0 || currData.email !== realPrevData.email;
+		const shouldValidateEmail = currData.email !== realPrevData.email;
 
 		const shouldValidatePassword =
-			currData.password.length !== 0 || currData.password !== realPrevData.password;
+			currData.password !== realPrevData.password;
 
 		const shouldValidateConfirmPassword =
-			currData.confirmPassword.length !== 0 ||
 			currData.confirmPassword !== realPrevData.confirmPassword;
 
 		shouldValidateEmail && this.handleEmailValidation(currData.email);
-		shouldValidatePassword && this.handlePasswordValidation(currData.password);
+		shouldValidatePassword &&
+			this.handlePasswordValidation(currData.password);
 		shouldValidateConfirmPassword &&
 			this.handlePasswordConfirmValidation(currData.confirmPassword);
 	}
@@ -89,25 +97,32 @@ export default class Login extends Vue {
 
 	submitForm() {
 		const errorValues = Object.values(this.errors);
-		const hasError = errorValues.some(error => error.trim().length);
+		const formDataValues = Object.values(this.formData);
+		const hasError = errorValues.some((error) => error.trim().length);
+		const isEmpty = formDataValues.some((value) => !value);
 
-		if (hasError) {
-			// handle error message
-			console.log('Provided credentials have incorrect format')
-			return; 
+		if (hasError || isEmpty) {
+			this.authError = "Invalid data format";
+			animateReject(this.authBox);
+			return;
 		}
-		
-		// make call to api module
-		// signUp().then(() => {
 
-			this.$router.push('dashboard')
-		// }).catch((e) => {
-		// 	console.log(e);
-		// });
+			user.signUp(this.formData)
+			.then((data) => {
+				this.$router.push("dashboard");
+			})
+			.catch((error) => {
+				animateReject(this.authBox);
+				const errorMessage = error.response.data.message;
+				this.authError = errorMessage;
+			})
+			.finally(() => {
+				// hide loader
+			});
 	}
 
 	signUpWithGoogle() {
-		return;
+		// sign up with google oauth
 	}
 }
 </script>
