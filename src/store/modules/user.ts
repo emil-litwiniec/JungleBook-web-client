@@ -35,7 +35,6 @@ class UserModule extends VuexModule {
 
     @Mutation
     SET_USER_DATA(responseData: UserData) {
-        console.log(responseData);
         this.userId = responseData.id;
         this.email = responseData.email;
         this.firstName = responseData.first_name;
@@ -46,11 +45,6 @@ class UserModule extends VuexModule {
         this.plants = responseData.plants;
         this.createdAt = responseData.created_at;
         this.lastUpdate = responseData.last_update;
-    }
-
-    @Mutation
-    SET_USER_ID(id: number) {
-        this.userId = id;
     }
 
     @Action({ rawError: true })
@@ -69,11 +63,13 @@ class UserModule extends VuexModule {
         const response = await signIn(payload);
         if (response.data) {
             const data: AuthResponse = response.data;
+
             const token = data['access-token'];
             setToken(token);
             this.SET_IS_AUTHORIZED(true);
+            
             const userData = data.data;
-            this.SET_USER_ID(userData.id);
+            this.SET_USER_DATA(userData);
         }
         return response;
     }
@@ -85,7 +81,7 @@ class UserModule extends VuexModule {
                 removeToken();
                 this.SET_IS_AUTHORIZED(true);
             } catch {
-                return resolve('Catch block from signout');
+                return reject();
             }
             const token = getToken();
 

@@ -38,62 +38,112 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import user from "@/store/modules/user";
-import {gsap} from 'gsap';
+import { gsap } from "gsap";
 
 @Component({
 	name: "LoaderAnimation",
 })
-export default class Dashboard extends Vue {
-
-	@Prop({ default: 'light'}) readonly color!: 'light' | 'dark';
+export default class LoaderAnimation extends Vue {
+	@Prop({ default: "light" }) readonly color!: "light" | "dark";
 
 	mounted() {
+		this.fadeIn();
 		this.animateLeaf();
 	}
 
+	fadeIn() {
+		gsap.timeline().fromTo(
+			".loader",
+			{
+				opacity: 0,
+			},
+			{
+				opacity: 1,
+				duration: 0.6,
+				ease: "power3.inOut",
+			}
+		);
+	}
+
+	public fadeOut = async () => {
+		await new Promise((resolve) => {
+			gsap.timeline({
+				onComplete: () => {
+					resolve();
+				},
+			}).fromTo(
+				".loader",
+				{
+					opacity: 1,
+				},
+				{
+					opacity: 0,
+					duration: 0.7,
+					ease: "power3.inOut",
+				}
+			);
+		});
+	};
+
 	animateLeaf() {
 		gsap.timeline({
-			repeat: -1
-		})
-		.fromTo('.loader__stalk', {
-			strokeDashoffset: 200
-		}, {
-			strokeDashoffset: 0,
-			duration: 2.6
-		})
-
+			repeat: -1,
+		}).fromTo(
+			".loader__stalk",
+			{
+				strokeDashoffset: 200,
+			},
+			{
+				strokeDashoffset: 0,
+				duration: 2.6,
+			}
+		);
 
 		gsap.timeline({
 			repeat: -1,
-			repeatDelay: 0.4
+			repeatDelay: 0.4,
 		})
-		.fromTo('.loader__leaf--1', {
-			opacity: 0,
-			scale: 0
-		}, {
-			opacity: 1,
-			scale: 1,
-			duration: 1,
-			ease: "elastic.out(0.8, 0.5)"
-		})
-		.fromTo('.loader__leaf--2', {
-			opacity: 0,
-			scale: 0
-		}, {
-			opacity: 1,
-			scale: 1,
-			duration: 1,
-			ease: "elastic.out(1, 0.5)"
-		}, ">-0.4")
-		.fromTo('.loader__leaf--3', {
-			opacity: 0,
-			scale: 0
-		}, {
-			opacity: 1,
-			scale: 1,
-			duration: 1,
-			ease: "elastic.out(1, 0.5)"
-		}, ">-0.4")
+			.fromTo(
+				".loader__leaf--1",
+				{
+					opacity: 0,
+					scale: 0,
+				},
+				{
+					opacity: 1,
+					scale: 1,
+					duration: 1,
+					ease: "elastic.out(0.8, 0.5)",
+				}
+			)
+			.fromTo(
+				".loader__leaf--2",
+				{
+					opacity: 0,
+					scale: 0,
+				},
+				{
+					opacity: 1,
+					scale: 1,
+					duration: 1,
+					ease: "elastic.out(1, 0.5)",
+				},
+				">-0.4"
+			)
+			.fromTo(
+				".loader__leaf--3",
+				{
+					opacity: 0,
+					scale: 0,
+				},
+				{
+					opacity: 1,
+					scale: 1,
+					duration: 1,
+					ease: "elastic.out(1, 0.5)",
+				},
+				">-0.4"
+			);
 	}
 }
 </script>

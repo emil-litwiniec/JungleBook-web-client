@@ -1,6 +1,5 @@
 <template>
 	<div class="auth__box auth__box--sign-in" ref="authBox">
-		<Loader v-if="loaderVisible" />
 		<form @submit.prevent="submitForm" class="auth__form">
 			<div class="auth__input">
 				<label for="email">Email</label>
@@ -19,8 +18,6 @@
 </template>
 
 <script lang="ts">
-import Loader from "@/components/loader/LoaderAnimation";
-
 import { Component, Prop, Vue, Watch, Ref } from "vue-property-decorator";
 import { validateEmail } from "@/utils/validation";
 import { animateReject } from "@/utils/animations";
@@ -31,17 +28,12 @@ interface SignInFormData {
 	password: string;
 }
 
-@Component({
-	components: {
-		Loader: Loader,
-	},
-})
+@Component
 export default class Login extends Vue {
-	private loaderVisible: boolean;
+	@Ref("authBox") readonly authBox!: HTMLDivElement;
 
 	constructor() {
 		super();
-		this.loaderVisible = false;
 	}
 
 	private formData: SignInFormData = {
@@ -55,8 +47,6 @@ export default class Login extends Vue {
 	};
 
 	private authError = "";
-
-	@Ref("authBox") readonly authBox!: HTMLDivElement;
 
 	@Watch("formData", {
 		deep: true,
@@ -72,6 +62,7 @@ export default class Login extends Vue {
 		this.errors.email = validateEmail(email);
 	}
 
+
 	submitForm() {
 		const errorValues = Object.values(this.errors);
 		const formDataValues = Object.values(this.formData);
@@ -85,8 +76,6 @@ export default class Login extends Vue {
 			return;
 		}
 
-		this.loaderVisible = true;
-
 		user.signIn(this.formData)
 			.then((data) => {
 				this.$router.push("dashboard");
@@ -96,9 +85,6 @@ export default class Login extends Vue {
 				const errorMessage = error.response.data.message;
 				this.authError = errorMessage;
 			})
-			.finally(() => {
-				this.loaderVisible = false;
-			});
 	}
 
 	signInWithGoogle() {
