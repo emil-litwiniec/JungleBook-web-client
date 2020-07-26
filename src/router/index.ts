@@ -1,17 +1,17 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Welcome from '../views/welcome/Welcome.vue';
+import WelcomeView from '../views/welcomeView/WelcomeView.vue';
 import SignIn from '@/components/auth/SignIn.vue';
 import SignUp from '@/components/auth/SignUp.vue';
 import AuthBox from '@/components/auth/AuthBox.vue';
-import Dashboard from '@/views/dashboard/Dashboard.vue';
+import DashboardView from '@/views/dashboardView/DashboardView.vue';
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
     {
         path: '/',
-        component: Welcome,
+        component: WelcomeView,
         children: [
             {
                 path: 'signIn',
@@ -25,13 +25,14 @@ const routes: Array<RouteConfig> = [
             },
             {
                 path: '',
+                name: 'authBox',
                 component: AuthBox,
             },
         ],
     },
     {
         path: '/dashboard',
-        component: Dashboard,
+        component: DashboardView,
     },
 ];
 

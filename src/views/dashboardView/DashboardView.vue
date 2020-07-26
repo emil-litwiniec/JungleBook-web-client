@@ -1,15 +1,6 @@
 <template>
-	<div class="welcome-wrapper">
-		<div class="welcome-container">
-			<Loader v-if="loaderVisible" ref="loader"/>
-			<template>
-				<div class="logotype">
-					<h2 class="logotype__base">JungleBook</h2>
-					<h5 class="logotype__phrase">Let it grow!</h5>
-				</div>
-				<button @click="signOut">Sign Out</button>
-			</template>
-		</div>
+	<div class="dashboard__wrapper" :class="{'dashboard__wrapper--white': fadeInDashboard}">
+		<Loader v-if="loaderVisible" color="light" ref="loader" />
 	</div>
 </template>
 
@@ -19,33 +10,26 @@ import { Loader } from "@/components/types";
 import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import user from "@/store/modules/user";
 
-
 @Component({
-	name: "Dashboard",
+	name: "DashboardView",
 	components: {
 		Loader: LoaderAnimation,
 	},
 })
-export default class Dashboard extends Vue {
+export default class DashboardView extends Vue {
 	loaderVisible = true;
+	fadeInDashboard = false;
 
-	mounted() {
+	created() {
 		this.fetchData();
 	}
-	@Ref('loader') readonly loader!: Loader;
+	@Ref("loader") readonly loader!: Loader;
 
 	hideLoader() {
 		this.loader.fadeOut().then(() => {
 			this.loaderVisible = false;
-		})
-	}
-
-	signOut() {
-		this.loaderVisible = true;
-		user.signOut()
-			.then(() => {
-				this.$router.push("/");
-			})
+			this.fadeInDashboard = true;
+		});
 	}
 
 	fetchData() {

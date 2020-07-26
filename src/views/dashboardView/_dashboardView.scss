@@ -1,0 +1,12 @@
+.dashboard {
+    &__wrapper {
+        height: max-content;
+        min-height: calc(100vh - #{$navigation-bar-height});
+        background-color: $color-primary;
+
+        &--white {
+            background-color: $color-bg-main;
+            transition: background-color 1.5s;
+        }
+    }
+}
