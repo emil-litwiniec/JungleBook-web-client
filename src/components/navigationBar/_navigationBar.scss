@@ -6,6 +6,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: sticky;
+    top: 0;
 
     .logotype {
         margin: 0;
@@ -13,4 +15,74 @@
             width: max-content;
         }
     }
+
+    &__profile {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        position: relative;
+    }
+
+        &__profile-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 18px;
+            color: $color-bg-main;
+            width: 110px;
+            height: 40px;
+            margin-top: 3px;
+            z-index: 10;
+            padding: 0px 10px 3px 10px;
+            transition: all 0.3s ease-in-out 30ms;
+            border-radius: 10px 10px 0 0;
+
+            span {
+                color: $color-bg-main;
+            }
+
+            &::before {
+                content: '';
+                background: url('assets/inverted-corner.svg');
+                position: absolute;
+                bottom: 0;
+                left: -10px;
+                height: 10px;
+                width: 10px;
+                background-size: contain;
+                background-repeat: no-repeat;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+            }
+
+            &--show-menu {
+                background-color: $color-bg-main;
+                color: $color-primary;
+
+                &::before {
+                    opacity: 1;
+                }
+                span {
+                    color: $color-primary;
+                }
+                
+                .profile-icon path {
+                    fill: $color-primary;
+                }
+            }
+
+        }
+
+        .profile-icon {
+            margin-bottom: 2px;
+        }
+    }
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease-in-out 15ms;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
 }

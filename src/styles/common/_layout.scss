@@ -10,4 +10,13 @@ body {
 
 * {
     box-sizing: border-box;
+    font-family: $font-primary;
+}
+
+button {
+    background: none;
+    border-style: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
 }
