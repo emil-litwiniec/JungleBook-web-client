@@ -1,0 +1,57 @@
+.view-selection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 225px;
+
+    &__icon {
+        position: relative;
+        cursor: pointer;
+
+        &:not(:last-child)::before {
+            content: '';
+            height: 100%;
+            width: 1px;
+            background-color: $color-gray-light;
+            position: absolute;
+            right: -20px;
+        }
+
+        svg {
+            height: 29px;
+            width: 48px;
+        }
+
+        rect {
+            transition: all 0.25s ease-in-out;
+        }
+    }
+
+    .small-tile-view-icon,
+    .big-tile-view-icon {
+        &.active {
+            rect {
+                stroke: $color-gray-dark;
+            }
+        }
+
+        &:hover {
+            rect {
+                stroke: $color-gray-dark;
+            }
+        }
+    }
+
+    .list-view-icon {
+        &.active {
+            rect {
+                fill: $color-gray-dark;
+            }
+        }
+        &:hover {
+            rect {
+                fill: $color-gray-dark;
+            }
+        }
+    }
+}

@@ -1,6 +1,8 @@
 <template>
 	<div class="dashboard__wrapper" :class="{'dashboard__wrapper--white': fadeInDashboard}">
 		<Loader v-if="loaderVisible" color="light" ref="loader" />
+		<dashboard-navigation-bar />
+		<!-- dashboard view -->
 	</div>
 </template>
 
@@ -9,16 +11,25 @@ import LoaderAnimation from "@/components/loader/LoaderAnimation.vue";
 import { Loader } from "@/components/types";
 import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import user from "@/store/modules/user";
+import DashboardNavigationBar from "@/components/dashboard/dashboardNavigationBar/DashboardNavigationBar.vue";
+
+export enum DashboardViews {
+	"LIST",
+	"SMALL_TILE",
+	"BIG_TILE",
+}
 
 @Component({
 	name: "DashboardView",
 	components: {
 		Loader: LoaderAnimation,
+		DashboardNavigationBar
 	},
 })
 export default class DashboardView extends Vue {
 	loaderVisible = true;
 	fadeInDashboard = false;
+	dashboardView: DashboardViews = DashboardViews.SMALL_TILE;
 
 	created() {
 		this.fetchData();

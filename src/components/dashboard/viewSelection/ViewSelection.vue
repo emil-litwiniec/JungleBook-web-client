@@ -1,0 +1,55 @@
+<template>
+	<div class="view-selection">
+		<small-tile-view-icon
+			class="view-selection__icon"
+			:class="{'active': activeView === dashboardViews.SMALL_TILE }"
+			@click.native="setSmallTile"
+			color="#C4C4C4"
+		/>
+		<big-tile-view-icon
+			class="view-selection__icon"
+			:class="{'active': activeView === dashboardViews.BIG_TILE }"
+			@click.native="setBigTile"
+			color="#C4C4C4"
+		/>
+		<list-view-icon
+			class="view-selection__icon"
+			:class="{'active': activeView === dashboardViews.LIST }"
+			@click.native="setList"
+			color="#C4C4C4"
+		/>
+	</div>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue, Ref } from "vue-property-decorator";
+import SmallTileViewIcon from "@/components/misc/icons/SmallTileViewIcon.vue";
+import BigTileViewIcon from "@/components/misc/icons/BigTileViewIcon.vue";
+import ListViewIcon from "@/components/misc/icons/ListViewIcon.vue";
+import { DashboardViews } from "@/views/dashboardView/DashboardView.vue";
+
+@Component({
+	name: "ViewSelection",
+	components: {
+		SmallTileViewIcon,
+		BigTileViewIcon,
+		ListViewIcon,
+	},
+})
+export default class ViewSelection extends Vue {
+	activeView: DashboardViews = DashboardViews.SMALL_TILE;
+	dashboardViews = DashboardViews;
+
+	setSmallTile() {
+		this.activeView = this.dashboardViews.SMALL_TILE;
+	}
+
+	setBigTile() {
+		this.activeView = this.dashboardViews.BIG_TILE
+	}
+
+	setList() {
+		this.activeView = this.dashboardViews.LIST;
+	}
+}
+</script>

@@ -1,4 +1,11 @@
 @import '../components/auth/auth';
 @import '../components/loader/loaderAnimation';
+
 @import '../components/navigationBar/navigationBar';
 @import '../components/navigationDropdownMenu/navigationDropdownMenu';
+
+@import '../components/dashboard/dashboardNavigationBar/dashboardNavigationBar';
+@import '../components/dashboard/searchBar/searchBar';
+@import '../components/dashboard/sortByDropdown/sortByDropdown';
+@import '../components/dashboard/selectionActions/selectionActions';
+@import '../components/dashboard/viewSelection/viewSelection';
