@@ -1,8 +1,8 @@
 <template>
 	<header class="navigation-bar">
-		<logotype-base />
-
-		<!-- <button class="navigation-bar__btn-sign-out" @click="signOut">Sign Out</button> -->
+		<router-link to="/dashboard"> 
+			<logotype-base />
+		</router-link>
 		<navigation-profile />
 	</header>
 </template>
