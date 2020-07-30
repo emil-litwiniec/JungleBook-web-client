@@ -11,19 +11,14 @@ import LoaderAnimation from "@/components/loader/LoaderAnimation.vue";
 import { Loader } from "@/components/types";
 import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import user from "@/store/modules/user";
+import settings, { DashboardViews } from "@/store/modules/settings";
 import DashboardNavigationBar from "@/components/dashboard/dashboardNavigationBar/DashboardNavigationBar.vue";
-
-export enum DashboardViews {
-	"LIST",
-	"SMALL_TILE",
-	"BIG_TILE",
-}
 
 @Component({
 	name: "DashboardView",
 	components: {
 		Loader: LoaderAnimation,
-		DashboardNavigationBar
+		DashboardNavigationBar,
 	},
 })
 export default class DashboardView extends Vue {

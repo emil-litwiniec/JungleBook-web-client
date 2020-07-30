@@ -26,7 +26,7 @@ import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import SmallTileViewIcon from "@/components/misc/icons/SmallTileViewIcon.vue";
 import BigTileViewIcon from "@/components/misc/icons/BigTileViewIcon.vue";
 import ListViewIcon from "@/components/misc/icons/ListViewIcon.vue";
-import { DashboardViews } from "@/views/dashboardView/DashboardView.vue";
+import settings, { DashboardViews } from "@/store/modules/settings";
 
 @Component({
 	name: "ViewSelection",
@@ -37,19 +37,22 @@ import { DashboardViews } from "@/views/dashboardView/DashboardView.vue";
 	},
 })
 export default class ViewSelection extends Vue {
-	activeView: DashboardViews = DashboardViews.SMALL_TILE;
 	dashboardViews = DashboardViews;
 
+	get activeView() {
+		return settings.dashboardViewMode;
+	}
+
 	setSmallTile() {
-		this.activeView = this.dashboardViews.SMALL_TILE;
+		settings.SET_DASHBOARD_VIEW_MODE(this.dashboardViews.SMALL_TILE);
 	}
 
 	setBigTile() {
-		this.activeView = this.dashboardViews.BIG_TILE
+		settings.SET_DASHBOARD_VIEW_MODE(this.dashboardViews.BIG_TILE);
 	}
 
 	setList() {
-		this.activeView = this.dashboardViews.LIST;
+		settings.SET_DASHBOARD_VIEW_MODE(this.dashboardViews.LIST);
 	}
 }
 </script>
