@@ -1,0 +1,41 @@
+.selection-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 410px;
+
+    &__btns {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+
+        .selection-actions {
+            &__btn {
+                &:first-child {
+                    position: relative;
+                }
+            }
+        }
+
+        .line-separator {
+            margin: 0 20px;
+        }
+    }
+
+    &__btn {
+        font-size: 15px;
+        color: $color-gray-light;
+        transition: all .15s ease-in-out;
+
+        &:hover, &:focus {
+            color: $color-gray-middle;
+        }
+        &:active {
+            transform: translateY(3px);
+        }
+
+        &.active {
+            color: $color-red;
+        }
+    }
+}

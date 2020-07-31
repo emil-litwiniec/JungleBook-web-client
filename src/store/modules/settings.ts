@@ -24,6 +24,7 @@ class SettingsModule extends VuexModule {
     dashboardViewMode: DashboardViews = DashboardViews.SMALL_TILE;
     sortBy: SortBy = SortBy.A_Z;
     currentlySelected: number[] = [];
+    isSelectionMode: boolean = false;
 
     @Mutation
     SET_DASHBOARD_VIEW_MODE(viewMode: DashboardViews) {
@@ -54,6 +55,11 @@ class SettingsModule extends VuexModule {
     @Mutation
     CLEAR_SELECTION() {
         this.currentlySelected = [];
+    }
+
+    @Mutation
+    SWITCH_SELECTION_MODE() {
+        this.isSelectionMode = !this.isSelectionMode;
     }
 }
 

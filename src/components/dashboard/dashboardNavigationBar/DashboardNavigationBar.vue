@@ -2,8 +2,8 @@
 	<div class="dashboard-navigation-bar">
         <view-selection />
         <selection-actions />
-        <sort-by-dropdown />
-        <search-bar/>
+        <sort-by-dropdown style="width: 400px"/>
+        <search-bar style="width: 400px"/>
 	</div>
 </template>
 

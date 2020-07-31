@@ -2,7 +2,7 @@
 	<div class="dashboard__wrapper" :class="{'dashboard__wrapper--white': fadeInDashboard}">
 		<Loader v-if="loaderVisible" color="light" ref="loader" />
 		<dashboard-navigation-bar />
-		<!-- dashboard view -->
+		<dashboard-exposition />
 	</div>
 </template>
 
@@ -13,12 +13,14 @@ import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import user from "@/store/modules/user";
 import settings, { DashboardViews } from "@/store/modules/settings";
 import DashboardNavigationBar from "@/components/dashboard/dashboardNavigationBar/DashboardNavigationBar.vue";
+import DashboardExposition from "@/components/dashboard/dashboardExposition/DashboardExposition.vue";
 
 @Component({
 	name: "DashboardView",
 	components: {
 		Loader: LoaderAnimation,
 		DashboardNavigationBar,
+		DashboardExposition
 	},
 })
 export default class DashboardView extends Vue {
@@ -45,7 +47,8 @@ export default class DashboardView extends Vue {
 				this.$router.push("/");
 			})
 			.finally(() => {
-				this.hideLoader();
+				setTimeout(() => this.hideLoader(), 1500)
+				// this.hideLoader();
 			});
 	}
 }

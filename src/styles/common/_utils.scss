@@ -1,0 +1,13 @@
+.line-separator {
+    background-color: $color-gray-light;
+
+    &--vertical {
+        height: 32px;
+        width: 1px;
+    }
+
+    &--horizontal {
+        height: 1px;
+        width: 100%;
+    }
+}

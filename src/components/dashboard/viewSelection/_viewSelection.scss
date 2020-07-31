@@ -3,19 +3,11 @@
     justify-content: space-between;
     align-items: center;
     width: 225px;
-
+    
     &__icon {
         position: relative;
         cursor: pointer;
-
-        &:not(:last-child)::before {
-            content: '';
-            height: 100%;
-            width: 1px;
-            background-color: $color-gray-light;
-            position: absolute;
-            right: -20px;
-        }
+        transition: transform 0.15s ease-in-out;
 
         svg {
             height: 29px;
@@ -24,6 +16,10 @@
 
         rect {
             transition: all 0.25s ease-in-out;
+        }
+
+        &:active {
+            transform: translateY(3px);
         }
     }
 
