@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 225px;
+    width: 22.5rem;
     
     &__icon {
         position: relative;
@@ -10,8 +10,8 @@
         transition: transform 0.15s ease-in-out;
 
         svg {
-            height: 29px;
-            width: 48px;
+            height: 2.9rem;
+            width: 4.8rem;
         }
 
         rect {

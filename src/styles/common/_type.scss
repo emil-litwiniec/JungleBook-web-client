@@ -14,7 +14,7 @@ li {
 }
 
 .logotype {
-	margin: 30px;
+	margin: 3rem;
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -22,16 +22,16 @@ li {
 	&__base {
 		font-family: $font-logotype;
 		color: $color-bg-main;
-		font-size: 48px;
+		font-size: 4.8rem;
 	}
 
 	&__phrase {
 		font-family: $font-logotype;
 		color: $color-bg-main;
-		font-size: 13px;
+		font-size: 1.3rem;
 		width: max-content;
 		position: absolute;
-		bottom: -12px;
-		right: -15px;
+		bottom: -1.2rem;
+		right: -1.5rem;
 	}
 }

@@ -1,32 +1,33 @@
 .navigation-dropdown-menu {
     background-color: $color-bg-main;
     position: absolute;
-    transform: translateY(54px);
-    width: 250px;
-    border-radius: 10px 0 10px 10px;
+    transform: translateY(5.4rem);
+    width: 25rem;
+    border-radius: 1rem 0 1rem 1rem;
     right: 0;
-    top: -10px;
+    top: -1rem;
     height: max-content;
-    box-shadow: 2px 8px 28px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px .8rem 2.8rem rgba(0, 0, 0, 0.1);
     overflow: hidden;
 
     &:after {
         content: '';
         position: absolute;
-        width: 80px;
-        border-radius: 10px;
+        width: 8rem;
+        border-radius: 1rem;
         top: 0;
         right: 0;
-        height: 200px;
+        height: 20rem;
         color: $color-bg-main;
     }
 
     ul {
         color: $color-primary;
         height: 100%;
+        font-size: 1.6rem;
 
         .navigation-dropdown-menu__user {
-            height: 60px;
+            height: 6rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -37,7 +38,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 40px;
+            height: 4rem;
             cursor: pointer;
 
             a {
