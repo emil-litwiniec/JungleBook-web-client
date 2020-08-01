@@ -2,7 +2,7 @@
 	<div class="dashboard-navigation-bar">
         <view-selection />
         <selection-actions />
-        <sort-by-dropdown style="width: 400px"/>
+        <sort-by-dropdown />
         <search-bar style="width: 400px"/>
 	</div>
 </template>
