@@ -3,6 +3,7 @@ import store from '@/store';
 import { API, signIn, signUp, fetchUserData } from '@/api/api';
 import { AuthResponse, SignUpRequest, SignInRequest, UserData, Book, Plant, Moment, Settings } from '@/api/types';
 import { getToken, setToken, removeToken } from '@/utils/cookies';
+import { plants } from '@/utils/fixtures';
 
 @Module({
     namespaced: true,
@@ -24,7 +25,7 @@ class UserModule extends VuexModule {
     lastUpdate: Date = new Date();
 
     books: Book[] = [];
-    plants: Plant[] = [];
+    plants: Plant[] = plants;
 
     settings: Settings | null = null;
 
@@ -42,7 +43,7 @@ class UserModule extends VuexModule {
         this.avatarImage = responseData.avatar_image;
         this.settings = responseData.settings;
         this.books = responseData.books;
-        this.plants = responseData.plants;
+        // this.plants = responseData.plants;
         this.createdAt = responseData.created_at;
         this.lastUpdate = responseData.last_update;
     }
@@ -67,7 +68,7 @@ class UserModule extends VuexModule {
             const token = data['access-token'];
             setToken(token);
             this.SET_IS_AUTHORIZED(true);
-            
+
             const userData = data.data;
             this.SET_USER_DATA(userData);
         }

@@ -30,7 +30,7 @@
         font-size: 1.5rem;
         background-color: $color-white;
 
-        box-shadow: 0 0.4rem 1.1rem rgba(124, 122, 122, 0.26);
+        box-shadow: $shadow-input;
     }
 
     &__select-box {
@@ -52,7 +52,9 @@
 
         &:hover {
             background-color: lighten($color: $color-primary, $amount: 15);
-            color: $color-white;
+            label {
+                color: $color-white;
+            }
         }
 
         input {
@@ -69,6 +71,7 @@
             align-items: center;
             height: 3rem;
             font-size: 1.5rem;
+            color: $color-gray-middle;
             cursor: pointer;
         }
 

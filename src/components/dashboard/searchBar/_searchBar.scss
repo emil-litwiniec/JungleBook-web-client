@@ -1,0 +1,110 @@
+.search-bar {
+    position: relative;
+
+    &__wrapper {
+        position: absolute;
+        top: 0;
+        border-radius: 1rem;
+        background-color: $color-white;
+        overflow: hidden;
+        width: 100%;
+        box-shadow: $shadow-input;
+    }
+
+    &__input-container {
+        position: relative;
+        height: 3rem;
+
+        input {
+            width: 100%;
+            outline: none;
+            border: none;
+            height: 3rem;
+            border-radius: 1rem;
+            padding-left: 1rem;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        svg {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 1rem;
+            height: 2rem;
+
+            rect {
+                fill: $color-gray-middle;
+            }
+
+            path {
+                stroke: $color-gray-middle;
+            }
+        }
+    }
+
+    &__results-box {
+        transition: height 0.2s ease-in-out;
+    }
+
+    .result {
+        display: flex;
+        height: 5rem;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        padding: 1.2rem 0;
+
+        > * {
+            color: $color-primary;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 1px;
+            background-color: lighten($color-primary, 40);
+        }
+
+        &:hover {
+            background-color: $color-primary;
+            * {
+                color: $color-white;
+            }
+        }
+
+        &__names {
+            padding-left: 5rem;
+
+            h5 {
+                font-size: 1.9rem;
+            }
+
+            span {
+                display: block;
+                margin-left: 5rem;
+                margin-top: 0.5rem;
+                color: $color-gray-middle;
+            }
+        }
+
+        &__stats {
+            display: flex;
+            flex-direction: column;
+            margin-right: 2rem;
+            height: 100%;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            span > span {
+                color: $color-gray-middle;
+                margin-right: 1rem;
+            }
+        }
+    }
+}
