@@ -1,10 +1,10 @@
 .auth {
     &__box {
         width: 30vw;
-        max-width: 20rem;
+        max-width: 37rem;
         min-width: 32rem;
         height: max-content;
-        max-height: 40rem;
+        max-height: 60rem;
         min-height: 12.5rem;
         background-color: $color-bg-main;
         border-radius: 3rem;
@@ -65,7 +65,7 @@
 
         margin-top: 1rem;
         margin-bottom: 1rem;
-        
+
         &:hover {
             transform: scale(1.02);
         }
