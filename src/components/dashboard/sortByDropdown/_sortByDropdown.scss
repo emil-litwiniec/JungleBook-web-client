@@ -29,7 +29,6 @@
         color: $color-primary;
         font-size: 1.5rem;
         background-color: $color-white;
-
         box-shadow: $shadow-input;
     }
 
@@ -44,6 +43,7 @@
         top: 0;
         height: max-content;
         transition: opacity 0.15s ease-in-out;
+        box-shadow: $shadow-input;
     }
 
     &__option {

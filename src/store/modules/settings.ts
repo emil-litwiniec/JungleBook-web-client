@@ -25,6 +25,12 @@ class SettingsModule extends VuexModule {
     sortBy: SortBy = SortBy.A_Z;
     currentlySelected: number[] = [];
     isSelectionMode: boolean = false;
+    selectedBookId: number | null = null;
+
+    @Mutation
+    SET_SELECTED_BOOK_ID(bookId: number) {
+        this.selectedBookId = bookId;
+    }
 
     @Mutation
     SET_DASHBOARD_VIEW_MODE(viewMode: DashboardViews) {

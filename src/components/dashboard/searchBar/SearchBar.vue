@@ -51,12 +51,20 @@ export default class SearchBar extends Vue {
 		if (!newValue) {
 			this.filteredPlants = [];
 		} else {
-			this.filteredPlants = this.plants;
+			this.filteredPlants = this.filterPlants(newValue);
 		}
 	}
 
 	get plants() {
 		return user.plants;
+	}
+
+	filterPlants(query: string) {
+		const filtered = this.plants.filter((plant) => {
+			const regex = new RegExp(query, "gmi");
+			return regex.test(plant.name) || regex.test(plant.scientific_name);
+		});
+		return filtered;
 	}
 
 	handleResultClick(plantId: number) {

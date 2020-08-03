@@ -1,9 +1,20 @@
 import { VuexModule, Module, getModule, Action, Mutation } from 'vuex-module-decorators';
 import store from '@/store';
-import { API, signIn, signUp, fetchUserData } from '@/api/api';
-import { AuthResponse, SignUpRequest, SignInRequest, UserData, Book, Plant, Moment, Settings } from '@/api/types';
+import { API, signIn, signUp, fetchUserData, createBook } from '@/api/api';
+import {
+    AuthResponse,
+    SignUpPayload,
+    SignInPayload,
+    UserData,
+    Book,
+    Plant,
+    Moment,
+    Settings,
+    CreateBookPayload,
+} from '@/api/types';
 import { getToken, setToken, removeToken } from '@/utils/cookies';
 import { plants } from '@/utils/fixtures';
+import settings from '../modules/settings';
 
 @Module({
     namespaced: true,
@@ -29,6 +40,10 @@ class UserModule extends VuexModule {
 
     settings: Settings | null = null;
 
+    get currentBookPlants() {
+        return this.plants.filter((plant) => plant.book_id === settings.selectedBookId);
+    }
+
     @Mutation
     SET_IS_AUTHORIZED(on: boolean) {
         this.isAuthorized = on;
@@ -36,6 +51,13 @@ class UserModule extends VuexModule {
 
     @Mutation
     SET_USER_DATA(responseData: UserData) {
+        const allPlants: Plant[] = [];
+        const books = responseData.books;
+        books.map((book) => {
+            allPlants.push(...book.plants);
+            delete book.plants;
+        });
+
         this.userId = responseData.id;
         this.email = responseData.email;
         this.firstName = responseData.first_name;
@@ -43,24 +65,31 @@ class UserModule extends VuexModule {
         this.avatarImage = responseData.avatar_image;
         this.settings = responseData.settings;
         this.books = responseData.books;
-        // this.plants = responseData.plants;
+        this.plants = allPlants;
         this.createdAt = responseData.created_at;
         this.lastUpdate = responseData.last_update;
     }
 
     @Action({ rawError: true })
-    async signUp(payload: SignUpRequest) {
+    async signUp(payload: SignUpPayload) {
         const response = await signUp(payload);
         if (response.data) {
             const data: AuthResponse = response.data;
             const token = data['access-token'];
             setToken(token);
+
+            const newBookPayload = {
+                name: 'My First Book',
+                description: 'We have created this book for you',
+                avatar_image: '',
+            };
+            const createBookResponse = await createBook(newBookPayload);
         }
         return response;
     }
 
     @Action({ rawError: true })
-    async signIn(payload: SignInRequest) {
+    async signIn(payload: SignInPayload) {
         const response = await signIn(payload);
         if (response.data) {
             const data: AuthResponse = response.data;
@@ -96,8 +125,17 @@ class UserModule extends VuexModule {
 
         if (response.data) {
             this.SET_USER_DATA(response.data.data);
+            if (settings.selectedBookId === null) {
+                const firstBookId = response.data.data.books[0].id;
+                settings.SET_SELECTED_BOOK_ID(firstBookId);
+            }
         }
         return response;
+    }
+
+    @Action({ rawError: true })
+    async createBook(payload: CreateBookPayload) {
+        await createBook(payload);
     }
 }
 

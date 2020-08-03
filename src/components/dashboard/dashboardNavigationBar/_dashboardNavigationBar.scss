@@ -1,5 +1,7 @@
 .dashboard-navigation-bar {
+    position: relative;
     display: flex;
     justify-content: space-between;
     padding: 2rem 5rem;
+    z-index: 900;
 }

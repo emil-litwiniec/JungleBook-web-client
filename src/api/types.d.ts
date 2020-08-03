@@ -1,9 +1,9 @@
-export interface SignInRequest {
+export interface SignInPayload {
     email: string;
     password: string;
 }
 
-export interface SignUpRequest {
+export interface SignUpPayload {
     email: string;
     password: string;
 }
@@ -12,6 +12,19 @@ export interface AuthResponse {
     'access-token': string;
     data: UserData;
 }
+
+export interface CreateBookPayload {
+    name: string;
+    description?: string;
+}
+
+export interface CreatePlantPayload {
+    name: string;
+    scientific_name?: string;
+    description?: string;
+    avatar_image?: string;
+}
+
 
 export interface UserData {
     id: number;
@@ -27,11 +40,13 @@ export interface UserData {
 }
 
 export interface Book {
-
+    plants: Plant[];
 }
 
 export interface Plant {
-
+    name: string;
+    scientific_name: string;
+    book_id: number;
 }
 
 export interface Moment {
