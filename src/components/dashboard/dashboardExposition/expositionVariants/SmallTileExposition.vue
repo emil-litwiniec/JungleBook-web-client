@@ -1,6 +1,6 @@
 <template>
-	<div class="exposition exposition--small-tile">
-		<div class="tile" v-for="plant in plants" :key="plant.id">
+	<transition-group name="fade-group" tag="div" class="exposition exposition--small-tile">
+		<div class="tile" v-for="plant in plants" :key="uniqueKey(plant.id)">
 			<div class="tile__image">
 				<img :src="imgPath" alt="Plant image" />
 			</div>
@@ -46,10 +46,11 @@
 				</button>
 			</div>
 		</div>
-	</div>
+	</transition-group>
 </template>
 
 <script lang="ts">
+const uuidv4 = require("uuid").v4;
 import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 
 import settings, { DashboardViews } from "@/store/modules/settings";
@@ -105,6 +106,10 @@ export default class SmallTileExposition extends Vue {
 
 	handleButtonDetails(plantId: number) {
 		this.$router.push(`/plant/${plantId}`);
+	}
+
+	uniqueKey() {
+		return uuidv4();
 	}
 }
 </script>

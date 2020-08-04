@@ -24,7 +24,7 @@ class SettingsModule extends VuexModule {
     dashboardViewMode: DashboardViews = DashboardViews.SMALL_TILE;
     sortBy: SortBy = SortBy.A_Z;
     currentlySelected: number[] = [];
-    isSelectionMode: boolean = false;
+    isSelectionMode = false;
     selectedBookId: number | null = null;
 
     @Mutation

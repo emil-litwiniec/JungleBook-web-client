@@ -38,8 +38,8 @@ export interface UserData {
     settings: null;
     books: Book[];
     plants: Plant[];
-    created_at: Date;
-    last_update: Date;
+    created_at: string;
+    last_update: string;
 }
 
 export interface Book {
@@ -51,6 +51,9 @@ export interface Plant {
     name: string;
     scientific_name: string;
     book_id: number;
+    avatar_image: string | null;
+    last_watering: string;
+    last_dew: string;
 }
 
 export interface Moment {

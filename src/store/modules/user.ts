@@ -15,7 +15,8 @@ import {
 } from '@/api/types.d.ts';
 import { getToken, setToken, removeToken } from '@/utils/cookies';
 import { plants } from '@/utils/fixtures';
-import settings from '../modules/settings';
+import settings, { SortBy } from '../modules/settings';
+import { sortByNameIncrementally, sortByNameDecrementally, sortByLastWatering, sortByLastDew } from '@/utils/sortBy';
 
 export enum PlantActionType {
     WATER,
@@ -38,8 +39,8 @@ class UserModule extends VuexModule {
 
     avatarImage: string | null = null;
 
-    createdAt: Date = new Date();
-    lastUpdate: Date = new Date();
+    createdAt = '';
+    lastUpdate = '';
 
     books: Book[] = [];
     plants: Plant[] = plants;
@@ -47,11 +48,24 @@ class UserModule extends VuexModule {
     settings: Settings | null = null;
 
     get currentBookPlants() {
-        return this.plants.filter((plant) => plant.book_id === settings.selectedBookId);
+        const filteredPlants = this.plants.filter((plant) => plant.book_id === settings.selectedBookId);
+
+        switch (settings.sortBy) {
+            case SortBy.A_Z:
+                return sortByNameIncrementally(filteredPlants);
+            case SortBy.Z_A:
+                return sortByNameDecrementally(filteredPlants);
+            case SortBy.LAST_WATERED:
+                return sortByLastWatering(filteredPlants);
+            case SortBy.LAST_DEWED:
+                return sortByLastDew(filteredPlants);
+            default:
+                return filteredPlants;
+        }
     }
 
     get currentBook() {
-        return this.books.find(book => book.id === settings.selectedBookId);
+        return this.books.find((book) => book.id === settings.selectedBookId);
     }
 
     @Mutation
