@@ -12,10 +12,6 @@ export const API = axios.create({
     },
 });
 
-const commonHeaders = {
-    'x-access-token': getToken(),
-};
-
 export async function signIn(payload: SignInPayload): Promise<AxiosResponse<AuthResponse>> {
     const response = await API.post('sign-in', payload);
     return response;
@@ -28,7 +24,9 @@ export async function signUp(payload: SignUpPayload): Promise<AxiosResponse<Auth
 
 export async function fetchUserData() {
     const response = await API.get(`user`, {
-        headers: commonHeaders,
+        headers: {
+            'x-access-token': getToken(),
+        },
     });
 
     return response;
@@ -36,7 +34,9 @@ export async function fetchUserData() {
 
 export async function createBook(payload: CreateBookPayload): Promise<AxiosResponse> {
     const response = await API.post('book', payload, {
-        headers: commonHeaders,
+        headers: {
+            'x-access-token': getToken(),
+        },
     });
 
     return response;
@@ -44,7 +44,9 @@ export async function createBook(payload: CreateBookPayload): Promise<AxiosRespo
 
 export async function createPlant(payload: CreatePlantPayload): Promise<AxiosResponse> {
     const response = await API.post('plant', payload, {
-        headers: commonHeaders,
+        headers: {
+            'x-access-token': getToken(),
+        },
     });
 
     return response;

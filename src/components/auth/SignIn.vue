@@ -8,7 +8,7 @@
 			</div>
 			<div class="auth__input">
 				<label for="email">Password</label>
-				<input type="password" id="password" v-model="formData.password" />
+				<input type="password" id="passwod" v-model="formData.password" />
 			</div>
 		</form>
 		<button @click="submitForm" class="auth__btn">Sign In</button>
@@ -62,7 +62,6 @@ export default class Login extends Vue {
 		this.errors.email = validateEmail(email);
 	}
 
-
 	submitForm() {
 		const errorValues = Object.values(this.errors);
 		const formDataValues = Object.values(this.formData);
@@ -84,7 +83,7 @@ export default class Login extends Vue {
 				animateReject(this.authBox);
 				const errorMessage = error.response.data.message;
 				this.authError = errorMessage;
-			})
+			});
 	}
 
 	signInWithGoogle() {

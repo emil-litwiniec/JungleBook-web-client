@@ -93,9 +93,10 @@ class UserModule extends VuexModule {
         const response = await signIn(payload);
         if (response.data) {
             const data: AuthResponse = response.data;
-
             const token = data['access-token'];
             setToken(token);
+
+            await new Promise(resolve => setTimeout(resolve, 1000))
             this.SET_IS_AUTHORIZED(true);
 
             const userData = data.data;
@@ -109,7 +110,7 @@ class UserModule extends VuexModule {
         await new Promise((resolve, reject) => {
             try {
                 removeToken();
-                this.SET_IS_AUTHORIZED(true);
+                this.SET_IS_AUTHORIZED(false);
             } catch {
                 return reject();
             }
