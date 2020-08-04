@@ -43,7 +43,7 @@ import { Plant } from "@/api/types";
 	},
 })
 export default class SearchBar extends Vue {
-	inputValue: string = "";
+	inputValue = "";
 	filteredPlants: Plant[] = [];
 
 	@Watch("inputValue")
