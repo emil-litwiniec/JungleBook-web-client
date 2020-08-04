@@ -1,6 +1,6 @@
 import { VuexModule, Module, getModule, Action, Mutation } from 'vuex-module-decorators';
 import store from '@/store';
-import { API, signIn, signUp, fetchUserData, createBook } from '@/api/api';
+import { API, signIn, signUp, fetchUserData, createBook, waterSinglePlant, dewSinglePlant } from '@/api/api';
 import {
     AuthResponse,
     SignUpPayload,
@@ -11,10 +11,16 @@ import {
     Moment,
     Settings,
     CreateBookPayload,
-} from '@/api/types';
+    SingleActionPlantPayload,
+} from '@/api/types.d.ts';
 import { getToken, setToken, removeToken } from '@/utils/cookies';
 import { plants } from '@/utils/fixtures';
 import settings from '../modules/settings';
+
+export enum PlantActionType {
+    WATER,
+    DEW,
+}
 
 @Module({
     namespaced: true,
@@ -54,6 +60,8 @@ class UserModule extends VuexModule {
         const allPlants: Plant[] = [];
         const books = responseData.books;
         books.map((book) => {
+            if (!book.plants) return;
+
             allPlants.push(...book.plants);
             delete book.plants;
         });
@@ -96,7 +104,6 @@ class UserModule extends VuexModule {
             const token = data['access-token'];
             setToken(token);
 
-            await new Promise(resolve => setTimeout(resolve, 1000))
             this.SET_IS_AUTHORIZED(true);
 
             const userData = data.data;
@@ -137,6 +144,15 @@ class UserModule extends VuexModule {
     @Action({ rawError: true })
     async createBook(payload: CreateBookPayload) {
         await createBook(payload);
+    }
+
+    @Action({ rawError: true })
+    async singleActionPlant({ data, plantActionType }: { data: SingleActionPlantPayload; plantActionType: number }) {
+        if (plantActionType == PlantActionType.WATER) {
+            await waterSinglePlant(data);
+        } else if (plantActionType == PlantActionType.DEW) {
+            await dewSinglePlant(data);
+        }
     }
 }
 

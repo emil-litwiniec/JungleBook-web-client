@@ -25,6 +25,9 @@ export interface CreatePlantPayload {
     avatar_image?: string;
 }
 
+export interface SingleActionPlantPayload {
+    plant_id: number;
+}
 
 export interface UserData {
     id: number;
@@ -50,7 +53,7 @@ export interface Plant {
 }
 
 export interface Moment {
-
+    
 }
 
 export interface Settings {

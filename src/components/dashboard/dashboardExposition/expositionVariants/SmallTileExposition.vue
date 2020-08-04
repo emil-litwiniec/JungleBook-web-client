@@ -51,8 +51,12 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Ref } from "vue-property-decorator";
+
 import settings, { DashboardViews } from "@/store/modules/settings";
-import { Plant } from "@/api/types";
+import user, { PlantActionType } from "@/store/modules/user";
+
+import { Plant } from "@/api/types.d.ts";
+
 import ProfileIcon from "@/components/misc/icons/ProfileIcon.vue";
 import LineSeparator from "@/components/misc/LineSeperator.vue";
 
@@ -82,11 +86,21 @@ export default class SmallTileExposition extends Vue {
 	}
 
 	handleButtonDew(plantId: number) {
-		return;
+		user.singleActionPlant({
+			data: { plant_id: plantId },
+			plantActionType: PlantActionType.DEW,
+		}).then(() => {
+			user.fetchUserData();
+		});
 	}
-	
+
 	handleButtonWater(plantId: number) {
-		return;
+		user.singleActionPlant({
+			data: { plant_id: plantId },
+			plantActionType: PlantActionType.WATER,
+		}).then(() => {
+			user.fetchUserData();
+		});
 	}
 
 	handleButtonDetails(plantId: number) {
