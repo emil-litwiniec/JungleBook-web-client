@@ -44,6 +44,7 @@ export interface UserData {
 
 export interface Book {
     plants: Plant[];
+    id: number;
 }
 
 export interface Plant {

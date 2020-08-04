@@ -50,6 +50,10 @@ class UserModule extends VuexModule {
         return this.plants.filter((plant) => plant.book_id === settings.selectedBookId);
     }
 
+    get currentBook() {
+        return this.books.find(book => book.id === settings.selectedBookId);
+    }
+
     @Mutation
     SET_IS_AUTHORIZED(on: boolean) {
         this.isAuthorized = on;

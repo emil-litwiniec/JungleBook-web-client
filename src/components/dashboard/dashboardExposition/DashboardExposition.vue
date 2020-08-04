@@ -1,6 +1,7 @@
 <template>
 	<section class="dashboard-exposition">
-		<h3>Book Name</h3>
+		<h3>{{currentBook.name}}</h3>
+		<h4>{{currentBook.description}}</h4>
 		<component :is="currentViewComponent" v-bind="viewProps" />
 	</section>
 </template>
@@ -24,6 +25,10 @@ import ListExposition from "@/components/dashboard/dashboardExposition/expositio
 export default class DashboardExposition extends Vue {
 	get activeView() {
 		return settings.dashboardViewMode;
+	}
+
+	get currentBook() {
+		return user.currentBook;
 	}
 
 	get currentViewComponent() {
