@@ -152,19 +152,19 @@
                 height: 100%;
                 padding: 2rem;
                 transition: all 150ms ease-in-out;
-    
+
                 &:hover {
                     background-color: #f5f5f5;
                 }
-    
+
                 & > * {
                     margin: auto;
                 }
-    
+
                 & > span {
                     font-size: 1.4rem;
                 }
-    
+
                 & > svg {
                     height: auto;
                     width: 4rem;
@@ -174,6 +174,40 @@
             &__button-block {
                 height: 100%;
                 flex-basis: calc(100% / 3);
+            }
+
+            &--add-plant {
+                background-color: $color-primary;
+                opacity: 0.6;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                transition: opacity 80ms cubic-bezier(0.64, 0.57, 0.67, 1.53);
+
+                & > * {
+                    transition: transform 80ms cubic-bezier(0.64, 0.57, 0.67, 1.53);
+                    }
+
+                &:hover {
+                    opacity: 1;
+                }
+
+                &:active {
+                    & > * {
+                        transform: translateY(5px);
+                    }
+                }
+
+                span {
+                    color: white;
+                    font-size: 2.2rem;
+                }
+
+                .plus-icon {
+                    rect {
+                        fill: $color-white;
+                    }
+                }
             }
         }
     }

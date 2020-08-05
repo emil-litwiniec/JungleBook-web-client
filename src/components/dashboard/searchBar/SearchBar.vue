@@ -60,6 +60,7 @@ export default class SearchBar extends Vue {
 	}
 
 	filterPlants(query: string) {
+		// TODO: trim white space
 		const filtered = this.plants.filter((plant) => {
 			const regex = new RegExp(query, "gmi");
 			return regex.test(plant.name) || regex.test(plant.scientific_name);
