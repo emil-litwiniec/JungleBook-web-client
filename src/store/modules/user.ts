@@ -64,6 +64,10 @@ class UserModule extends VuexModule {
         }
     }
 
+    get plantById() {
+        return (plantId: number) =>  this.plants.find(plant => plant.id === plantId);
+    }
+
     get currentBook() {
         return this.books.find((book) => book.id === settings.selectedBookId);
     }

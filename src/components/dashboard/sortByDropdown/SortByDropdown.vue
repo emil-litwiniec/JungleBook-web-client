@@ -32,6 +32,8 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import settings, { SortBy } from "@/store/modules/settings";
 
+// TODO: make dropdown separate autonomous component
+
 interface Option {
 	name: string;
 	label: string;

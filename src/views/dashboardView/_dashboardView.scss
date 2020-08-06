@@ -1,5 +1,6 @@
 .dashboard {
     &__wrapper {
+        position: relative;
         height: max-content;
         min-height: calc(100vh - #{$navigation-bar-height});
         background-color: $color-primary;

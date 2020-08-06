@@ -48,6 +48,7 @@ export interface Book {
 }
 
 export interface Plant {
+    id: number;
     name: string;
     scientific_name: string;
     book_id: number;
