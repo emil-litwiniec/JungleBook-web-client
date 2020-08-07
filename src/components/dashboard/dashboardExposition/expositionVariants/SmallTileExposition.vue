@@ -11,11 +11,11 @@
 						<div class="tile__days">
 							<div>
 								<span>Last watered:</span>
-								<span class="big">{{daysSince(plant.days_since_last_watering)}}</span>
+								<span class="big">{{formatDays(plant.days_since_last_watering)}}</span>
 							</div>
 							<div>
 								<span>Last dewed:</span>
-								<span class="big">{{daysSince(plant.days_since_last_dew)}}</span>
+								<span class="big">{{formatDays(plant.days_since_last_dew)}}</span>
 							</div>
 						</div>
 					</div>
@@ -75,6 +75,8 @@ import ProfileIcon from "@/components/misc/icons/ProfileIcon.vue";
 import PlusIcon from "@/components/misc/icons/PlusIcon.vue";
 import LineSeparator from "@/components/misc/LineSeperator.vue";
 
+import { formatDays } from "@/utils/format";
+
 @Component({
 	name: "SmallTileExposition",
 	components: {
@@ -85,7 +87,8 @@ import LineSeparator from "@/components/misc/LineSeperator.vue";
 })
 export default class SmallTileExposition extends Vue {
 	addPlantKey = this.uniqueKey();
-
+	formatDays = formatDays;
+	
 	@Prop({ default: [] }) readonly plants!: any[];
 
 	get imgPath() {
@@ -103,18 +106,6 @@ export default class SmallTileExposition extends Vue {
 
 	beforeUpdate() {
 		this.addPlantKey = this.uniqueKey();
-	}
-
-
-	daysSince(days: number | null) {
-		switch (days) {
-			case null:
-				return "n/a";
-			case 1:
-				return "1 day";
-			default:
-				return `${days} days`;
-		}
 	}
 
 	handleButtonDew(plantId: number) {

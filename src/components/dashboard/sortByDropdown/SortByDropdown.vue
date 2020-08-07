@@ -1,44 +1,20 @@
 <template>
 	<div class="sort-by-dropdown">
 		<span class="sort-by-dropdown__label">Sort by:</span>
-		<div class="dropdown">
-			<div class="dropdown__selected">
-				<span>{{selectedOption.label}}</span>
-			</div>
-			<div class="dropdown__select-box">
-				<div
-					class="dropdown__option"
-					v-for="option in sortByOptions"
-					:key="option.id"
-					@click="handleDropdownSelect(option.id)"
-				>
-					<input
-						v-if="option.id === selectedOption.id"
-						type="radio"
-						:id="option.name"
-						name="category"
-						checked
-					/>
-					<input v-else type="radio" :id="option.name" name="category" />
-
-					<label :for="option.name">{{option.label}}</label>
-				</div>
-			</div>
-		</div>
+		<dropdown-selection
+			@on-select="handleDropdownSelect"
+			:options="sortByOptions"
+			:selectedOption="selectedOption"
+		/>
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import settings, { SortBy } from "@/store/modules/settings";
-
-// TODO: make dropdown separate autonomous component
-
-interface Option {
-	name: string;
-	label: string;
-	id: SortBy;
-}
+import DropdownSelection, {
+	Option,
+} from "@/components/common/dropdownSelection/DropdownSelection.vue";
 
 interface SortOptions {
 	[SortBy.A_Z]: Option;
@@ -72,6 +48,9 @@ const possibleOptions = {
 
 @Component({
 	name: "SortByDropdown",
+	components: {
+		DropdownSelection,
+	},
 })
 export default class SortByDropdown extends Vue {
 	sortByOptions: SortOptions = possibleOptions;
