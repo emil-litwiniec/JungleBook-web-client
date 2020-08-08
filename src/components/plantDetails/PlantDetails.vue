@@ -1,6 +1,7 @@
 <template>
 	<section class="plant-details">
-		<div class="plant-details__image">
+		<button @click="editMode=!editMode" style="posiiton: absolute;">Set mode</button>
+		<div class="plant-details__image tile">
 			<img v-if="!isAddPlantMode" :src="imgPath" alt="Plant image" />
 		</div>
 		<div class="plant-details__info">
@@ -9,40 +10,50 @@
 					:edit-mode="editMode"
 					:custom-v-model.sync="plantData.name"
 					tag="h2"
+					class="info__name"
+					custom-class="info"
 					input-placeholder="Enter Plant Name"
 				/>
 				<editable-component
 					:edit-mode="editMode"
 					:custom-v-model.sync="plantData.scientific_name"
 					tag="h3"
+					class="info__scientific-name"
+					custom-class="info"
 					input-placeholder="Enter Scientific Name"
 				/>
 			</div>
-			<div class="info__stats"></div>
-			<div class="info__days">
-				<div>
-					<span>Last watered:</span>
-					<span class="big">{{formatDays(plant.days_since_last_watering)}}</span>
+			<div class="plant-details__content">
+				<div class="plant-details__stats-container">
+					<div class="info__stats"></div>
+					<div class="info__days">
+						<div>
+							<span>Last watered:</span>
+							<span class="days-big">{{formatDays(plantData.days_since_last_watering)}}</span>
+						</div>
+						<div>
+							<span>Last dewed:</span>
+							<span class="days-big">{{formatDays(plantData.days_since_last_dew)}}</span>
+						</div>
+						<div>
+							<span>Last fertilized:</span>
+							<span class="days-big">25 days</span>
+						</div>
+					</div>
 				</div>
-				<div>
-					<span>Last dewed:</span>
-					<span class="big">{{formatDays(plant.days_since_last_dew)}}</span>
-				</div>
-				<div>
-					<span>Last fertilized:</span>
-					<span class="big">25 days</span>
+
+				<div class="plant-details__description">
+					<editable-component
+						:edit-mode="editMode"
+						:custom-v-model.sync="plantData.description"
+						input-placeholder="Enter Plant Description"
+						:text-area="true"
+						tag="p"
+						class="description"
+						custom-class="description"
+					/>
 				</div>
 			</div>
-		</div>
-
-		<div class="plant-details__description">
-			<editable-component
-				:edit-mode="editMode"
-				:custom-v-model.sync="plantData.description"
-				input-placeholder="Enter Plant Description"
-				:text-area="true"
-				tag="p"
-			/>
 		</div>
 	</section>
 </template>
@@ -68,7 +79,7 @@ const emptyPlantDetails = {
 export default class PlantDetails extends Vue {
 	isAddPlantMode = true;
 	plantData: any = emptyPlantDetails;
-	editMode = true;
+	editMode = false;
 
 	formatDays = formatDays;
 
