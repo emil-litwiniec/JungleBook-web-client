@@ -3,7 +3,7 @@
 		<template v-if="editMode">
 			<div :class="{'selection': editMode, 'active': isActive}">
 				<input
-					v-if="!textArea"
+					v-if="isInputMode"
 					v-model="syncModel"
 					:class="`${customClass}__input`"
 					:placeholder="inputPlaceholder"
@@ -12,7 +12,7 @@
 					ref="editableInput"
 				/>
 				<textarea
-					v-else
+					v-if="isTextAreaMode"
 					v-model="syncModel"
 					spellcheck="false"
 					:class="`${customClass}__input`"
@@ -21,13 +21,14 @@
 					@blur="handleBlur"
 					ref="editableInput"
 				></textarea>
+
 				<button class="selection__btn" @click="handleSelectionBtn">
 					<edit-icon />
 				</button>
 			</div>
 		</template>
 		<template v-if="!editMode">
-			<template v-if="textArea">
+			<template v-if="isTextAreaMode">
 				<component
 					:is="tag"
 					:class="`${customClass}__display`"
@@ -40,6 +41,7 @@
 		</template>
 	</div>
 </template>
+
 
 <script lang="ts">
 import {
@@ -54,6 +56,7 @@ import user from "@/store/modules/user";
 import settings, { DashboardViews } from "@/store/modules/settings";
 import EditIcon from "@/components/misc/icons/EditIcon.vue";
 
+
 @Component({
 	name: "EditableComponent",
 	components: {
@@ -65,11 +68,20 @@ export default class EditableComponent extends Vue {
 	@Prop({ default: "span" }) tag!: string;
 	@Prop({ default: "" }) customClass!: string;
 	@Prop({ default: "" }) inputName!: string;
-	@Prop({ default: false }) textArea!: boolean;
+	@Prop({ default: "input" }) inputMode!: "input" | "textarea";
 	@Prop({ default: "" }) inputPlaceholder!: string;
+
 	@PropSync("customVModel", { type: String }) syncModel!: string;
 
 	isActive = false;
+
+	get isTextAreaMode() {
+		return this.inputMode === "textarea";
+	}
+
+	get isInputMode() {
+		return this.inputMode === "input";
+	}
 
 	@Ref("editableInput") readonly editableInput!:
 		| HTMLInputElement
@@ -79,17 +91,18 @@ export default class EditableComponent extends Vue {
 		if (!this.syncModel) return [""];
 		return this.syncModel.split("\n\n");
 	}
-	
-	handleFocus(val: any) {
+
+	handleFocus() {
 		this.isActive = true;
 	}
 
-	handleBlur(val: any) {
+	handleBlur() {
 		this.isActive = false;
 	}
 
 	handleSelectionBtn() {
 		this.editableInput.focus();
 	}
+
 }
 </script>

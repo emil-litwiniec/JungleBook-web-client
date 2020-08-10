@@ -12,6 +12,7 @@
 					tag="h2"
 					class="info__name"
 					custom-class="info"
+					input-mode="input"
 					input-placeholder="Enter Plant Name"
 				/>
 				<editable-component
@@ -20,12 +21,26 @@
 					tag="h3"
 					class="info__scientific-name"
 					custom-class="info"
+					input-mode="input"
 					input-placeholder="Enter Scientific Name"
 				/>
 			</div>
 			<div class="plant-details__content">
 				<div class="plant-details__stats-container">
-					<div class="info__stats"></div>
+					<div class="info__stats">
+						<div class="info__position">
+							<component :is="`${selectedOption.name}-light-icon`"  class="info__icon"/>
+							<dropdown-selection
+								v-if="editMode"
+								class="info__input"
+								@on-select="handleDropdownSelect"
+								:options="positionOptions"
+								:selectedOption="selectedOption"
+							/>
+							<span v-else class="info__display">{{selectedOption.label}}</span>
+
+						</div>
+					</div>
 					<div class="info__days">
 						<div>
 							<span>Last watered:</span>
@@ -51,6 +66,7 @@
 						tag="p"
 						class="description"
 						custom-class="description"
+						input-mode="textarea"
 					/>
 				</div>
 			</div>
@@ -64,29 +80,65 @@ import user from "@/store/modules/user";
 import settings, { DashboardViews } from "@/store/modules/settings";
 import EditableComponent from "@/components/plantDetails/EditableComponent.vue";
 import { formatDays } from "@/utils/format";
+import DropdownSelection, {
+	Option,
+} from "@/components/common/dropdownSelection/DropdownSelection.vue";
+
+import FullLightIcon from "@/components/misc/icons/FullLightIcon.vue";
+import PartialLightIcon from "@/components/misc/icons/PartialLightIcon.vue";
+import ShadyLightIcon from "@/components/misc/icons/ShadyLightIcon.vue";
+
 
 const emptyPlantDetails = {
 	name: "",
 	scientific_name: "",
+	details: ""
 };
+
+const positionOptions = [
+	{
+		name: "full",
+		label: "Full Sun",
+		id: 0,
+	},
+	{
+		name: "partial",
+		label: "Partial Sun",
+		id: 1,
+	},
+	{
+		name: "shady",
+		label: "Shady",
+		id: 2,
+	},
+];
+
 
 @Component({
 	name: "PlantDetails",
 	components: {
 		EditableComponent,
+		DropdownSelection,
+		FullLightIcon,
+		PartialLightIcon,
+		ShadyLightIcon
 	},
 })
 export default class PlantDetails extends Vue {
 	isAddPlantMode = true;
 	plantData: any = emptyPlantDetails;
 	editMode = false;
-
+	positionOptions = positionOptions;
+	selectedOptionId = 0;
 	formatDays = formatDays;
 
 	created() {
 		const currentRoute = this.$router.currentRoute;
 		this.isAddPlantMode = currentRoute.name === "addPlant";
 		this.populatePlantData();
+		if (this.isAddPlantMode) {
+			this.editMode = true;
+		}
 	}
 
 	populatePlantData() {
@@ -100,6 +152,16 @@ export default class PlantDetails extends Vue {
 
 	get imgPath() {
 		return require("@/assets/img/mock-plant-2.jpg");
+	}
+
+	get selectedOption() {
+		return this.positionOptions.find((option) => {
+			return option.id === this.selectedOptionId;
+		});
+	}
+
+	handleDropdownSelect(optionId: number) {
+		this.selectedOptionId = optionId;
 	}
 }
 </script>

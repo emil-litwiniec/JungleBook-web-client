@@ -136,8 +136,32 @@
 
             &__stats {
                 height: 13rem;
-                background-color: #eaeaeaea;
                 margin-top: 2rem;
+            }
+
+            &__position {
+                display: flex;
+                align-items: center;
+
+                .info {
+                    &__icon {
+                        width: 4rem;
+                        margin-right: 1.5rem;
+                    }
+
+                    &__input {
+                        max-width: 15rem;
+                    }
+
+                    &__display {
+                        max-width: 15rem;
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 1.6rem;
+                    }
+                }
             }
 
             &__days {
@@ -224,4 +248,3 @@
 .days-big {
     font-size: 1.5rem !important;
 }
-
