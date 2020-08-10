@@ -15,6 +15,61 @@
         }
     }
 
+    .selection {
+        position: relative;
+
+        &.active {
+            &::after {
+                animation: pulseSelection 1.5s infinite ease-in-out;
+                border-width: 2px;
+            }
+        }
+
+        &__btn {
+            position: absolute;
+            right: -10%;
+            top: 50%;
+            display: flex;
+            transform: translateY(-50%);
+            justify-content: center;
+            align-items: center;
+            transition: all 150ms ease-in-out;
+
+            .edit-icon {
+                width: 2rem;
+
+                path {
+                    fill: $color-primary;
+                }
+            }
+
+            &:hover,
+            focus {
+                .edit-icon {
+                    path {
+                        fill: lighten($color-primary, 20);
+                    }
+                }
+            }
+            &:active {
+                transform: translateY(calc(-50% + 3px));
+            }
+        }
+
+        &::after {
+            content: '';
+            pointer-events: none;
+            position: absolute;
+            height: 88%;
+            width: 107%;
+            top: 48%;
+            left: 56%;
+            transform: translate(-50%, -50%);
+            border: 1px solid $color-primary;
+            border-radius: 2rem;
+        }
+    }
+
     &__info {
         display: flex;
         flex-direction: column;
@@ -27,6 +82,17 @@
                     font-size: 5.2rem;
                     color: $color-gray-dark;
 
+                    .selection {
+                        .edit-icon {
+                            right: -5.5rem;
+                        }
+
+                        &::after {
+                            top: 50%;
+                            left: 50%;
+                        }
+                    }
+
                     .info__display {
                         line-height: 7.3rem;
                     }
@@ -35,6 +101,7 @@
                         color: $color-gray-dark;
                         font-size: 5.2rem;
                         font-weight: 600;
+                        outline: none;
                     }
                 }
 
@@ -45,6 +112,16 @@
                     margin-top: 0.3rem;
                     color: $color-gray-middle-lighter;
 
+                    .selection {
+                        &__btn {
+                            right: -3.5rem;
+                        }
+                        &::after {
+                            top: 50%;
+                            left: 47%;
+                        }
+                    }
+
                     .info__display {
                         line-height: 2.4rem;
                     }
@@ -52,6 +129,7 @@
                     .info__input {
                         font-size: 2rem;
                         color: $color-gray-middle-lighter;
+                        outline: none;
                     }
                 }
             }
@@ -106,6 +184,18 @@
         height: 38rem;
 
         .description {
+            .selection {
+                &__btn {
+                    right: -5rem;
+                }
+                &::after {
+                    top: 50%;
+                    left: 52%;
+                    height: 107%;
+                    width: 100%;
+                }
+            }
+
             &__input {
                 border: none;
                 background: none;
@@ -116,6 +206,7 @@
                 color: $color-gray-middle-lighter;
                 font-size: 1.5rem;
                 line-height: 2.2rem;
+                outline: none;
             }
 
             &__display {
@@ -124,6 +215,7 @@
                 color: $color-gray-middle-lighter;
                 font-size: 1.5rem;
                 width: 36rem;
+                word-wrap: break-word;
             }
         }
     }
@@ -132,3 +224,4 @@
 .days-big {
     font-size: 1.5rem !important;
 }
+

@@ -1,21 +1,30 @@
 <template>
-	<div>
+	<div class="relative" style="width: max-content;">
 		<template v-if="editMode">
-			<input
-				v-if="!textArea"
-				v-model="syncModel"
-				:class="`${customClass}__input`"
-				class="active"
-				:placeholder="inputPlaceholder"
-			/>
-			<textarea
-				v-else
-				v-model="syncModel"
-				spellcheck="false"
-				:class="`${customClass}__input`"
-				class="active"
-				:placeholder="inputPlaceholder"
-			></textarea>
+			<div :class="{'selection': editMode, 'active': isActive}">
+				<input
+					v-if="!textArea"
+					v-model="syncModel"
+					:class="`${customClass}__input`"
+					:placeholder="inputPlaceholder"
+					@focus="handleFocus"
+					@blur="handleBlur"
+					ref="editableInput"
+				/>
+				<textarea
+					v-else
+					v-model="syncModel"
+					spellcheck="false"
+					:class="`${customClass}__input`"
+					:placeholder="inputPlaceholder"
+					@focus="handleFocus"
+					@blur="handleBlur"
+					ref="editableInput"
+				></textarea>
+				<button class="selection__btn" @click="handleSelectionBtn">
+					<edit-icon />
+				</button>
+			</div>
 		</template>
 		<template v-if="!editMode">
 			<template v-if="textArea">
@@ -33,18 +42,23 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Ref, PropSync } from "vue-property-decorator";
+import {
+	Component,
+	Prop,
+	Vue,
+	PropSync,
+	Ref,
+	Watch,
+} from "vue-property-decorator";
 import user from "@/store/modules/user";
 import settings, { DashboardViews } from "@/store/modules/settings";
-
-const emptyPlantDetails = {
-	name: "",
-	scientific_name: "",
-};
+import EditIcon from "@/components/misc/icons/EditIcon.vue";
 
 @Component({
 	name: "EditableComponent",
-	components: {},
+	components: {
+		EditIcon,
+	},
 })
 export default class EditableComponent extends Vue {
 	@Prop({ default: false }) editMode!: boolean;
@@ -55,9 +69,27 @@ export default class EditableComponent extends Vue {
 	@Prop({ default: "" }) inputPlaceholder!: string;
 	@PropSync("customVModel", { type: String }) syncModel!: string;
 
+	isActive = false;
+
+	@Ref("editableInput") readonly editableInput!:
+		| HTMLInputElement
+		| HTMLTextAreaElement;
+
 	get formattedText() {
-		if (!this.syncModel) return [''];
+		if (!this.syncModel) return [""];
 		return this.syncModel.split("\n\n");
+	}
+	
+	handleFocus(val: any) {
+		this.isActive = true;
+	}
+
+	handleBlur(val: any) {
+		this.isActive = false;
+	}
+
+	handleSelectionBtn() {
+		this.editableInput.focus();
 	}
 }
 </script>

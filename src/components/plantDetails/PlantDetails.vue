@@ -1,6 +1,6 @@
 <template>
 	<section class="plant-details">
-		<button @click="editMode=!editMode" style="posiiton: absolute;">Set mode</button>
+		<button @click="editMode=!editMode" style="position: absolute; left: 30px;">Set mode</button>
 		<div class="plant-details__image tile">
 			<img v-if="!isAddPlantMode" :src="imgPath" alt="Plant image" />
 		</div>

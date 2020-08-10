@@ -1,5 +1,9 @@
 html {
     font-size: 62.5%; // 10px //
+
+    @media only screen and (max-width: 90em) {
+        font-size: 50%;
+    }
 }
 
 body {
