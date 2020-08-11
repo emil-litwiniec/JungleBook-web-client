@@ -29,7 +29,7 @@
 				<div class="plant-details__stats-container">
 					<div class="info__stats">
 						<div class="info__position">
-							<component :is="`${selectedOption.name}-light-icon`"  class="info__icon"/>
+							<component :is="`${selectedOption.name}-light-icon`" class="info__icon" />
 							<dropdown-selection
 								v-if="editMode"
 								class="info__input"
@@ -38,7 +38,15 @@
 								:selectedOption="selectedOption"
 							/>
 							<span v-else class="info__display">{{selectedOption.label}}</span>
+						</div>
 
+						<div class="info__temperature">
+							<range-slider
+								v-if="editMode"
+								:range-values="tempratureData"
+								@updatedValues="handleTemperatureUpdate"
+							/>
+							<span v-else>{{tempratureData[0]}}-{{tempratureData[1]}}</span>
 						</div>
 					</div>
 					<div class="info__days">
@@ -87,12 +95,12 @@ import DropdownSelection, {
 import FullLightIcon from "@/components/misc/icons/FullLightIcon.vue";
 import PartialLightIcon from "@/components/misc/icons/PartialLightIcon.vue";
 import ShadyLightIcon from "@/components/misc/icons/ShadyLightIcon.vue";
-
+import RangeSliderComponent from "@/components/common/rangeSlider/RangeSliderComponent.vue";
 
 const emptyPlantDetails = {
 	name: "",
 	scientific_name: "",
-	details: ""
+	details: "",
 };
 
 const positionOptions = [
@@ -113,7 +121,6 @@ const positionOptions = [
 	},
 ];
 
-
 @Component({
 	name: "PlantDetails",
 	components: {
@@ -121,7 +128,8 @@ const positionOptions = [
 		DropdownSelection,
 		FullLightIcon,
 		PartialLightIcon,
-		ShadyLightIcon
+		ShadyLightIcon,
+		RangeSlider: RangeSliderComponent,
 	},
 })
 export default class PlantDetails extends Vue {
@@ -131,6 +139,7 @@ export default class PlantDetails extends Vue {
 	positionOptions = positionOptions;
 	selectedOptionId = 0;
 	formatDays = formatDays;
+	tempratureData: number[] = [0, 35];
 
 	created() {
 		const currentRoute = this.$router.currentRoute;
@@ -162,6 +171,10 @@ export default class PlantDetails extends Vue {
 
 	handleDropdownSelect(optionId: number) {
 		this.selectedOptionId = optionId;
+	}
+
+	handleTemperatureUpdate(values: number[]) {
+		this.tempratureData = values;
 	}
 }
 </script>
