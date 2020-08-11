@@ -139,7 +139,8 @@
                 margin-top: 2rem;
             }
 
-            &__position {
+            &__position,
+            &__temperature {
                 display: flex;
                 align-items: center;
 
@@ -164,8 +165,17 @@
                 }
             }
 
+            &__position {
+                position: relative;
+                z-index: 100;
+            }
+
             &__temperature {
-                margin-top: 6rem;
+                margin-top: 3rem;
+
+                .info__input {
+                    max-width: unset;
+                }
             }
 
             &__days {

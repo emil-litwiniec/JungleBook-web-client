@@ -41,12 +41,14 @@
 						</div>
 
 						<div class="info__temperature">
+							<full-light-icon class="info__icon" />
 							<range-slider
 								v-if="editMode"
 								:range-values="tempratureData"
 								@updatedValues="handleTemperatureUpdate"
+								class="info__input"
 							/>
-							<span v-else>{{tempratureData[0]}}-{{tempratureData[1]}}</span>
+							<span v-else class="info__display">{{tempratureData[0]}} - Ū{{tempratureData[1]}} °C</span>
 						</div>
 					</div>
 					<div class="info__days">
