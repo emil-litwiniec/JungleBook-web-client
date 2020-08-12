@@ -1,7 +1,7 @@
 <template>
 	<div class="dashboard__wrapper" :class="{'dashboard__wrapper--white': fadeInDashboard}">
 		<Loader v-if="loaderVisible" color="light" ref="loader" />
-		<dashboard-navigation-bar />
+		<common-toolbar />
 		<dashboard-exposition />
 	</div>
 </template>
@@ -12,15 +12,15 @@ import { Loader } from "@/components/types";
 import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import user from "@/store/modules/user";
 import settings, { DashboardViews } from "@/store/modules/settings";
-import DashboardNavigationBar from "@/components/dashboard/dashboardNavigationBar/DashboardNavigationBar.vue";
+import CommonToolbar from "@/components/common/commonToolbar/CommonToolbar.vue";
 import DashboardExposition from "@/components/dashboard/dashboardExposition/DashboardExposition.vue";
 
 @Component({
 	name: "DashboardView",
 	components: {
 		Loader: LoaderAnimation,
-		DashboardNavigationBar,
-		DashboardExposition
+		CommonToolbar,
+		DashboardExposition,
 	},
 })
 export default class DashboardView extends Vue {

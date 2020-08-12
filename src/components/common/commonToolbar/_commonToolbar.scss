@@ -1,7 +1,8 @@
-.dashboard-navigation-bar {
+.common-toolbar {
     position: relative;
     display: flex;
     justify-content: space-between;
     padding: 2rem 5rem;
     z-index: 900;
+    width: 100%;
 }

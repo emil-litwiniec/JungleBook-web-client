@@ -4,7 +4,7 @@
 @import '../components/navigationBar/navigationBar';
 @import '../components/navigationDropdownMenu/navigationDropdownMenu';
 
-@import '../components/dashboard/dashboardNavigationBar/dashboardNavigationBar';
+@import '../components/common/commonToolbar/commonToolbar';
 @import '../components/dashboard/searchBar/searchBar';
 @import '../components/dashboard/sortByDropdown/sortByDropdown';
 @import '../components/dashboard/selectionActions/selectionActions';
@@ -15,3 +15,4 @@
 
 @import '../components/common/dropdownSelection/dropdownSelection';
 @import '../components/common/rangeSlider/rangeSlider';
+@import '../components/common/editAction/editAction';

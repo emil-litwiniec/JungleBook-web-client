@@ -2,9 +2,8 @@
 	<div id="wrapper" class="wrapper">
 		<navigation-bar v-if="isNavVisible" />
 		<main>
-			<router-view />
+			<router-view :key="$route.fullPath"/>
 		</main>
-		<!-- <Footer /> -->
 	</div>
 </template>
 

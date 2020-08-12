@@ -5,7 +5,8 @@
         height: max-content;
         min-height: calc(100vh - 5.4rem);
         display: flex;
-        justify-content: center;
-        padding: 17rem 0;
+        flex-direction: column;
+        padding-bottom: 17rem;
+        align-items: center;
     }
 }

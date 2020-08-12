@@ -25,6 +25,7 @@ class SettingsModule extends VuexModule {
     sortBy: SortBy = SortBy.A_Z;
     currentlySelected: number[] = [];
     isSelectionMode = false;
+    isEditMode = false;
     selectedBookId: number | null = null;
 
     @Mutation
@@ -66,6 +67,11 @@ class SettingsModule extends VuexModule {
     @Mutation
     SWITCH_SELECTION_MODE() {
         this.isSelectionMode = !this.isSelectionMode;
+    }
+
+    @Mutation
+    SWITCH_EDIT_MODE() {
+        this.isEditMode = !this.isEditMode;
     }
 }
 

@@ -1,26 +1,8 @@
-.selection-actions {
+.edit-action {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 41rem;
-
-    &__btns {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-
-        .selection-actions {
-            &__btn {
-                &:first-child {
-                    position: relative;
-                }
-            }
-        }
-
-        .line-separator {
-            margin: 0 2rem;
-        }
-    }
 
     &__btn {
         font-size: 1.5rem;

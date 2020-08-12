@@ -1,7 +1,8 @@
 <template>
-	<section class="plant-details-view__wrapper" >
+	<section class="plant-details-view__wrapper">
 		<Loader v-if="loaderVisible" color="dark" ref="loader" />
-        <plant-details v-if="!loaderVisible"/>
+		<common-toolbar components-setup="plantDetails" />
+		<plant-details v-if="!loaderVisible" />
 	</section>
 </template>
 
@@ -12,12 +13,14 @@ import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import user from "@/store/modules/user";
 import settings, { DashboardViews } from "@/store/modules/settings";
 import PlantDetails from "@/components/plantDetails/PlantDetails.vue";
+import CommonToolbar from "@/components/common/commonToolbar/CommonToolbar.vue";
 
 @Component({
 	name: "PlantDetailsView",
 	components: {
-        Loader: LoaderAnimation,
-        PlantDetails
+		Loader: LoaderAnimation,
+		PlantDetails,
+		CommonToolbar,
 	},
 })
 export default class PlantDetailsView extends Vue {

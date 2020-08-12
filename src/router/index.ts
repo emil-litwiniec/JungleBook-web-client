@@ -32,6 +32,7 @@ const routes: Array<RouteConfig> = [
         ],
     },
     {
+        name: 'dashboard',
         path: '/dashboard',
         component: DashboardView,
     },

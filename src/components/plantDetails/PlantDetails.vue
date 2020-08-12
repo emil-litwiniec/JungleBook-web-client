@@ -1,6 +1,5 @@
 <template>
 	<section class="plant-details">
-		<button @click="editMode=!editMode" style="position: absolute; left: 30px;">Set mode</button>
 		<div class="plant-details__image tile">
 			<img v-if="!isAddPlantMode" :src="imgPath" alt="Plant image" />
 		</div>
@@ -48,7 +47,7 @@
 								@updatedValues="handleTemperatureUpdate"
 								class="info__input"
 							/>
-							<span v-else class="info__display">{{tempratureData[0]}} - Ū{{tempratureData[1]}} °C</span>
+							<span v-else class="info__display">{{tempratureData[0]}} - {{tempratureData[1]}} °C</span>
 						</div>
 					</div>
 					<div class="info__days">
@@ -137,7 +136,6 @@ const positionOptions = [
 export default class PlantDetails extends Vue {
 	isAddPlantMode = true;
 	plantData: any = emptyPlantDetails;
-	editMode = false;
 	positionOptions = positionOptions;
 	selectedOptionId = 0;
 	formatDays = formatDays;
@@ -148,7 +146,9 @@ export default class PlantDetails extends Vue {
 		this.isAddPlantMode = currentRoute.name === "addPlant";
 		this.populatePlantData();
 		if (this.isAddPlantMode) {
-			this.editMode = true;
+			if (!this.editMode) {
+				settings.SWITCH_EDIT_MODE();
+			}
 		}
 	}
 
@@ -163,6 +163,10 @@ export default class PlantDetails extends Vue {
 
 	get imgPath() {
 		return require("@/assets/img/mock-plant-2.jpg");
+	}
+
+	get editMode() {
+		return settings.isEditMode;
 	}
 
 	get selectedOption() {
