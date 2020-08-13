@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { SignInPayload, SignUpPayload, AuthResponse, CreateBookPayload, CreatePlantPayload, SingleActionPlantPayload } from '@/api/types';
+import { ImageUploadPayload, SignInPayload, SignUpPayload, AuthResponse, CreateBookPayload, CreatePlantPayload, SingleActionPlantPayload } from '@/api/types';
 import { getToken } from '@/utils/cookies';
 
 export const API = axios.create({
@@ -70,4 +70,18 @@ export async function dewSinglePlant(payload: SingleActionPlantPayload): Promise
     });
 
     return response;
+}
+
+export async function imageUpload(payload: ImageUploadPayload) {
+    const response = await API.post('images', payload, {
+        headers: {
+            'x-access-token': getToken()
+        }
+    })
+    return response;
+    
+    // return axios.post(url, formData)
+    //     .then(x => x.data)
+    //     .then(x => x.map(img => Object.assign({},
+    //         img, { url: `${BASE_URL}/images/${img.id}` }))); ???
 }

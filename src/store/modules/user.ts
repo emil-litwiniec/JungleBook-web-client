@@ -1,6 +1,6 @@
 import { VuexModule, Module, getModule, Action, Mutation } from 'vuex-module-decorators';
 import store from '@/store';
-import { API, signIn, signUp, fetchUserData, createBook, waterSinglePlant, dewSinglePlant } from '@/api/api';
+import { API, imageUpload, signIn, signUp, fetchUserData, createBook, waterSinglePlant, dewSinglePlant } from '@/api/api';
 import {
     AuthResponse,
     SignUpPayload,
@@ -12,6 +12,7 @@ import {
     Settings,
     CreateBookPayload,
     SingleActionPlantPayload,
+    ImageUploadPayload,
 } from '@/api/types.d.ts';
 import { getToken, setToken, removeToken } from '@/utils/cookies';
 import { plants } from '@/utils/fixtures';
@@ -175,6 +176,11 @@ class UserModule extends VuexModule {
         } else if (plantActionType == PlantActionType.DEW) {
             await dewSinglePlant(data);
         }
+    }
+
+    @Action({ rawError: true })
+    async imageUpload(payload: ImageUploadPayload) {
+        await imageUpload(payload);       
     }
 }
 

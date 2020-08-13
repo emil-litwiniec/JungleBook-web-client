@@ -70,8 +70,8 @@ class SettingsModule extends VuexModule {
     }
 
     @Mutation
-    SWITCH_EDIT_MODE() {
-        this.isEditMode = !this.isEditMode;
+    SET_EDIT_MODE(on: boolean) {
+        this.isEditMode = on;
     }
 }
 

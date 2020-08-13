@@ -25,6 +25,10 @@ export interface CreatePlantPayload {
     avatar_image?: string;
 }
 
+export interface ImageUploadPayload {
+    formData: FormData
+}
+
 export interface SingleActionPlantPayload {
     plant_id: number;
 }

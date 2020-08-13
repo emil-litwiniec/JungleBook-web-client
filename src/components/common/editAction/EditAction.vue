@@ -21,7 +21,7 @@ export default class EditAction extends Vue {
 	}
 
 	handleSelectionModeSwitch() {
-		settings.SWITCH_EDIT_MODE();
+		settings.SET_EDIT_MODE(!settings.isEditMode);
 	}
 }
 </script>

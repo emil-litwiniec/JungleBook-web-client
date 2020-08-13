@@ -1,7 +1,8 @@
 <template>
 	<section class="plant-details">
 		<div class="plant-details__image tile">
-			<img v-if="!isAddPlantMode" :src="imgPath" alt="Plant image" />
+			<image-upload/>
+			<!-- <img v-if="!isAddPlantMode" :src="imgPath" alt="Plant image" /> -->
 		</div>
 		<div class="plant-details__info">
 			<div class="info__header">
@@ -97,6 +98,7 @@ import FullLightIcon from "@/components/misc/icons/FullLightIcon.vue";
 import PartialLightIcon from "@/components/misc/icons/PartialLightIcon.vue";
 import ShadyLightIcon from "@/components/misc/icons/ShadyLightIcon.vue";
 import RangeSliderComponent from "@/components/common/rangeSlider/RangeSliderComponent.vue";
+import ImageUpload from "@/components/common/imageUpload/ImageUpload.vue";
 
 const emptyPlantDetails = {
 	name: "",
@@ -131,6 +133,7 @@ const positionOptions = [
 		PartialLightIcon,
 		ShadyLightIcon,
 		RangeSlider: RangeSliderComponent,
+		ImageUpload
 	},
 })
 export default class PlantDetails extends Vue {
@@ -145,11 +148,8 @@ export default class PlantDetails extends Vue {
 		const currentRoute = this.$router.currentRoute;
 		this.isAddPlantMode = currentRoute.name === "addPlant";
 		this.populatePlantData();
-		if (this.isAddPlantMode) {
-			if (!this.editMode) {
-				settings.SWITCH_EDIT_MODE();
-			}
-		}
+
+		settings.SET_EDIT_MODE(this.isAddPlantMode);
 	}
 
 	populatePlantData() {
@@ -162,7 +162,7 @@ export default class PlantDetails extends Vue {
 	}
 
 	get imgPath() {
-		return require("@/assets/img/mock-plant-2.jpg");
+		return "https://cdn.gardenista.com/wp-content/uploads/2015/04/fields/bed_monstera_erinboyle_gardenista.jpg";
 	}
 
 	get editMode() {
