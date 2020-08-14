@@ -1,6 +1,6 @@
 <template>
 	<section class="plant-details">
-		<editable-image :edit-mode="editMode" :img-path="imgPath" class="plant-details__image" />
+		<editable-image :img-path="imgPath" :plant-id="plantData.id" class="plant-details__image" />
 		<div class="plant-details__info">
 			<div class="info__header">
 				<editable-component
@@ -101,6 +101,7 @@ const emptyPlantDetails = {
 	name: "",
 	scientific_name: "",
 	details: "",
+	plantId: 0,
 };
 
 // TODO: move constants to separate file
@@ -136,7 +137,6 @@ const positionOptions = [
 })
 export default class PlantDetails extends Vue {
 	isAddPlantMode = true;
-	plantData: any = emptyPlantDetails;
 	positionOptions = positionOptions;
 	selectedOptionId = 0;
 	formatDays = formatDays;
@@ -145,18 +145,17 @@ export default class PlantDetails extends Vue {
 	created() {
 		const currentRoute = this.$router.currentRoute;
 		this.isAddPlantMode = currentRoute.name === "addPlant";
-		this.populatePlantData();
 
 		settings.SET_EDIT_MODE(this.isAddPlantMode);
 	}
 
-	populatePlantData() {
+	get plantData() {
 		if (this.isAddPlantMode) {
-			this.plantData = emptyPlantDetails;
-		} else {
-			const plantId = Number(this.$router.currentRoute.params.plantId);
-			this.plantData = user.plantById(plantId);
+			return emptyPlantDetails;
 		}
+
+		const plantId = Number(this.$router.currentRoute.params.plantId);
+		return user.plantById(plantId);
 	}
 
 	get imgPath() {

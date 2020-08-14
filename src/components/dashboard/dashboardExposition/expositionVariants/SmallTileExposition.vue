@@ -88,7 +88,7 @@ import { formatDays } from "@/utils/format";
 export default class SmallTileExposition extends Vue {
 	addPlantKey = this.uniqueKey();
 	formatDays = formatDays;
-	
+
 	@Prop({ default: [] }) readonly plants!: any[];
 
 	get imgPath() {
@@ -131,7 +131,7 @@ export default class SmallTileExposition extends Vue {
 	}
 
 	handleAddPlant() {
-		this.$router.push('plant/add');
+		this.$router.push("plant/add");
 	}
 
 	uniqueKey() {

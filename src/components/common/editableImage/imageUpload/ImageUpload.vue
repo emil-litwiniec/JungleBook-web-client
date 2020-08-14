@@ -5,7 +5,6 @@
 			class="image-upload__form"
 			enctype="multipart/form-data"
 			novalidate
-			v-if="isInitial || isSaving"
 			@click="handleFormClick"
 			ref="formElement"
 			@drag.stop.prevent
@@ -111,10 +110,6 @@ export default class ImageUpload extends Vue {
 		if (!images) return; // show error message ?
 		formData.append(fieldName, images[0], images[0].name);
 		this.save(formData);
-	}
-
-	get isInitial() {
-		return this.currentStatus === UploadStatus.INITIAL;
 	}
 
 	get isSaving() {
