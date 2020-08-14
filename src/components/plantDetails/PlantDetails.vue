@@ -1,9 +1,6 @@
 <template>
 	<section class="plant-details">
-		<div class="plant-details__image tile">
-			<image-upload/>
-			<!-- <img v-if="!isAddPlantMode" :src="imgPath" alt="Plant image" /> -->
-		</div>
+		<editable-image :edit-mode="editMode" :img-path="imgPath" class="plant-details__image" />
 		<div class="plant-details__info">
 			<div class="info__header">
 				<editable-component
@@ -98,7 +95,7 @@ import FullLightIcon from "@/components/misc/icons/FullLightIcon.vue";
 import PartialLightIcon from "@/components/misc/icons/PartialLightIcon.vue";
 import ShadyLightIcon from "@/components/misc/icons/ShadyLightIcon.vue";
 import RangeSliderComponent from "@/components/common/rangeSlider/RangeSliderComponent.vue";
-import ImageUpload from "@/components/common/imageUpload/ImageUpload.vue";
+import EditableImage from "@/components/common/editableImage/EditableImage.vue";
 
 const emptyPlantDetails = {
 	name: "",
@@ -106,6 +103,7 @@ const emptyPlantDetails = {
 	details: "",
 };
 
+// TODO: move constants to separate file
 const positionOptions = [
 	{
 		name: "full",
@@ -133,7 +131,7 @@ const positionOptions = [
 		PartialLightIcon,
 		ShadyLightIcon,
 		RangeSlider: RangeSliderComponent,
-		ImageUpload
+		EditableImage,
 	},
 })
 export default class PlantDetails extends Vue {

@@ -34,7 +34,7 @@
             cursor: pointer;
 
             transition-property: transform, opacity;
-            transition-timing-function: cubic-bezier(0.64, 0.57, 0.67, 1.53);
+            transition-timing-function: $ease-bounce;
             transition-duration: 80ms;
 
             &:hover {
@@ -182,10 +182,10 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-evenly;
-                transition: opacity 80ms cubic-bezier(0.64, 0.57, 0.67, 1.53);
+                transition: opacity 80ms $ease-bounce;
 
                 & > * {
-                    transition: transform 80ms cubic-bezier(0.64, 0.57, 0.67, 1.53);
+                    transition: transform 80ms $ease-bounce;
                     }
 
                 &:hover {

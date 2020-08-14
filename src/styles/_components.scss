@@ -16,4 +16,7 @@
 @import '../components/common/dropdownSelection/dropdownSelection';
 @import '../components/common/rangeSlider/rangeSlider';
 @import '../components/common/editAction/editAction';
-@import '../components/common/imageUpload/imageUpload';
+
+@import '../components/common/editableImage/imageUpload/imageUpload';
+@import '../components/common/editableImage/imageDisplay/imageDisplay';
+@import '../components/common/editableImage/editableImage';

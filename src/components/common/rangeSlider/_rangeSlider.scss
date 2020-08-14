@@ -27,7 +27,7 @@
         background: $color-primary;
         border-radius: 50%;
 
-        transition: all 80ms cubic-bezier(0.64, 0.57, 0.67, 1.53);
+        transition: all 80ms $ease-bounce;
 
         &:hover {
             transform: translate(-50%, -50%) scale(1.1);

@@ -7,6 +7,13 @@
 			novalidate
 			v-if="isInitial || isSaving"
 			@click="handleFormClick"
+			ref="formElement"
+			@drag.stop.prevent
+			@dragenter.stop.prevent="handleDragStart"
+			@dragover.stop.prevent="handleDragStart"
+			@dragleave.stop.prevent="handleDragEnd"
+			@dragend.stop.prevent="handleDragEnd"
+			@drop.stop.prevent="handleDrop"
 		>
 			<profile-icon />
 			<h4>Image Upload</h4>
@@ -53,6 +60,7 @@ enum UploadStatus {
 })
 export default class ImageUpload extends Vue {
 	uploadedFiles: any[] = [];
+	draggedFiles!: Blob;
 	uploadError: string | null = null;
 	currentStatus: UploadStatus | null = null;
 	uploadFieldName = "image";
@@ -60,15 +68,16 @@ export default class ImageUpload extends Vue {
 
 	@Ref("loader") readonly loader!: Loader;
 	@Ref("inputFile") readonly inputFile!: HTMLInputElement;
+	@Ref("formElement") readonly formElement!: HTMLElement;
+
+	mounted() {
+		this.reset();
+	}
 
 	hideLoader() {
 		this.loader.fadeOut().then(() => {
 			this.loaderVisible = false;
 		});
-	}
-
-	mounted() {
-		this.reset();
 	}
 
 	reset() {
@@ -80,26 +89,27 @@ export default class ImageUpload extends Vue {
 	save(formData: FormData) {
 		this.currentStatus = UploadStatus.SAVING;
 		this.loaderVisible = true;
-		console.log(formData);
 		user.imageUpload({ formData })
 			.then((data: any) => {
 				this.uploadedFiles = [].concat(data);
 				this.currentStatus = UploadStatus.SUCCESS;
+				// load tinted image in the back
 			})
 			.catch((err: any) => {
 				this.uploadError = err.response;
 				this.currentStatus = UploadStatus.FAILED;
+				// show error message
 			})
 			.finally(() => {
 				this.hideLoader();
 			});
 	}
 
-	imageChange(fieldName: string, image: FileList) {
+	imageChange(fieldName: string, images: FileList) {
 		const formData = new FormData();
-		console.log({ image });
-		if (!image) return;
-		formData.append(fieldName, image[0], image[0].name);
+
+		if (!images) return; // show error message ?
+		formData.append(fieldName, images[0], images[0].name);
 		this.save(formData);
 	}
 
@@ -117,6 +127,20 @@ export default class ImageUpload extends Vue {
 
 	get isFailed() {
 		return this.currentStatus === UploadStatus.FAILED;
+	}
+
+	handleDragStart(e: Event) {
+		this.formElement.classList.add("is-dragover");
+	}
+
+	handleDragEnd(e: Event) {
+		this.formElement.classList.remove("is-dragover");
+	}
+
+	handleDrop(e: any) {
+		this.formElement.classList.remove("is-dragover");
+		this.uploadedFiles = e.dataTransfer.files;
+		this.imageChange(this.inputFile.name, e.dataTransfer.files);
 	}
 
 	handleFormClick() {
