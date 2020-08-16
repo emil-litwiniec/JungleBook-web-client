@@ -2,19 +2,9 @@
 	<section class="dashboard-exposition">
 		<h3>{{currentBook.name}}</h3>
 		<h4>{{currentBook.description}}</h4>
-		<transition-group
-			name="fade-group"
-			tag="div"
-			class="exposition"
-			:class="`exposition--${currentViewComponent}`"
-		>
-			<component
-				:is="currentViewComponent"
-				v-for="plant in mappedPlants"
-				:key="uniqueKey(plant.id)"
-				:plant="plant"
-			/>
-		</transition-group>
+		<transition name="fade" mode="out-in">
+			<component :is="`${currentViewComponent}-exposition`" />
+		</transition>
 	</section>
 </template>
 
@@ -22,13 +12,18 @@
 import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import settings, { DashboardViews } from "@/store/modules/settings";
 import user from "@/store/modules/user";
-import SmallTile from "@/components/dashboard/dashboardExposition/SmallTile.vue";
+
+import SmallTileExposition from "@/components/dashboard/dashboardExposition/tileVariants/smallTile/SmallTileExposition.vue";
+import BigTileExposition from "@/components/dashboard/dashboardExposition/tileVariants/bigTile/BigTileExposition.vue";
+// import ListTile from "@/components/dashboard/dashboardExposition/tileVariants/listTile/ListTile.vue";
 const uuidv4 = require("uuid").v4;
 
 @Component({
 	name: "DashboardExposition",
 	components: {
-		SmallTile,
+		SmallTileExposition,
+		BigTileExposition,
+		// ListTile,
 	},
 })
 export default class DashboardExposition extends Vue {
@@ -46,8 +41,8 @@ export default class DashboardExposition extends Vue {
 				return "small-tile";
 			case DashboardViews.BIG_TILE:
 				return "big-tile";
-			case DashboardViews.LIST:
-				return "list";
+			case DashboardViews.LIST_TILE:
+				return "list-tile";
 			default:
 				return "small-tile";
 		}

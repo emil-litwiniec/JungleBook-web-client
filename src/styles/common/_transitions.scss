@@ -7,14 +7,17 @@
     opacity: 0;
 }
 
-.fade-group-enter-active, .fade-group-leave-active, .fade-group-move-active {
-    transition: opacity .2s;
-  }
-  .fade-group-enter, .fade-group-leave-to, .fade-group-move{
+.fade-group-enter-active,
+.fade-group-leave-active,
+.fade-group-move-active {
+    transition: opacity 0.2s;
+}
+.fade-group-enter,
+.fade-group-leave-to,
+.fade-group-move {
     opacity: 0;
-  }
+}
 
-  .fade-group-enter-active {
-    transition-delay: .2s;
-  }
-  
+.fade-group-enter-active {
+    transition-delay: 0.2s;
+}

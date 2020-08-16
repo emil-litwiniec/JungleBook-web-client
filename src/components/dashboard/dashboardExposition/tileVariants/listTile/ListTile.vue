@@ -67,15 +67,15 @@ import ProfileIcon from "@/components/misc/icons/ProfileIcon.vue";
 import PlusIcon from "@/components/misc/icons/PlusIcon.vue";
 import LineSeparator from "@/components/misc/LineSeperator.vue";
 
-import TileBase from "./TileBase";
+import TileBase from "@/components/dashboard/dashboardExposition/tileVariants/TileBase";
 
 @Component({
-	name: "SmallTile",
+	name: "ListTile",
 	components: {
 		ProfileIcon,
 		PlusIcon,
 		LineSeparator,
 	},
 })
-export default class SmallTile extends TileBase {}
+export default class ListTile extends TileBase {}
 </script>

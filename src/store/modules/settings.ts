@@ -2,7 +2,7 @@ import { VuexModule, Module, getModule, Action, Mutation } from 'vuex-module-dec
 import store from '@/store';
 
 export enum DashboardViews {
-    LIST,
+    LIST_TILE,
     SMALL_TILE,
     BIG_TILE,
 }

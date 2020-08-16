@@ -16,7 +16,7 @@
 		<line-separator />
 		<list-view-icon
 			class="view-selection__icon"
-			:class="{'active': activeView === dashboardViews.LIST }"
+			:class="{'active': activeView === dashboardViews.LIST_TILE }"
 			@click.native="setList"
 			color="#C4C4C4"
 		/>
@@ -56,7 +56,7 @@ export default class ViewSelection extends Vue {
 	}
 
 	setList() {
-		settings.SET_DASHBOARD_VIEW_MODE(this.dashboardViews.LIST);
+		settings.SET_DASHBOARD_VIEW_MODE(this.dashboardViews.LIST_TILE);
 	}
 }
 </script>
