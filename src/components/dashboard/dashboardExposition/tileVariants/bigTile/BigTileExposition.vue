@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 
 import BigTile from "@/components/dashboard/dashboardExposition/tileVariants/bigTile/BigTile.vue";
 import TileExpositionBase from "@/components/dashboard/dashboardExposition/tileVariants/TileExpositionBase";

@@ -1,62 +1,66 @@
 <template>
-	<div class="tile">
-		<template v-if="plant.type === 'regular'">
-			<div class="tile__image">
-				<img :src="imgPath" alt="Plant image" />
-			</div>
-			<div class="tile__content">
-				<div class="tile__stats">
-					<div class="tile__alerts"></div>
-					<div class="tile__days">
-						<div>
-							<span>Last watered:</span>
-							<span class="big">{{formatDays(plant.days_since_last_watering)}}</span>
-						</div>
-						<div>
-							<span>Last dewed:</span>
-							<span class="big">{{formatDays(plant.days_since_last_dew)}}</span>
-						</div>
-					</div>
+	<div>
+		<div class="list-tile" :class="{'margin-top-medium': plant.type === 'addPlant'}">
+			<template v-if="plant.type === 'regular'">
+				<div class="list-tile__check-box">
+					<!-- <check-box/> -->
 				</div>
-				<div class="tile__headers">
+				<div class="list-tile__headers">
 					<h4>{{plant.name}}</h4>
 					<h5>{{plant.scientific_name}}</h5>
 				</div>
-			</div>
-			<div class="tile__menu">
-				<button class="tile__button-block" @click="handleButtonDew(plant.id)">
-					<div class="tile__button-container">
-						<span>Dew</span>
-						<profile-icon color="#000000" />
+				<div class="list-tile__content">
+					<div class="list-tile__stats">
+						<div class="list-tile__alerts"></div>
+						<div class="list-tile__days">
+							<div>
+								<span>Last watered:</span>
+								<span class="days-big">{{formatDays(plant.days_since_last_watering)}}</span>
+							</div>
+							<div>
+								<span>Last dewed:</span>
+								<span class="days-big">{{formatDays(plant.days_since_last_dew)}}</span>
+							</div>
+						</div>
 					</div>
-				</button>
-				<line-separator />
-				<button class="tile__button-block" @click="handleButtonWater(plant.id)">
-					<div class="tile__button-container">
-						<span>Water</span>
-						<profile-icon color="#000000" />
+
+					<div class="list-tile__menu">
+						<button class="list-tile__button-block" @click="handleButtonDew(plant.id)">
+							<div class="list-tile__button-container">
+								<span>Dew</span>
+								<profile-icon color="#000000" />
+							</div>
+						</button>
+						<line-separator />
+						<button class="list-tile__button-block" @click="handleButtonWater(plant.id)">
+							<div class="list-tile__button-container">
+								<span>Water</span>
+								<profile-icon color="#000000" />
+							</div>
+						</button>
+						<line-separator />
+						<button class="list-tile__button-block" @click="handleButtonDetails(plant.id)">
+							<div class="list-tile__button-container">
+								<span>Details</span>
+								<profile-icon color="#000000" />
+							</div>
+						</button>
 					</div>
-				</button>
-				<line-separator />
-				<button class="tile__button-block" @click="handleButtonDetails(plant.id)">
-					<div class="tile__button-container">
-						<span>Details</span>
-						<profile-icon color="#000000" />
-					</div>
-				</button>
-			</div>
-		</template>
-		<template v-if="plant.type === 'addPlant'">
-			<div
-				class="tile tile--add-plant"
-				style="transition: nune !important;"
-				@click="handleAddPlant"
-				:key="addPlantKey"
-			>
-				<span>Add new plant</span>
-				<plus-icon />
-			</div>
-		</template>
+				</div>
+			</template>
+			<template v-if="plant.type === 'addPlant'">
+				<div
+					class="list-tile list-tile--add-plant"
+					style="transition: nune !important;"
+					@click="handleAddPlant"
+					:key="addPlantKey"
+				>
+					<span>Add new plant</span>
+					<plus-icon />
+				</div>
+			</template>
+		</div>
+		<line-separator v-if="plant.type === 'regular'" :is-horizontal="true" />
 	</div>
 </template>
 

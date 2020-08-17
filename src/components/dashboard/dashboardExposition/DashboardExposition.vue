@@ -15,7 +15,7 @@ import user from "@/store/modules/user";
 
 import SmallTileExposition from "@/components/dashboard/dashboardExposition/tileVariants/smallTile/SmallTileExposition.vue";
 import BigTileExposition from "@/components/dashboard/dashboardExposition/tileVariants/bigTile/BigTileExposition.vue";
-// import ListTile from "@/components/dashboard/dashboardExposition/tileVariants/listTile/ListTile.vue";
+import ListTileExposition from "@/components/dashboard/dashboardExposition/tileVariants/listTile/ListTileExposition.vue";
 const uuidv4 = require("uuid").v4;
 
 @Component({
@@ -23,7 +23,7 @@ const uuidv4 = require("uuid").v4;
 	components: {
 		SmallTileExposition,
 		BigTileExposition,
-		// ListTile,
+		ListTileExposition,
 	},
 })
 export default class DashboardExposition extends Vue {

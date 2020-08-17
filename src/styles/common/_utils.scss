@@ -1,5 +1,5 @@
 .line-separator {
-    background-color: $color-gray-light;
+    background-color: #d8d8d8;
 
     &--vertical {
         height: 3.2rem;
@@ -14,4 +14,8 @@
 
 .relative {
     position: relative;
+}
+
+.margin-top-medium {
+    margin-top: 5rem;
 }
