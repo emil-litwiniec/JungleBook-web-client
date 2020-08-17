@@ -10,11 +10,11 @@
 					<div class="tile__days">
 						<div>
 							<span>Last watered:</span>
-							<span class="big">{{formatDays(plant.days_since_last_watering)}}</span>
+							<span class="days-big">{{formatDays(plant.days_since_last_watering)}}</span>
 						</div>
 						<div>
 							<span>Last dewed:</span>
-							<span class="big">{{formatDays(plant.days_since_last_dew)}}</span>
+							<span class="days-big">{{formatDays(plant.days_since_last_dew)}}</span>
 						</div>
 					</div>
 				</div>
@@ -30,14 +30,14 @@
 						<profile-icon color="#000000" />
 					</div>
 				</button>
-				<line-separator />
+				<line-separator :is-horizontal="true" />
 				<button class="tile__button-block" @click="handleButtonWater(plant.id)">
 					<div class="tile__button-container">
 						<span>Water</span>
 						<profile-icon color="#000000" />
 					</div>
 				</button>
-				<line-separator />
+				<line-separator :is-horizontal="true" />
 				<button class="tile__button-block" @click="handleButtonDetails(plant.id)">
 					<div class="tile__button-container">
 						<span>Details</span>

@@ -1,58 +1,59 @@
 .image-display {
     position: relative;
+    width: 100%;
+}
 
-    .tile {
-        &__menu {
-            position: absolute;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            top: 0;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            opacity: 0;
-            background-color: $color-white;
+.big-tile {
+    &__menu {
+        position: absolute;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        opacity: 0;
+        background-color: $color-white;
 
-            &:hover {
-                opacity: 1;
-            }
-
-            .line-separator {
-                width: 80%;
-            }
+        &:hover {
+            opacity: 1;
         }
 
-        &__button-block {
-            flex-basis: calc(100% / 3);
-            width: 100%;
-            transition: background-color 0.1s ease-in-out;
+        .line-separator {
+            width: 80%;
+        }
+    }
 
-            &:hover {
-                background-color: $color-off-white;
-            }
+    &__button-block {
+        flex-basis: calc(100% / 3);
+        width: 100%;
+        transition: background-color 0.1s ease-in-out;
 
-            &:active {
-                .tile__button-container {
-                    transform: translateY(3px);
-                }
-            }
+        &:hover {
+            background-color: $color-off-white;
         }
 
-        &__button-container {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            transition: transform 0.1s ease-in-out;
-
-            span {
-                font-size: 2rem;
+        &:active {
+            .tile__button-container {
+                transform: translateY(3px);
             }
+        }
+    }
 
-            svg {
-                width: 7rem;
-                height: 7rem;
-            }
+    &__button-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        transition: transform 0.1s ease-in-out;
+
+        span {
+            font-size: 2rem;
+        }
+
+        svg {
+            width: 7rem;
+            height: 7rem;
         }
     }
 }

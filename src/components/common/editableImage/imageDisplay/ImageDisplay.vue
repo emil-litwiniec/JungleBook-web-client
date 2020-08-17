@@ -1,23 +1,23 @@
 <template>
 	<div class="image-display">
 		<img :src="imgPath" alt="Plant image" />
-		<div v-if="!isEditMode" class="image-display__menu tile__menu">
-			<button class="tile__button-block" @click="handleButtonDew">
-				<div class="tile__button-container">
+		<div v-if="!isEditMode" class="image-display__menu big-tile__menu">
+			<button class="big-tile__button-block" @click="handleButtonDew">
+				<div class="big-tile__button-container">
 					<span>Dew</span>
 					<profile-icon color="#000000" />
 				</div>
 			</button>
 			<line-separator :is-horizontal="true" />
-			<button class="tile__button-block" @click="handleButtonWater">
-				<div class="tile__button-container">
+			<button class="big-tile__button-block" @click="handleButtonWater">
+				<div class="big-tile__button-container">
 					<span>Water</span>
 					<profile-icon color="#000000" />
 				</div>
 			</button>
 			<line-separator :is-horizontal="true" />
-			<button class="tile__button-block" @click="handleButtonFertilize">
-				<div class="tile__button-container">
+			<button class="big-tile__button-block" @click="handleButtonFertilize">
+				<div class="big-tile__button-container">
 					<span>Fertilize</span>
 					<profile-icon color="#000000" />
 				</div>
