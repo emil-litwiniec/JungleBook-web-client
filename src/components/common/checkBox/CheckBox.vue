@@ -1,7 +1,7 @@
 <template>
 	<div class="check-box__wrapper">
 		<label class="check-box__label">
-			<input class="check-box__input" type="checkbox" />
+			<input class="check-box__input" type="checkbox" v-model="isChecked"/>
 			<div class="check-box__display">
 				<tick-icon />
 			</div>
@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, PropSync } from "vue-property-decorator";
 
 import TickIcon from "@/components/misc/icons/TickIcon.vue";
 
@@ -20,7 +20,9 @@ import TickIcon from "@/components/misc/icons/TickIcon.vue";
 		TickIcon,
 	},
 })
-export default class CheckBox extends Vue {}
+export default class CheckBox extends Vue {
+	@PropSync("customVModel", { type: Boolean, default: false }) isChecked!: boolean;
+}
 </script>
 
 

@@ -1,5 +1,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import user, { PlantActionType } from '@/store/modules/user';
+import settings from '@/store/modules/settings';
 import { Plant } from '@/api/types.d.ts';
 import { formatDays } from '@/utils/format';
 const uuidv4 = require('uuid').v4;
@@ -13,8 +14,24 @@ export default class TileBase extends Vue {
     addPlantKey = this.uniqueKey();
     formatDays = formatDays;
 
+    get isSelectionMode() {
+        return settings.isSelectionMode;
+    }
+
     get imgPath() {
         return require('@/assets/img/mock-plant-2.jpg');
+    }
+
+    get isSelected() {
+        return settings.currentlySelected.includes(this.plant.id);
+    }
+
+    set isSelected(on: boolean) {
+        if (this.isSelected) {
+            !on && settings.REMOVE_FROM_SELECTION(this.plant.id);
+        } else {
+            on && settings.ADD_TO_SELECTION(this.plant.id);
+        }
     }
 
     uniqueKey() {

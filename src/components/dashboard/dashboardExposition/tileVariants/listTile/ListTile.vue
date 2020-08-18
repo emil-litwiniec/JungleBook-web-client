@@ -2,8 +2,8 @@
 	<div>
 		<div class="list-tile" :class="{'margin-top-medium': plant.type === 'addPlant'}">
 			<template v-if="plant.type === 'regular'">
-				<div class="list-tile__check-box">
-					<check-box />
+				<div class="list-tile__check-box" :class="{'show': isSelectionMode}">
+					<check-box :custom-v-model.sync="isSelected" />
 				</div>
 				<div class="list-tile__headers">
 					<h4>{{plant.name}}</h4>
@@ -81,7 +81,7 @@ import LineSeparator from "@/components/misc/LineSeperator.vue";
 		ProfileIcon,
 		PlusIcon,
 		LineSeparator,
-		CheckBox
+		CheckBox,
 	},
 })
 export default class ListTile extends TileBase {}

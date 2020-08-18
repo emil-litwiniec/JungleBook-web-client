@@ -11,7 +11,6 @@
     display: flex;
     cursor: pointer;
     border-radius: 1rem;
-    background: $color-bg-main;
 
     transition-property: transform, opacity;
     transition-timing-function: $ease-bounce;
@@ -25,10 +24,18 @@
     }
 
     &__check-box {
-        width: 30rem;
+        width: 10rem;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 250ms ease-in-out;
+
+        &.show {
+            opacity: 1;
+            pointer-events: all;
+        }
     }
 
     &__image {
