@@ -1,6 +1,11 @@
 <template>
-	<div class="tile">
+	<div class="tile" :class="{'tile-selected':isSelected && isSelectionMode}">
 		<template v-if="plant.type === 'regular'">
+			<check-box-tile
+				:custom-v-model.sync="isSelected"
+				:class="{'show':isSelected && isSelectionMode}"
+				:style="[ isSelectionMode ? {pointerEvents: 'all'} : {pointerEvents: 'none'}]"
+			/>
 			<div class="tile__image">
 				<img :src="imgPath" alt="Plant image" />
 			</div>
@@ -23,7 +28,7 @@
 					<h5>{{plant.scientific_name}}</h5>
 				</div>
 			</div>
-			<div class="tile__menu">
+			<div class="tile__menu" v-show="!isSelectionMode">
 				<button class="tile__button-block" @click="handleButtonDew(plant.id)">
 					<div class="tile__button-container">
 						<span>Dew</span>
@@ -69,12 +74,15 @@ import LineSeparator from "@/components/misc/LineSeperator.vue";
 
 import TileBase from "@/components/dashboard/dashboardExposition/tileVariants/TileBase";
 
+import CheckBoxTile from "@/components/common/checkBoxTile/CheckBoxTile.vue";
+
 @Component({
 	name: "BigTile",
 	components: {
 		ProfileIcon,
 		PlusIcon,
 		LineSeparator,
+		CheckBoxTile,
 	},
 })
 export default class BigTile extends TileBase {}

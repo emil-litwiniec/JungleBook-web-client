@@ -1,0 +1,49 @@
+.check-box-tile {
+    &__wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 150;
+        pointer-events: none;
+
+        &.show {
+            pointer-events: all;
+
+            .check-box-tile {
+                &__display {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    &__display {
+        height: 100%;
+        width: 100%;
+        border: 3px solid transparent;
+        border-radius: 2.6rem;
+        cursor: pointer;
+        transition: all 250ms ease-in-out;
+        opacity: 0;
+    }
+
+    &__input {
+        position: absolute;
+        opacity: 0;
+
+        &:checked ~ .check-box-tile__display {
+            border-color: $color-primary;
+
+            &::before {
+                opacity: 0;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(1.5);
+                width: 2.5rem;
+                height: 2.5rem;
+                z-index: 999;
+                transition: all 250ms ease-out;
+            }
+        }
+    }
+}
