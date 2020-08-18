@@ -26,6 +26,9 @@
 
     &__check-box {
         width: 30rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     &__image {
@@ -130,7 +133,7 @@
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        transition: opacity 100ms ease-in-out;
+        transition: opacity 100msū ease-in-out;
 
         & > .line-separator {
             height: 64%;

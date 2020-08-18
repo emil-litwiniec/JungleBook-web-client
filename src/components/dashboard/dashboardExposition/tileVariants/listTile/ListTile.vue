@@ -3,7 +3,7 @@
 		<div class="list-tile" :class="{'margin-top-medium': plant.type === 'addPlant'}">
 			<template v-if="plant.type === 'regular'">
 				<div class="list-tile__check-box">
-					<!-- <check-box/> -->
+					<check-box />
 				</div>
 				<div class="list-tile__headers">
 					<h4>{{plant.name}}</h4>
@@ -67,11 +67,13 @@
 <script lang="ts">
 import { Component } from "vue-property-decorator";
 
+import TileBase from "@/components/dashboard/dashboardExposition/tileVariants/TileBase";
+
+import CheckBox from "@/components/common/checkBox/CheckBox.vue";
+
 import ProfileIcon from "@/components/misc/icons/ProfileIcon.vue";
 import PlusIcon from "@/components/misc/icons/PlusIcon.vue";
 import LineSeparator from "@/components/misc/LineSeperator.vue";
-
-import TileBase from "@/components/dashboard/dashboardExposition/tileVariants/TileBase";
 
 @Component({
 	name: "ListTile",
@@ -79,6 +81,7 @@ import TileBase from "@/components/dashboard/dashboardExposition/tileVariants/Ti
 		ProfileIcon,
 		PlusIcon,
 		LineSeparator,
+		CheckBox
 	},
 })
 export default class ListTile extends TileBase {}
