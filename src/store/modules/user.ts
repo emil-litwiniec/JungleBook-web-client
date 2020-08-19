@@ -1,6 +1,15 @@
 import { VuexModule, Module, getModule, Action, Mutation } from 'vuex-module-decorators';
 import store from '@/store';
-import { API, imageUpload, signIn, signUp, fetchUserData, createBook, waterSinglePlant, dewSinglePlant } from '@/api/api';
+import {
+    API,
+    imageUpload,
+    signIn,
+    signUp,
+    fetchUserData,
+    createBook,
+    waterSinglePlant,
+    dewSinglePlant,
+} from '@/api/api';
 import {
     AuthResponse,
     SignUpPayload,
@@ -66,7 +75,7 @@ class UserModule extends VuexModule {
     }
 
     get plantById() {
-        return (plantId: number) =>  this.plants.find(plant => plant.id === plantId);
+        return (plantId: number) => this.plants.find((plant) => plant.id === plantId);
     }
 
     get currentBook() {
@@ -180,7 +189,7 @@ class UserModule extends VuexModule {
 
     @Action({ rawError: true })
     async imageUpload(payload: ImageUploadPayload) {
-        await imageUpload(payload);       
+        await imageUpload(payload);
     }
 }
 

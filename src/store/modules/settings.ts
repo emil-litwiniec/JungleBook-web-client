@@ -1,5 +1,6 @@
 import { VuexModule, Module, getModule, Action, Mutation } from 'vuex-module-decorators';
 import store from '@/store';
+import EventBus, { BusEvents } from '@/utils/EventBus';
 
 export enum DashboardViews {
     LIST_TILE,
@@ -27,6 +28,7 @@ class SettingsModule extends VuexModule {
     isSelectionMode = false;
     isEditMode = false;
     selectedBookId: number | null = null;
+    isPlantDataFormValid = true;
 
     @Mutation
     SET_SELECTED_BOOK_ID(bookId: number) {
@@ -72,6 +74,21 @@ class SettingsModule extends VuexModule {
     @Mutation
     SET_EDIT_MODE(on: boolean) {
         this.isEditMode = on;
+    }
+
+    @Mutation
+    SET_IS_PLANT_DATA_FORM_VALID(on: boolean) {
+        this.isPlantDataFormValid = on;
+    }
+
+    @Action
+    setEditMode(on: boolean) {
+        if (!this.isPlantDataFormValid) {
+            this.SET_EDIT_MODE(true);
+            EventBus.$emit(BusEvents.PLANT_FORM_DATA_ERROR);
+        } else {
+            this.SET_EDIT_MODE(on);
+        }
     }
 }
 

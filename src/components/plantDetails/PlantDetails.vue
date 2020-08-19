@@ -5,7 +5,7 @@
 			<div class="info__header">
 				<editable-component
 					:edit-mode="editMode"
-					:custom-v-model.sync="plantData.name"
+					:custom-v-model.sync="plantFormData.name"
 					tag="h2"
 					class="info__name"
 					custom-class="info"
@@ -14,7 +14,7 @@
 				/>
 				<editable-component
 					:edit-mode="editMode"
-					:custom-v-model.sync="plantData.scientific_name"
+					:custom-v-model.sync="plantFormData.scientific_name"
 					tag="h3"
 					class="info__scientific-name"
 					custom-class="info"
@@ -41,11 +41,11 @@
 							<full-light-icon class="info__icon" />
 							<range-slider
 								v-if="editMode"
-								:range-values="tempratureData"
+								:range-values="temperatureData"
 								@updatedValues="handleTemperatureUpdate"
 								class="info__input"
 							/>
-							<span v-else class="info__display">{{tempratureData[0]}} - {{tempratureData[1]}} °C</span>
+							<span v-else class="info__display">{{temperatureData[0]}} - {{temperatureData[1]}} °C</span>
 						</div>
 					</div>
 					<div class="info__days">
@@ -67,7 +67,7 @@
 				<div class="plant-details__description">
 					<editable-component
 						:edit-mode="editMode"
-						:custom-v-model.sync="plantData.description"
+						:custom-v-model.sync="plantFormData.description"
 						input-placeholder="Enter Plant Description"
 						:text-area="true"
 						tag="p"
@@ -82,7 +82,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Ref } from "vue-property-decorator";
+import { Component, Prop, Vue, Ref, Watch } from "vue-property-decorator";
 import user from "@/store/modules/user";
 import settings, { DashboardViews } from "@/store/modules/settings";
 import EditableComponent from "@/components/plantDetails/EditableComponent.vue";
@@ -97,12 +97,8 @@ import ShadyLightIcon from "@/components/misc/icons/ShadyLightIcon.vue";
 import RangeSliderComponent from "@/components/common/rangeSlider/RangeSliderComponent.vue";
 import EditableImage from "@/components/common/editableImage/EditableImage.vue";
 
-const emptyPlantDetails = {
-	name: "",
-	scientific_name: "",
-	details: "",
-	plantId: 0,
-};
+import { isEmpty } from "@/utils/utils";
+import EventBus, { BusEvents } from "@/utils/EventBus";
 
 // TODO: move constants to separate file
 const positionOptions = [
@@ -123,6 +119,22 @@ const positionOptions = [
 	},
 ];
 
+const emptyPlantFormData = {
+	name: "",
+	scientific_name: "",
+	description: "",
+	temperature: [0, 35],
+	positionId: 0,
+};
+
+interface PlantFormData {
+	name: string;
+	scientific_name: string;
+	description: string;
+	temperature: number[];
+	positionId: number;
+}
+
 @Component({
 	name: "PlantDetails",
 	components: {
@@ -140,22 +152,26 @@ export default class PlantDetails extends Vue {
 	positionOptions = positionOptions;
 	selectedOptionId = 0;
 	formatDays = formatDays;
-	tempratureData: number[] = [0, 35];
+	temperatureData: number[] = [0, 35];
+	plantData: any | {} = {};
+	plantFormData: PlantFormData = emptyPlantFormData;
+	plantId: number | undefined = undefined;
 
-	created() {
-		const currentRoute = this.$router.currentRoute;
-		this.isAddPlantMode = currentRoute.name === "addPlant";
-
-		settings.SET_EDIT_MODE(this.isAddPlantMode);
+	@Watch("plantFormData", {
+		deep: true,
+	})
+	handlePlantFormDataChange() {
+		const isFormValid = this.isFormDataValid;
+		if (settings.isPlantDataFormValid === isFormValid) return;
+		settings.SET_IS_PLANT_DATA_FORM_VALID(this.isFormDataValid);
 	}
 
-	get plantData() {
-		if (this.isAddPlantMode) {
-			return emptyPlantDetails;
-		}
-
-		const plantId = Number(this.$router.currentRoute.params.plantId);
-		return user.plantById(plantId);
+	get isFormDataValid(): boolean {
+		return !(
+			!this.plantFormData.name ||
+			!this.plantFormData.scientific_name ||
+			!this.plantFormData.description
+		);
 	}
 
 	get imgPath() {
@@ -172,12 +188,53 @@ export default class PlantDetails extends Vue {
 		});
 	}
 
+	created() {
+		EventBus.$on(
+			BusEvents.PLANT_FORM_DATA_ERROR,
+			this.handlePlantFormDataError
+		);
+		const currentRoute = this.$router.currentRoute;
+		this.isAddPlantMode = currentRoute.name === "addPlant";
+
+		settings.setEditMode(this.isAddPlantMode);
+		settings.SET_IS_PLANT_DATA_FORM_VALID(false);
+
+		const plantId = this.$router.currentRoute.params.plantId;
+		this.plantId = plantId ? Number(plantId) : undefined;
+		if (this.plantId === undefined) return;
+
+		this.plantData = user.plantById(this.plantId);
+		this.updateFormData();
+	}
+
+	beforeDestroy() {
+		EventBus.$off(
+			BusEvents.PLANT_FORM_DATA_ERROR,
+			this.handlePlantFormDataError
+		);
+	}
+
+	updateFormData(): void {
+		if (isEmpty(this.plantData)) return;
+		this.plantFormData = {
+			name: this.plantData.name,
+			scientific_name: this.plantData.scientific_name,
+			description: this.plantData.description,
+			temperature: this.plantData.temperature,
+			positionId: this.plantData.position,
+		};
+	}
+
 	handleDropdownSelect(optionId: number) {
 		this.selectedOptionId = optionId;
 	}
 
 	handleTemperatureUpdate(values: number[]) {
-		this.tempratureData = values;
+		this.temperatureData = values;
+	}
+
+	handlePlantFormDataError() {
+		console.log("handling plant form data error");
 	}
 }
 </script>

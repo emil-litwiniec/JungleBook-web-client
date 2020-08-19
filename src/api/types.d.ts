@@ -23,10 +23,16 @@ export interface CreatePlantPayload {
     scientific_name?: string;
     description?: string;
     avatar_image?: string;
+    plant_info: PlantInfo;
+}
+
+export interface PlantInfo {
+    temperature: number[];
+    position: string;
 }
 
 export interface ImageUploadPayload {
-    formData: FormData
+    formData: FormData;
 }
 
 export interface SingleActionPlantPayload {
@@ -61,10 +67,6 @@ export interface Plant {
     last_dew: string;
 }
 
-export interface Moment {
-    
-}
+export interface Moment {}
 
-export interface Settings {
-
-}
+export interface Settings {}
