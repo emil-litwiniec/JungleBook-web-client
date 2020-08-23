@@ -28,6 +28,37 @@
         right: 0;
         z-index: 900;
     }
+
+    &--invalid-form {
+        .modal {
+            justify-content: space-evenly;
+            height: 27rem;
+            width: 43rem;
+            flex-direction: column;
+
+            p {
+                font-size: 1.6rem;
+                margin-top: 2rem;
+                color: $color-gray-middle;
+            }
+
+            button {
+                padding: 1rem 4rem;
+                background-color: $color-primary;
+                color: $color-white;
+                border-radius: 1.2rem;
+                transition: all 200ms ease-in-out;
+
+                &:hover {
+                    background-color: lighten($color-primary, 15);
+                }
+
+                &:active {
+                    transform: translateY(4px);
+                }
+            }
+        }
+    }
 }
 
 .fade-in {

@@ -1,11 +1,14 @@
 <template>
-	<modal-template>
-        This is invalid form modal!
-    </modal-template>
+	<modal-template ref="modalTemplate" :showCloseButton="false" class="modal--invalid-form">
+		<p>
+			Plant name can't be empty!
+		</p>
+		<button @click="handleAffirmativeButton">Ok</button>
+	</modal-template>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import ModalTemplate from "@/components/modal/ModalTemplate.vue";
 
 @Component({
@@ -14,5 +17,11 @@ import ModalTemplate from "@/components/modal/ModalTemplate.vue";
 		ModalTemplate,
 	},
 })
-export default class InvalidFormModal extends Vue {}
+export default class InvalidFormModal extends Vue {
+	@Ref("modalTemplate") modalTemplate!: ModalTemplate;
+
+	handleAffirmativeButton() {
+		this.modalTemplate.handleHideModal();
+	}
+}
 </script>

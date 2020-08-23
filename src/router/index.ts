@@ -7,6 +7,8 @@ import AuthBox from '@/components/auth/AuthBox.vue';
 import DashboardView from '@/views/dashboardView/DashboardView.vue';
 import PlantDetailsView from '@/views/plantDetailsView/PlantDetailsView.vue';
 
+import modal from '@/store/modules/modal';
+
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -39,18 +41,23 @@ const routes: Array<RouteConfig> = [
     {
         path: '/plant/add',
         name: 'addPlant',
-        component: PlantDetailsView
+        component: PlantDetailsView,
     },
     {
         path: '/plant/:plantId',
         name: 'plantDetails',
-        component: PlantDetailsView
-    }
+        component: PlantDetailsView,
+    },
 ];
 
 const router = new VueRouter({
     mode: 'history',
     routes,
+});
+
+router.afterEach((to, from) => {
+    if (!modal.currentModalComponent) return;
+    modal.HIDE_MODAL();
 });
 
 export default router;

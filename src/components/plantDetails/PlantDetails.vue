@@ -99,6 +99,7 @@ import EditableImage from "@/components/common/editableImage/EditableImage.vue";
 
 import { isEmpty } from "@/utils/utils";
 import EventBus, { BusEvents } from "@/utils/EventBus";
+import modal from "@/store/modules/modal";
 
 // TODO: move constants to separate file
 const positionOptions = [
@@ -167,11 +168,7 @@ export default class PlantDetails extends Vue {
 	}
 
 	get isFormDataValid(): boolean {
-		return !(
-			!this.plantFormData.name ||
-			!this.plantFormData.scientific_name ||
-			!this.plantFormData.description
-		);
+		return !!this.plantFormData.name;
 	}
 
 	get imgPath() {
@@ -189,10 +186,13 @@ export default class PlantDetails extends Vue {
 	}
 
 	created() {
-		EventBus.$on(
-			BusEvents.PLANT_FORM_DATA_ERROR,
-			this.handlePlantFormDataError
-		);
+		setTimeout(() => {
+			EventBus.$on(
+				BusEvents.PLANT_FORM_DATA_ERROR,
+				this.handlePlantFormDataError
+			);
+		}, 500);
+
 		const currentRoute = this.$router.currentRoute;
 		this.isAddPlantMode = currentRoute.name === "addPlant";
 
@@ -208,10 +208,20 @@ export default class PlantDetails extends Vue {
 	}
 
 	beforeDestroy() {
+		if (this.isAddPlantMode) {
+			this.resetFormData();
+		}
+
 		EventBus.$off(
 			BusEvents.PLANT_FORM_DATA_ERROR,
 			this.handlePlantFormDataError
 		);
+	}
+
+	resetFormData() {
+		this.plantFormData.name = "";
+		this.plantFormData.scientific_name = "";
+		this.plantFormData.description = "";
 	}
 
 	updateFormData(): void {
@@ -234,7 +244,7 @@ export default class PlantDetails extends Vue {
 	}
 
 	handlePlantFormDataError() {
-		console.log("handling plant form data error");
+		modal.SHOW_MODAL("InvalidFormModal");
 	}
 }
 </script>
