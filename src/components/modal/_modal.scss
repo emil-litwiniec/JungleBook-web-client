@@ -1,0 +1,44 @@
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40rem;
+    width: 50rem;
+    background: white;
+    border-radius: 2rem;
+    box-shadow: 0 10px 65px rgba(0, 0, 0, 0.1);
+    z-index: 910;
+
+    &__wrapper {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__close-area {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 900;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
