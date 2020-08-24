@@ -23,10 +23,7 @@ import { validateEmail } from "@/utils/validation";
 import { animateReject } from "@/utils/animations";
 import user from "@/store/modules/user";
 
-interface SignInFormData {
-	email: string;
-	password: string;
-}
+import { SignInFormData } from "@/components/types";
 
 @Component
 export default class Login extends Vue {

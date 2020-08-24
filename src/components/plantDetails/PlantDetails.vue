@@ -87,9 +87,7 @@ import user from "@/store/modules/user";
 import settings, { DashboardViews } from "@/store/modules/settings";
 import EditableComponent from "@/components/plantDetails/EditableComponent.vue";
 import { formatDays } from "@/utils/format";
-import DropdownSelection, {
-	Option,
-} from "@/components/common/dropdownSelection/DropdownSelection.vue";
+import DropdownSelection from "@/components/common/dropdownSelection/DropdownSelection.vue";
 
 import FullLightIcon from "@/components/misc/icons/FullLightIcon.vue";
 import PartialLightIcon from "@/components/misc/icons/PartialLightIcon.vue";
@@ -100,41 +98,8 @@ import EditableImage from "@/components/common/editableImage/EditableImage.vue";
 import { isEmpty } from "@/utils/utils";
 import EventBus, { BusEvents } from "@/utils/EventBus";
 import modal from "@/store/modules/modal";
-
-// TODO: move constants to separate file
-const positionOptions = [
-	{
-		name: "full",
-		label: "Full Sun",
-		id: 0,
-	},
-	{
-		name: "partial",
-		label: "Partial Sun",
-		id: 1,
-	},
-	{
-		name: "shady",
-		label: "Shady",
-		id: 2,
-	},
-];
-
-const emptyPlantFormData = {
-	name: "",
-	scientific_name: "",
-	description: "",
-	temperature: [0, 35],
-	positionId: 0,
-};
-
-interface PlantFormData {
-	name: string;
-	scientific_name: string;
-	description: string;
-	temperature: number[];
-	positionId: number;
-}
+import { positionOptions, emptyPlantFormData } from "@/utils/constants";
+import { PlantFormData, Option } from "@/components/types";
 
 @Component({
 	name: "PlantDetails",

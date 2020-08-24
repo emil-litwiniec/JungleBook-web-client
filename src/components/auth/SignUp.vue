@@ -24,7 +24,6 @@
 </template>
 
 <script lang="ts">
-
 import { Component, Prop, Vue, Watch, Ref } from "vue-property-decorator";
 import {
 	validateEmail,
@@ -35,12 +34,7 @@ import {
 import { animateReject } from "@/utils/animations";
 
 import user from "@/store/modules/user";
-
-interface SignUpFormData {
-	email: string;
-	password: string;
-	confirmPassword: string;
-}
+import { SignUpFormData } from "@/components/types";
 
 @Component
 export default class Login extends Vue {
@@ -120,7 +114,7 @@ export default class Login extends Vue {
 				animateReject(this.authBox);
 				const errorMessage = error.response.data.message;
 				this.authError = errorMessage;
-			})
+			});
 	}
 
 	signUpWithGoogle() {

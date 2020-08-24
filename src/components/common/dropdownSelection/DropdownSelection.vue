@@ -27,12 +27,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from "vue-property-decorator";
-
-export interface Option {
-	name: string;
-	label: string;
-	id: any;
-}
+import { Option } from "@/components/types";
 
 @Component({
 	name: "DropdownSelection",
