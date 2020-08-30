@@ -34,4 +34,12 @@
     &:active {
         transform: translateY(4px);
     }
+
+    &--danger {
+        background-color: $color-red;
+
+        &:hover {
+            background-color: lighten($color-red, 15);
+        }
+    }
 }

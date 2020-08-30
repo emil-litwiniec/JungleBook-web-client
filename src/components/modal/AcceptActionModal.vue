@@ -3,7 +3,7 @@
 		<p>{{currentModal.message}}</p>
 		<div class="modal__button-container">
 			<button class="button-primary" @click="handleAffirmativeButton">Yes</button>
-			<button class="button-primary" @click="handleRejectButton">No</button>
+			<button class="button-primary button-primary--danger" @click="handleRejectButton">No</button>
 		</div>
 	</modal-template>
 </template>
