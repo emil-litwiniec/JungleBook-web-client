@@ -209,7 +209,7 @@ export default class PlantDetails extends Vue {
 	}
 
 	handlePlantFormDataError() {
-		modal.SHOW_MODAL("InvalidFormModal");
+		modal.SHOW_MODAL({ componentName: "InvalidFormModal" });
 	}
 }
 </script>

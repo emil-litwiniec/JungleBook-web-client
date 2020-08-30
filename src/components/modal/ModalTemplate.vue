@@ -1,6 +1,6 @@
 <template>
 	<div class="modal__wrapper">
-		<div class="modal__close-area" @click="handleHideModal"></div>
+		<div class="modal__close-area fade-in" @click="handleHideModal" ref="modalCloseAreaElement"></div>
 		<div class="modal fade-in" ref="modalElement">
 			<slot></slot>
 			<button @click="handleHideModal" v-if="showCloseButton">Close</button>
@@ -19,9 +19,10 @@ import { fadeOut } from "@/utils/animations";
 export default class ModalTemplate extends Vue {
 	@Prop() showCloseButton!: boolean;
 	@Ref("modalElement") modalElement!: HTMLElement;
+	@Ref("modalCloseAreaElement") modalCloseAreaElement!: HTMLElement;
 
 	public handleHideModal() {
-		fadeOut(this.modalElement).then(() => {
+		fadeOut([this.modalElement, this.modalCloseAreaElement]).then(() => {
 			modal.HIDE_MODAL();
 		});
 	}

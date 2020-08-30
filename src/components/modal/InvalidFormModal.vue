@@ -1,9 +1,7 @@
 <template>
 	<modal-template ref="modalTemplate" :showCloseButton="false" class="modal--invalid-form">
-		<p>
-			Plant name can't be empty!
-		</p>
-		<button @click="handleAffirmativeButton">Ok</button>
+		<p>Plant name can't be empty!</p>
+		<button class="button-primary" @click="handleAffirmativeButton">Ok</button>
 	</modal-template>
 </template>
 

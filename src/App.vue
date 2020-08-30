@@ -1,8 +1,8 @@
 <template>
 	<div id="wrapper" class="wrapper">
+		<modal-display v-show="isModalVisible" />
 		<navigation-bar v-if="isNavVisible" />
 		<main>
-			<modal-display v-show="isModalVisible" />
 			<router-view :key="$route.fullPath" />
 		</main>
 	</div>
@@ -24,7 +24,9 @@ const viewsWithoutNavigation: string[] = ["signIn", "signUp", "authBox"];
 })
 export default class App extends Vue {
 	handleShowModal() {
-		modal.SHOW_MODAL("InvalidFormModal");
+		modal.SHOW_MODAL({
+			componentName: "InvalidFormModal",
+		});
 	}
 
 	get isNavVisible() {

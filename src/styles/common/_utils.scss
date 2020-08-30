@@ -19,3 +19,19 @@
 .margin-top-medium {
     margin-top: 5rem;
 }
+
+.button-primary {
+    padding: 1rem 4rem;
+    background-color: $color-primary;
+    color: $color-white;
+    border-radius: 1.2rem;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+        background-color: lighten($color-primary, 15);
+    }
+
+    &:active {
+        transform: translateY(4px);
+    }
+}

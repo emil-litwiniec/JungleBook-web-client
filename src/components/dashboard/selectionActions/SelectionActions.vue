@@ -18,6 +18,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import settings from "@/store/modules/settings";
 import LineSeparator from "@/components/misc/LineSeperator.vue";
+import modal from "@/store/modules/modal";
 
 @Component({
 	name: "SelectionActions",
@@ -39,11 +40,23 @@ export default class SelectionActions extends Vue {
 	}
 
 	handleDew() {
-		return;
+		modal.SHOW_MODAL({
+			componentName: 'AcceptActionModal',
+			message: `Are you sure you want to dew ${this.actionText} plants?`,
+			callbackAction: () => {
+				alert('This is accept action alert message');
+			}
+		})
 	}
 
 	handleWater() {
-		return;
+		modal.SHOW_MODAL({
+			componentName: 'AcceptActionModal',
+			message: `Are you sure you want to water ${this.actionText} plants?`,
+			callbackAction: () => {
+				alert('This is accept action alert message');
+			}
+		})
 	}
 }
 </script>

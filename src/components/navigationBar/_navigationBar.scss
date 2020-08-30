@@ -8,7 +8,7 @@
     justify-content: space-between;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: $z-index-navigation;
 
     .logotype {
         margin: 0;
@@ -24,57 +24,56 @@
         position: relative;
     }
 
-        &__profile-btn {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 1.8rem;
-            color: $color-bg-main;
-            width: 11rem;
-            height: 4rem;
-            margin-top: 3px;
-            z-index: 10;
-            padding: 0px 1rem 3px 1rem;
-            transition: all 0.3s ease-in-out 30ms;
-            border-radius: 1rem 1rem 0 0;
+    &__profile-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 1.8rem;
+        color: $color-bg-main;
+        width: 11rem;
+        height: 4rem;
+        margin-top: 3px;
+        z-index: 10;
+        padding: 0px 1rem 3px 1rem;
+        transition: all 0.3s ease-in-out 30ms;
+        border-radius: 1rem 1rem 0 0;
 
-            span {
-                color: $color-bg-main;
-            }
+        span {
+            color: $color-bg-main;
+        }
+
+        &::before {
+            content: '';
+            background: url('assets/inverted-corner.svg');
+            position: absolute;
+            bottom: 0;
+            left: -1rem;
+            height: 1rem;
+            width: 1rem;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        &--show-menu {
+            background-color: $color-bg-main;
+            color: $color-primary;
 
             &::before {
-                content: '';
-                background: url('assets/inverted-corner.svg');
-                position: absolute;
-                bottom: 0;
-                left: -1rem;
-                height: 1rem;
-                width: 1rem;
-                background-size: contain;
-                background-repeat: no-repeat;
-                opacity: 0;
-                transition: opacity 0.3s ease-in-out;
+                opacity: 1;
             }
-
-            &--show-menu {
-                background-color: $color-bg-main;
+            span {
                 color: $color-primary;
-
-                &::before {
-                    opacity: 1;
-                }
-                span {
-                    color: $color-primary;
-                }
-                
-                .profile-icon path {
-                    fill: $color-primary;
-                }
             }
 
-        }
-
-        .profile-icon {
-            margin-bottom: 2px;
+            .profile-icon path {
+                fill: $color-primary;
+            }
         }
     }
+
+    .profile-icon {
+        margin-bottom: 2px;
+    }
+}

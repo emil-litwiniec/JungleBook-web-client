@@ -4,10 +4,10 @@
     align-items: center;
     height: 40rem;
     width: 50rem;
-    background: white;
+    background: $color-white;
     border-radius: 2rem;
     box-shadow: 0 10px 65px rgba(0, 0, 0, 0.1);
-    z-index: 910;
+    z-index: $z-index-modal + 10;
 
     &__wrapper {
         position: absolute;
@@ -26,7 +26,8 @@
         bottom: 0;
         left: 0;
         right: 0;
-        z-index: 900;
+        z-index: $z-index-modal;
+        background: rgba(0, 0, 0, 0.5);
     }
 
     &--invalid-form {
@@ -41,20 +42,26 @@
                 margin-top: 2rem;
                 color: $color-gray-middle;
             }
+        }
+    }
 
-            button {
-                padding: 1rem 4rem;
-                background-color: $color-primary;
-                color: $color-white;
-                border-radius: 1.2rem;
-                transition: all 200ms ease-in-out;
+    &--accept-action {
+        .modal {
+            flex-direction: column;
+            height: 25rem;
+            width: 38rem;
 
-                &:hover {
-                    background-color: lighten($color-primary, 15);
-                }
+            p {
+                font-size: 1.5rem;
+                margin-top: 1rem;
+                margin-bottom: 4rem;
+            }
 
-                &:active {
-                    transform: translateY(4px);
+            &__button-container {
+                display: flex;
+
+                :first-child {
+                    margin-right: 4rem;
                 }
             }
         }
@@ -65,11 +72,3 @@
     animation: fadeIn 0.3s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
