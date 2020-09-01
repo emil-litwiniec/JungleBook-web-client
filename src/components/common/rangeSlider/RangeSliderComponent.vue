@@ -26,6 +26,14 @@ export default class RangeSliderComponent extends Vue {
 		});
 	}
 
+	get values() {
+		if (this.slider) {
+			return this.slider.values;
+		} else {
+			return [0, 35];
+		}
+	}
+
 	beforeDestroy() {
 		if (this.slider) {
 			this.$emit("updatedValues", this.slider.values);

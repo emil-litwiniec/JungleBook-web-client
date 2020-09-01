@@ -41,11 +41,15 @@
 							<full-light-icon class="info__icon" />
 							<range-slider
 								v-if="editMode"
-								:range-values="temperatureData"
+								:range-values="plantFormData.temperature"
 								@updatedValues="handleTemperatureUpdate"
 								class="info__input"
+								ref="rangeSliderComponent"
 							/>
-							<span v-else class="info__display">{{temperatureData[0]}} - {{temperatureData[1]}} °C</span>
+							<span
+								v-else
+								class="info__display"
+							>{{plantFormData.temperature[0]}} - {{plantFormData.temperature[1]}} °C</span>
 						</div>
 					</div>
 					<div class="info__days">
@@ -85,6 +89,7 @@
 import { Component, Prop, Vue, Ref, Watch } from "vue-property-decorator";
 import user from "@/store/modules/user";
 import settings, { DashboardViews } from "@/store/modules/settings";
+import modal from "@/store/modules/modal";
 import EditableComponent from "@/components/plantDetails/EditableComponent.vue";
 import { formatDays } from "@/utils/format";
 import DropdownSelection from "@/components/common/dropdownSelection/DropdownSelection.vue";
@@ -97,9 +102,9 @@ import EditableImage from "@/components/common/editableImage/EditableImage.vue";
 
 import { isEmpty } from "@/utils/utils";
 import EventBus, { BusEvents } from "@/utils/EventBus";
-import modal from "@/store/modules/modal";
 import { positionOptions, emptyPlantFormData } from "@/utils/constants";
 import { PlantFormData, Option } from "@/components/types";
+import { RangeSlider } from "../common/rangeSlider/rangeSlider";
 
 @Component({
 	name: "PlantDetails",
@@ -116,12 +121,13 @@ import { PlantFormData, Option } from "@/components/types";
 export default class PlantDetails extends Vue {
 	isAddPlantMode = true;
 	positionOptions = positionOptions;
-	selectedOptionId = 0;
 	formatDays = formatDays;
-	temperatureData: number[] = [0, 35];
 	plantData: any | {} = {};
 	plantFormData: PlantFormData = emptyPlantFormData;
 	plantId: number | undefined = undefined;
+
+	@Ref("rangeSliderComponent")
+	readonly rangeSliderComponent!: RangeSliderComponent;
 
 	@Watch("plantFormData", {
 		deep: true,
@@ -146,16 +152,20 @@ export default class PlantDetails extends Vue {
 
 	get selectedOption() {
 		return this.positionOptions.find((option) => {
-			return option.id === this.selectedOptionId;
+			return option.id === this.plantFormData.positionId;
 		});
 	}
 
 	created() {
+		this.resetFormData();
+		console.log(this.plantFormData);
 		setTimeout(() => {
 			EventBus.$on(
 				BusEvents.PLANT_FORM_DATA_ERROR,
 				this.handlePlantFormDataError
 			);
+
+			EventBus.$on(BusEvents.PLANT_FORM_DATA_SAVE, this.saveFormData);
 		}, 500);
 
 		const currentRoute = this.$router.currentRoute;
@@ -173,43 +183,84 @@ export default class PlantDetails extends Vue {
 	}
 
 	beforeDestroy() {
-		if (this.isAddPlantMode) {
-			this.resetFormData();
-		}
-
 		EventBus.$off(
 			BusEvents.PLANT_FORM_DATA_ERROR,
 			this.handlePlantFormDataError
 		);
+
+		EventBus.$off(BusEvents.PLANT_FORM_DATA_SAVE, this.saveFormData);
 	}
 
 	resetFormData() {
 		this.plantFormData.name = "";
 		this.plantFormData.scientific_name = "";
 		this.plantFormData.description = "";
+		this.plantFormData.temperature = [0, 35];
+		this.plantFormData.positionId = 0;
 	}
 
 	updateFormData(): void {
-		if (isEmpty(this.plantData)) return;
 		this.plantFormData = {
-			name: this.plantData.name,
-			scientific_name: this.plantData.scientific_name,
-			description: this.plantData.description,
-			temperature: this.plantData.temperature,
-			positionId: this.plantData.position,
+			name: this.plantData.name || "",
+			scientific_name: this.plantData.scientific_name || "",
+			description: this.plantData.description || "",
+			temperature: this.plantData.plant_info.temperature || [0, 35],
+			positionId:
+				positionOptions.find(
+					(position) =>
+						position.name == this.plantData.plant_info.position
+				)?.id || 0,
 		};
 	}
 
 	handleDropdownSelect(optionId: number) {
-		this.selectedOptionId = optionId;
+		this.plantFormData.positionId = optionId;
 	}
 
 	handleTemperatureUpdate(values: number[]) {
-		this.temperatureData = values;
+		this.plantFormData.temperature = values;
 	}
 
 	handlePlantFormDataError() {
 		modal.SHOW_MODAL({ componentName: "InvalidFormModal" });
+	}
+
+	saveFormData() {
+		if (!settings.selectedBookId) return;
+
+		this.plantFormData.temperature = this.rangeSliderComponent.values;
+
+		if (this.isAddPlantMode) {
+			user.createPlant({
+				book_id: settings.selectedBookId,
+				name: this.plantFormData.name,
+				scientific_name: this.plantFormData.scientific_name,
+				description: this.plantFormData.description,
+				avatar_image: "mock/path.jpeg",
+				plant_info: {
+					temperature: this.plantFormData.temperature,
+					position:
+						positionOptions[this.plantFormData.positionId].name,
+				},
+			});
+			// TODO: show notification after response or error
+		} else {
+			if (!this.plantId) return;
+			user.updatePlant({
+				plant_id: this.plantId,
+				name: this.plantFormData.name || undefined,
+				scientific_name:
+					this.plantFormData.scientific_name || undefined,
+				description: this.plantFormData.description || undefined,
+				avatar_image: "mock/path.jpeg",
+				plant_info: {
+					temperature: this.plantFormData.temperature || undefined,
+					position: this.plantFormData.positionId
+						? positionOptions[this.plantFormData.positionId].name
+						: undefined,
+				},
+			});
+		}
 	}
 }
 </script>

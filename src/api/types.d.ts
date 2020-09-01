@@ -19,6 +19,7 @@ export interface CreateBookPayload {
 }
 
 export interface CreatePlantPayload {
+    book_id: number;
     name: string;
     scientific_name?: string;
     description?: string;
@@ -26,9 +27,18 @@ export interface CreatePlantPayload {
     plant_info: PlantInfo;
 }
 
+export interface UpdatePlantPayload {
+    plant_id: number;
+    name?: string;
+    scientific_name?: string;
+    description?: string;
+    avatar_image?: string;
+    plant_info?: PlantInfo;
+}
+
 export interface PlantInfo {
-    temperature: number[];
-    position: string;
+    temperature?: number[];
+    position?: string;
 }
 
 export interface ImageUploadPayload {

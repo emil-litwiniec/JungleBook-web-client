@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { ImageUploadPayload, SignInPayload, SignUpPayload, AuthResponse, CreateBookPayload, CreatePlantPayload, SingleActionPlantPayload } from '@/api/types';
+import { ImageUploadPayload, SignInPayload, SignUpPayload, AuthResponse, CreateBookPayload, CreatePlantPayload, SingleActionPlantPayload, UpdatePlantPayload } from '@/api/types';
 import { getToken } from '@/utils/cookies';
 
 export const API = axios.create({
@@ -44,6 +44,17 @@ export async function createBook(payload: CreateBookPayload): Promise<AxiosRespo
 
 export async function createPlant(payload: CreatePlantPayload): Promise<AxiosResponse> {
     const response = await API.post('plant', payload, {
+        headers: {
+            'x-access-token': getToken(),
+        },
+    });
+
+    return response;
+}
+
+export async function updatePlant(payload: UpdatePlantPayload): Promise<AxiosResponse> {
+    console.info('Updating plant API')
+    const response = await API.put('plant', payload, {
         headers: {
             'x-access-token': getToken(),
         },

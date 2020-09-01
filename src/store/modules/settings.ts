@@ -88,6 +88,9 @@ class SettingsModule extends VuexModule {
             EventBus.$emit(BusEvents.PLANT_FORM_DATA_ERROR);
         } else {
             this.SET_EDIT_MODE(on);
+            if (!on) {
+                EventBus.$emit(BusEvents.PLANT_FORM_DATA_SAVE)
+            }
         }
     }
 }

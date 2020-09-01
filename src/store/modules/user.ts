@@ -9,6 +9,8 @@ import {
     createBook,
     waterSinglePlant,
     dewSinglePlant,
+    createPlant,
+    updatePlant,
 } from '@/api/api';
 import {
     AuthResponse,
@@ -22,11 +24,14 @@ import {
     CreateBookPayload,
     SingleActionPlantPayload,
     ImageUploadPayload,
+    CreatePlantPayload,
+    UpdatePlantPayload,
 } from '@/api/types.d.ts';
 import { getToken, setToken, removeToken } from '@/utils/cookies';
 import { plants } from '@/utils/fixtures';
 import settings, { SortBy } from '../modules/settings';
 import { sortByNameIncrementally, sortByNameDecrementally, sortByLastWatering, sortByLastDew } from '@/utils/sortBy';
+import router from '@/router/index';
 
 export enum PlantActionType {
     WATER,
@@ -176,6 +181,28 @@ class UserModule extends VuexModule {
     @Action({ rawError: true })
     async createBook(payload: CreateBookPayload) {
         await createBook(payload);
+    }
+
+    @Action({ rawError: true })
+    async createPlant(payload: CreatePlantPayload) {
+        const response = await createPlant(payload);
+
+        if (response.data) {
+            const plantId = response.data.plant_id;
+
+            this.fetchUserData().then(() => {
+                router.push(`/plant/${plantId}`);
+            });
+        }
+    }
+
+    @Action({ rawError: true })
+    async updatePlant(payload: UpdatePlantPayload) {
+        const response = await updatePlant(payload);
+
+        if (response.data) {
+            this.fetchUserData();
+        }
     }
 
     @Action({ rawError: true })
