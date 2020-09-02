@@ -28,6 +28,7 @@ const uuidv4 = require("uuid").v4;
 })
 export default class DashboardExposition extends Vue {
 	get currentBook() {
+		if (!user.currentBook) return {};
 		return user.currentBook;
 	}
 
