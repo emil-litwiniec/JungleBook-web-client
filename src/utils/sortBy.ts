@@ -1,4 +1,20 @@
 import { Plant } from '@/api/types';
+import { getProperty } from '@/utils/utils';
+
+const compareTimestamps = (a: Plant, b: Plant, propertyName: 'last_watering' | 'last_dew') => {
+    if (!propertyName) return;
+    const timestampA = Date.parse(getProperty(a, propertyName)) || Infinity;
+    const timestampB = Date.parse(getProperty(b, propertyName)) || Infinity;
+
+    if (timestampA > timestampB) {
+        return 1;
+    }
+    if (timestampA < timestampB) {
+        return -1;
+    }
+
+    return 0;
+};
 
 export const sortByNameIncrementally = (plants: Plant[]) => {
     const plantsCopy = JSON.parse(JSON.stringify(plants));
@@ -12,33 +28,10 @@ export const sortByNameDecrementally = (plants: Plant[]) => {
 
 export const sortByLastWatering = (plants: Plant[]) => {
     const plantsCopy = JSON.parse(JSON.stringify(plants));
-    return plantsCopy.sort((a: Plant, b: Plant) => {
-        const timestampA = Date.parse(a.last_watering);
-        const timestampB = Date.parse(b.last_watering);
-
-        if (timestampA > timestampB) {
-            return 1;
-        }
-        if (timestampA < timestampB) {
-            return -1;
-        }
-        return 0;
-    });
-
+    return plantsCopy.sort((a: Plant, b: Plant) => compareTimestamps(a, b, 'last_watering'));
 };
 
 export const sortByLastDew = (plants: Plant[]) => {
     const plantsCopy = JSON.parse(JSON.stringify(plants));
-    return plantsCopy.sort((a: Plant, b: Plant) => {
-        const timestampA = Date.parse(a.last_dew);
-        const timestampB = Date.parse(b.last_dew);
-
-        if (timestampA > timestampB) {
-            return 1;
-        }
-        if (timestampA < timestampB) {
-            return -1;
-        }
-        return 0;
-    });
-}
+    return plantsCopy.sort((a: Plant, b: Plant) => compareTimestamps(a, b, 'last_dew'));
+};
