@@ -222,7 +222,8 @@ export default class PlantDetails extends Vue {
 	}
 
 	handlePlantFormDataError() {
-		modal.SHOW_MODAL({ componentName: "InvalidFormModal" });
+		modal.SHOW_MODAL({ componentName: "InfoModal" ,
+		message: "Plant's name can't be empty"});
 	}
 
 	saveFormData() {

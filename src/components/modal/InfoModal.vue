@@ -1,6 +1,6 @@
 <template>
 	<modal-template ref="modalTemplate" :showCloseButton="false" class="modal--invalid-form">
-		<p>Plant name can't be empty!</p>
+		<p>{{currentModal.message}}</p>
 		<button class="button-primary" @click="handleAffirmativeButton">Ok</button>
 	</modal-template>
 </template>
@@ -8,15 +8,20 @@
 <script lang="ts">
 import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import ModalTemplate from "@/components/modal/ModalTemplate.vue";
+import modal from "@/store/modules/modal";
 
 @Component({
-	name: "InvalidFormModal",
+	name: "InfoModal",
 	components: {
 		ModalTemplate,
 	},
 })
-export default class InvalidFormModal extends Vue {
+export default class InfoModal extends Vue {
 	@Ref("modalTemplate") modalTemplate!: ModalTemplate;
+
+	get currentModal() {
+		return modal.currentModalComponent;
+	}
 
 	handleAffirmativeButton() {
 		this.modalTemplate.handleHideModal();

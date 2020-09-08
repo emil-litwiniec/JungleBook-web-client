@@ -23,12 +23,6 @@ const viewsWithoutNavigation: string[] = ["signIn", "signUp", "authBox"];
 	},
 })
 export default class App extends Vue {
-	handleShowModal() {
-		modal.SHOW_MODAL({
-			componentName: "InvalidFormModal",
-		});
-	}
-
 	get isNavVisible() {
 		return !viewsWithoutNavigation.some(
 			(viewName) => this.$route.name === viewName

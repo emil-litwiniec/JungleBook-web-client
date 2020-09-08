@@ -5,13 +5,13 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import modal from "@/store/modules/modal";
-import InvalidFormModal from "@/components/modal/InvalidFormModal.vue";
+import InfoModal from "@/components/modal/InfoModal.vue";
 import AcceptActionModal from "@/components/modal/AcceptActionModal.vue";
 
 @Component({
 	name: "ModalDisplay",
 	components: {
-		InvalidFormModal,
+		InfoModal,
 		AcceptActionModal,
 	},
 })

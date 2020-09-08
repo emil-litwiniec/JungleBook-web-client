@@ -46,7 +46,23 @@ export default class SelectionActions extends Vue {
 		settings.SWITCH_SELECTION_MODE();
 	}
 
+	validateSelection() {
+		const arePlantsSelected = settings.currentlySelected.length;
+		if (this.isSelectionMode && !arePlantsSelected) {
+			modal.SHOW_MODAL({
+				componentName: "InfoModal",
+				message: "No plants selected",
+			});
+			return false;
+		}
+
+		return true;
+	}
+
 	handleDew() {
+		const isSelectionValid = this.validateSelection();
+		if (!isSelectionValid) return;
+
 		modal.SHOW_MODAL({
 			componentName: "AcceptActionModal",
 			message: `Are you sure you want to dew ${this.actionText} plants?`,
@@ -60,6 +76,9 @@ export default class SelectionActions extends Vue {
 	}
 
 	handleWater() {
+		const isSelectionValid = this.validateSelection();
+		if (!isSelectionValid) return;
+
 		modal.SHOW_MODAL({
 			componentName: "AcceptActionModal",
 			message: `Are you sure you want to water ${this.actionText} plants?`,
