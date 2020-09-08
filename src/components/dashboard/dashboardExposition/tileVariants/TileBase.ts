@@ -39,8 +39,8 @@ export default class TileBase extends Vue {
     }
 
     handleButtonDew(plantId: number) {
-        user.singleActionPlant({
-            data: { plant_id: plantId },
+        user.actionPlant({
+            data: { plant_ids: [plantId] },
             plantActionType: PlantActionType.DEW,
         }).then(() => {
             user.fetchUserData();
@@ -48,8 +48,8 @@ export default class TileBase extends Vue {
     }
 
     handleButtonWater(plantId: number) {
-        user.singleActionPlant({
-            data: { plant_id: plantId },
+        user.actionPlant({
+            data: { plant_ids: [plantId] },
             plantActionType: PlantActionType.WATER,
         }).then(() => {
             user.fetchUserData();

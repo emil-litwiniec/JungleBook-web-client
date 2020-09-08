@@ -45,8 +45,8 @@ export interface ImageUploadPayload {
     formData: FormData;
 }
 
-export interface SingleActionPlantPayload {
-    plant_id: number;
+export interface ActionPlantPayload {
+    plant_ids: number[];
 }
 
 export interface UserData {

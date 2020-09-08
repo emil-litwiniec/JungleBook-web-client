@@ -1,14 +1,13 @@
 import { VuexModule, Module, getModule, Action, Mutation } from 'vuex-module-decorators';
 import store from '@/store';
 import {
-    API,
     imageUpload,
     signIn,
     signUp,
     fetchUserData,
     createBook,
-    waterSinglePlant,
-    dewSinglePlant,
+    waterPlants,
+    dewPlants,
     createPlant,
     updatePlant,
 } from '@/api/api';
@@ -19,10 +18,9 @@ import {
     UserData,
     Book,
     Plant,
-    Moment,
     Settings,
     CreateBookPayload,
-    SingleActionPlantPayload,
+    ActionPlantPayload,
     ImageUploadPayload,
     CreatePlantPayload,
     UpdatePlantPayload,
@@ -85,6 +83,10 @@ class UserModule extends VuexModule {
 
     get currentBook() {
         return this.books.find((book) => book.id === settings.selectedBookId);
+    }
+
+    get allCurrentBookPlantsIds() {
+        return this.currentBookPlants.map((plant: Plant) => plant.id);
     }
 
     @Mutation
@@ -206,12 +208,13 @@ class UserModule extends VuexModule {
     }
 
     @Action({ rawError: true })
-    async singleActionPlant({ data, plantActionType }: { data: SingleActionPlantPayload; plantActionType: number }) {
+    async actionPlant({ data, plantActionType }: { data: ActionPlantPayload; plantActionType: number }) {
         if (plantActionType == PlantActionType.WATER) {
-            await waterSinglePlant(data);
+            await waterPlants(data);
         } else if (plantActionType == PlantActionType.DEW) {
-            await dewSinglePlant(data);
+            await dewPlants(data);
         }
+        this.fetchUserData();
     }
 
     @Action({ rawError: true })

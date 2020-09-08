@@ -46,31 +46,21 @@ export default class ImageDisplay extends Vue {
 	@Prop() plantId!: number;
 
 	handleButtonDew() {
-		user.singleActionPlant({
-			data: { plant_id: this.plantId },
+		user.actionPlant({
+			data: { plant_ids: [this.plantId] },
 			plantActionType: PlantActionType.DEW,
-		}).then(() => {
-			user.fetchUserData();
 		});
 	}
 
 	handleButtonWater() {
 		console.log(this.plantId);
-		user.singleActionPlant({
-			data: { plant_id: this.plantId },
+		user.actionPlant({
+			data: { plant_ids: [this.plantId] },
 			plantActionType: PlantActionType.WATER,
-		}).then(() => {
-			user.fetchUserData();
 		});
 	}
 
 	handleButtonFertilize() {
-		// user.singleActionPlant({
-		// 	data: { plant_id: this.plantId },
-		// 	plantActionType: PlantActionType.WATER,
-		// }).then(() => {
-		// 	user.fetchUserData();
-		// });
 		console.log("handleFertilize");
 	}
 

@@ -1,5 +1,14 @@
 import axios, { AxiosResponse } from 'axios';
-import { ImageUploadPayload, SignInPayload, SignUpPayload, AuthResponse, CreateBookPayload, CreatePlantPayload, SingleActionPlantPayload, UpdatePlantPayload } from '@/api/types';
+import {
+    ImageUploadPayload,
+    SignInPayload,
+    SignUpPayload,
+    AuthResponse,
+    CreateBookPayload,
+    CreatePlantPayload,
+    ActionPlantPayload,
+    UpdatePlantPayload,
+} from '@/api/types';
 import { getToken } from '@/utils/cookies';
 
 export const API = axios.create({
@@ -53,7 +62,6 @@ export async function createPlant(payload: CreatePlantPayload): Promise<AxiosRes
 }
 
 export async function updatePlant(payload: UpdatePlantPayload): Promise<AxiosResponse> {
-    console.info('Updating plant API')
     const response = await API.put('plant', payload, {
         headers: {
             'x-access-token': getToken(),
@@ -63,7 +71,7 @@ export async function updatePlant(payload: UpdatePlantPayload): Promise<AxiosRes
     return response;
 }
 
-export async function waterSinglePlant(payload: SingleActionPlantPayload): Promise<AxiosResponse> {
+export async function waterPlants(payload: ActionPlantPayload): Promise<AxiosResponse> {
     const response = await API.put('plant/watering', payload, {
         headers: {
             'x-access-token': getToken(),
@@ -73,7 +81,7 @@ export async function waterSinglePlant(payload: SingleActionPlantPayload): Promi
     return response;
 }
 
-export async function dewSinglePlant(payload: SingleActionPlantPayload): Promise<AxiosResponse> {
+export async function dewPlants(payload: ActionPlantPayload): Promise<AxiosResponse> {
     const response = await API.put('plant/dew', payload, {
         headers: {
             'x-access-token': getToken(),
@@ -86,11 +94,11 @@ export async function dewSinglePlant(payload: SingleActionPlantPayload): Promise
 export async function imageUpload(payload: ImageUploadPayload) {
     const response = await API.post('images', payload, {
         headers: {
-            'x-access-token': getToken()
-        }
-    })
+            'x-access-token': getToken(),
+        },
+    });
     return response;
-    
+
     // return axios.post(url, formData)
     //     .then(x => x.data)
     //     .then(x => x.map(img => Object.assign({},
