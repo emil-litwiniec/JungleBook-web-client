@@ -43,7 +43,7 @@ export default class SelectionActions extends Vue {
 	}
 
 	handleSelectionModeSwitch() {
-		settings.SWITCH_SELECTION_MODE();
+		settings.switchSelectionMode();
 	}
 
 	validateSelection() {

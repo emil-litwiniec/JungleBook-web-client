@@ -89,8 +89,16 @@ class SettingsModule extends VuexModule {
         } else {
             this.SET_EDIT_MODE(on);
             if (!on) {
-                EventBus.$emit(BusEvents.PLANT_FORM_DATA_SAVE)
+                EventBus.$emit(BusEvents.PLANT_FORM_DATA_SAVE);
             }
+        }
+    }
+
+    @Action
+    switchSelectionMode() {
+        this.SWITCH_SELECTION_MODE();
+        if (!this.isSelectionMode) {
+            this.CLEAR_SELECTION();
         }
     }
 }
