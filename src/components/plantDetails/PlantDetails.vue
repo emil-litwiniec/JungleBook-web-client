@@ -36,7 +36,6 @@
 							/>
 							<span v-else class="info__display">{{selectedOption.label}}</span>
 						</div>
-
 						<div class="info__temperature">
 							<full-light-icon class="info__icon" />
 							<range-slider
@@ -65,9 +64,21 @@
 							<span>Last fertilized:</span>
 							<span class="days-big">25 days</span>
 						</div>
+						<div class="info__water-interval">
+							<span>Water interval (days):</span>
+							<editable-component
+								:edit-mode="editMode"
+								:custom-v-model.sync="plantFormData.water_interval"
+								tag="span"
+								class="info__water-interval"
+								custom-class="info"
+								input-mode="input"
+								input-type="number"
+								input-placeholder="Enter Water Interval"
+							/>
+						</div>
 					</div>
 				</div>
-
 				<div class="plant-details__description">
 					<editable-component
 						:edit-mode="editMode"
@@ -158,7 +169,6 @@ export default class PlantDetails extends Vue {
 
 	created() {
 		this.resetFormData();
-		console.log(this.plantFormData);
 		setTimeout(() => {
 			EventBus.$on(
 				BusEvents.PLANT_FORM_DATA_ERROR,
@@ -197,6 +207,7 @@ export default class PlantDetails extends Vue {
 		this.plantFormData.description = "";
 		this.plantFormData.temperature = [0, 35];
 		this.plantFormData.positionId = 0;
+		this.plantFormData.water_interval = "1";
 	}
 
 	updateFormData(): void {
@@ -210,6 +221,7 @@ export default class PlantDetails extends Vue {
 					(position) =>
 						position.name == this.plantData.plant_info.position
 				)?.id || 0,
+			water_interval: String(this.plantData.water_interval) || "1",
 		};
 	}
 
@@ -222,8 +234,10 @@ export default class PlantDetails extends Vue {
 	}
 
 	handlePlantFormDataError() {
-		modal.SHOW_MODAL({ componentName: "InfoModal" ,
-		message: "Plant's name can't be empty"});
+		modal.SHOW_MODAL({
+			componentName: "InfoModal",
+			message: "Plant's name can't be empty",
+		});
 	}
 
 	saveFormData() {
@@ -243,6 +257,7 @@ export default class PlantDetails extends Vue {
 					position:
 						positionOptions[this.plantFormData.positionId].name,
 				},
+				water_interval: Number(this.plantFormData.water_interval)
 			});
 			// TODO: show notification after response or error
 		} else {
@@ -260,6 +275,7 @@ export default class PlantDetails extends Vue {
 						? positionOptions[this.plantFormData.positionId].name
 						: undefined,
 				},
+				water_interval: Number(this.plantFormData.water_interval)
 			});
 		}
 	}

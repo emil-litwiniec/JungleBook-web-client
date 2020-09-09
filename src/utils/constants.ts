@@ -24,6 +24,7 @@ export const emptyPlantFormData = {
     description: '',
     temperature: [0, 35],
     positionId: 0,
+    water_interval: "1"
 };
 
 export const possibleSortOptions = {

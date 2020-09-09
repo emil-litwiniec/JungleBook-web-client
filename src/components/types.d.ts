@@ -34,4 +34,5 @@ interface PlantFormData {
     description: string;
     temperature: number[];
     positionId: number;
+    water_interval: string;
 }

@@ -3,9 +3,22 @@
 		<template v-if="editMode">
 			<div :class="{'selection': editMode, 'active': isActive}">
 				<input
-					v-if="isInputMode"
+					v-if="isInputMode && inputType === 'text'"
+					type="text"
 					v-model="syncModel"
 					:class="`${customClass}__input`"
+					:placeholder="inputPlaceholder"
+					@focus="handleFocus"
+					@blur="handleBlur"
+					ref="editableInput"
+				/>
+				<input
+					v-if="isInputMode && inputType === 'number'"
+					type="number"
+					min="1"
+					max="100"
+					v-model="syncModel"
+					:class="`${customClass}__input--number`"
 					:placeholder="inputPlaceholder"
 					@focus="handleFocus"
 					@blur="handleBlur"
@@ -56,7 +69,6 @@ import user from "@/store/modules/user";
 import settings, { DashboardViews } from "@/store/modules/settings";
 import EditIcon from "@/components/misc/icons/EditIcon.vue";
 
-
 @Component({
 	name: "EditableComponent",
 	components: {
@@ -69,6 +81,7 @@ export default class EditableComponent extends Vue {
 	@Prop({ default: "" }) customClass!: string;
 	@Prop({ default: "" }) inputName!: string;
 	@Prop({ default: "input" }) inputMode!: "input" | "textarea";
+	@Prop({ default: "text" }) inputType!: "text" | "number";
 	@Prop({ default: "" }) inputPlaceholder!: string;
 
 	@PropSync("customVModel", { type: String }) syncModel!: string;
@@ -103,6 +116,5 @@ export default class EditableComponent extends Vue {
 	handleSelectionBtn() {
 		this.editableInput.focus();
 	}
-
 }
 </script>

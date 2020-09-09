@@ -25,6 +25,7 @@ export interface CreatePlantPayload {
     description?: string;
     avatar_image?: string;
     plant_info: PlantInfo;
+    water_interval: number;
 }
 
 export interface UpdatePlantPayload {
@@ -34,6 +35,7 @@ export interface UpdatePlantPayload {
     description?: string;
     avatar_image?: string;
     plant_info?: PlantInfo;
+    water_interval: number;
 }
 
 export interface PlantInfo {

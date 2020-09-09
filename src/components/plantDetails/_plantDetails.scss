@@ -167,6 +167,37 @@
                 }
             }
 
+            &__water-interval {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                span {
+                    font-size: 1.2rem;
+                }
+
+                .selection {
+                    &__btn {
+                        right: -3.5rem;
+                    }
+                }
+
+                .info {
+                    &__input--number {
+                        appearance: textfield;
+                        margin: 0;
+                        background: none;
+                        border: none;
+                        text-align: center;
+                        width: 6rem;
+                    }
+
+                    &__display {
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+
             &__position {
                 position: relative;
                 z-index: 100;
@@ -184,8 +215,8 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                height: 10rem;
-                width: 17rem;
+                height: 13rem;
+                width: 24rem;
                 margin-top: 4rem;
 
                 & > div {
