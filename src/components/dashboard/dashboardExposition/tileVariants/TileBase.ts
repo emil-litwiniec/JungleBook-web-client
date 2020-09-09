@@ -25,7 +25,7 @@ export default class TileBase extends Vue {
     get isSelected() {
         return settings.currentlySelected.includes(this.plant.id);
     }
-
+        
     set isSelected(on: boolean) {
         if (this.isSelected) {
             !on && settings.REMOVE_FROM_SELECTION(this.plant.id);
@@ -33,6 +33,10 @@ export default class TileBase extends Vue {
             on && settings.ADD_TO_SELECTION(this.plant.id);
         }
     }
+
+    get shouldBeWatered() {
+        return this.plant.should_be_watered;
+    } 
 
     uniqueKey() {
         return uuidv4();

@@ -77,6 +77,7 @@ export interface Plant {
     avatar_image: string | null;
     last_watering: string;
     last_dew: string;
+    should_be_watered: boolean;
 }
 
 export interface Moment {}

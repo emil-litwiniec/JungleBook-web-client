@@ -1,5 +1,8 @@
 <template>
-	<div class="tile" :class="{'tile-selected':isSelected && isSelectionMode}">
+	<div
+		class="tile"
+		:class="{'tile-selected':isSelected && isSelectionMode, 'danger': shouldBeWatered}"
+	>
 		<template v-if="plant.type === 'regular'">
 			<check-box-tile
 				:custom-v-model.sync="isSelected"
@@ -9,6 +12,7 @@
 			<div class="tile__image">
 				<img :src="imgPath" alt="Plant image" />
 			</div>
+
 			<div class="tile__content">
 				<div class="tile__stats">
 					<div class="tile__alerts"></div>
@@ -26,6 +30,9 @@
 				<div class="tile__headers">
 					<h4>{{plant.name}}</h4>
 					<h5>{{plant.scientific_name}}</h5>
+				</div>
+				<div v-if="shouldBeWatered" class="tile__danger-icon">
+					<drop-icon />
 				</div>
 			</div>
 			<div class="tile__menu" v-show="!isSelectionMode">
@@ -70,6 +77,7 @@ import { Component } from "vue-property-decorator";
 
 import ProfileIcon from "@/components/misc/icons/ProfileIcon.vue";
 import PlusIcon from "@/components/misc/icons/PlusIcon.vue";
+import DropIcon from "@/components/misc/icons/DropIcon.vue";
 import LineSeparator from "@/components/misc/LineSeperator.vue";
 
 import TileBase from "@/components/dashboard/dashboardExposition/tileVariants/TileBase";
@@ -81,6 +89,7 @@ import CheckBoxTile from "@/components/common/checkBoxTile/CheckBoxTile.vue";
 	components: {
 		ProfileIcon,
 		PlusIcon,
+		DropIcon,
 		LineSeparator,
 		CheckBoxTile,
 	},

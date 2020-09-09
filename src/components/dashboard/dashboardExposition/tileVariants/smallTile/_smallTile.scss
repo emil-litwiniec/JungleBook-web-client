@@ -187,7 +187,44 @@
     }
 }
 
+.exposition--small-tile .tile.danger {
+    .tile {
+        &__image {
+            &::after {
+                background: linear-gradient(90deg, $color-red 30.92%, rgba(196, 196, 196, 0) 47.59%);
+            }
+        }
 
+        &__danger-icon {
+            right: 19.5rem;
+            top: 2rem;
+        }
+    }
+}
+
+.tile.danger {
+    background-color: $color-red;
+    box-shadow: 2px 9px 69px rgba($color-red, 0.3);
+
+    & * {
+        color: $color-white;
+    }
+
+    .tile {
+        &__button-container > span {
+            color: $color-gray-dark;
+        }
+
+        &__danger-icon {
+            position: absolute;
+            height: 2.7rem;
+            width: 2.7rem;
+            z-index: 100;
+            right: 19.5rem;
+            top: 2rem;
+        }
+    }
+}
 .tile-selected {
     box-shadow: 2px 9px 69px rgba(70, 199, 121, 0.16);
 }

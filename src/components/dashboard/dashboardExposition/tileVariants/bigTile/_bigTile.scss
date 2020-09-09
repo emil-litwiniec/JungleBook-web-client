@@ -22,6 +22,7 @@
         }
 
         &__content {
+            position: relative;
             flex-direction: column-reverse;
             padding: 2rem;
             margin-top: auto;
@@ -102,6 +103,21 @@
                     transform: translateY(3px);
                 }
             }
+        }
+    }
+}
+
+.exposition--big-tile .tile.danger {
+    .tile {
+        &__image {
+            &::after {
+                background: linear-gradient(0deg, $color-red 30.92%, rgba(196, 196, 196, 0) 47.59%);
+            }
+        }
+
+        &__danger-icon {
+            right: 1.5rem;
+            top: 2rem;
         }
     }
 }
