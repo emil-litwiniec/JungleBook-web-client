@@ -1,6 +1,9 @@
 <template>
 	<div>
-		<div class="list-tile" :class="{'margin-top-medium': plant.type === 'addPlant'}">
+		<div
+			class="list-tile"
+			:class="{'margin-top-medium': plant.type === 'addPlant', 'danger': shouldBeWatered}"
+		>
 			<template v-if="plant.type === 'regular'">
 				<div class="list-tile__check-box" :class="{'show': isSelectionMode}">
 					<check-box :custom-v-model.sync="isSelected" />
@@ -10,6 +13,9 @@
 					<h5>{{plant.scientific_name}}</h5>
 				</div>
 				<div class="list-tile__content">
+					<div v-if="shouldBeWatered" class="list-tile__danger-icon">
+						<drop-icon />
+					</div>
 					<div class="list-tile__stats">
 						<div class="list-tile__alerts"></div>
 						<div class="list-tile__days">
@@ -67,19 +73,20 @@
 <script lang="ts">
 import { Component } from "vue-property-decorator";
 
-import TileBase from "@/components/dashboard/dashboardExposition/tileVariants/TileBase";
-
-import CheckBox from "@/components/common/checkBox/CheckBox.vue";
-
 import ProfileIcon from "@/components/misc/icons/ProfileIcon.vue";
+import DropIcon from "@/components/misc/icons/DropIcon.vue";
 import PlusIcon from "@/components/misc/icons/PlusIcon.vue";
 import LineSeparator from "@/components/misc/LineSeperator.vue";
+
+import TileBase from "@/components/dashboard/dashboardExposition/tileVariants/TileBase";
+import CheckBox from "@/components/common/checkBox/CheckBox.vue";
 
 @Component({
 	name: "ListTile",
 	components: {
 		ProfileIcon,
 		PlusIcon,
+		DropIcon,
 		LineSeparator,
 		CheckBox,
 	},

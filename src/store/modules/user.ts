@@ -24,7 +24,7 @@ import {
     ImageUploadPayload,
     CreatePlantPayload,
     UpdatePlantPayload,
-} from '@/api/types.d.ts';
+} from '@/api/types';
 import { getToken, setToken, removeToken } from '@/utils/cookies';
 import { plants } from '@/utils/fixtures';
 import settings, { SortBy } from '../modules/settings';
