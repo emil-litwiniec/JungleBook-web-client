@@ -1,4 +1,4 @@
-import { gsap } from 'gsap';
+import { gsap, Power2 } from 'gsap';
 
 export const animateReject = (target: HTMLDivElement) => {
     gsap.timeline({
@@ -20,5 +20,16 @@ export const fadeOut = (targets: HTMLElement[], duration = 0.3) => {
             opacity: 0,
             duration,
         });
+    });
+};
+
+export const blink = (target: HTMLElement, opacity = 0, blinkDuration = 1) => {
+    gsap.timeline({}).to(target, {
+        opacity,
+        duration: blinkDuration,
+        repeat: -1,
+        yoyo: true,
+        yoyoEase: Power2.easeOut,
+        ease: Power2.easeIn,
     });
 };

@@ -60,13 +60,17 @@
     }
 
     &__check-box {
-        width: 10rem;
+        width: 14rem;
         display: flex;
         justify-content: flex-start;
         align-items: center;
         opacity: 0;
         pointer-events: none;
         transition: opacity 250ms ease-in-out;
+
+        & .check-box__wrapper {
+            margin-left: 2.1rem;
+        }
 
         &.show {
             opacity: 1;
