@@ -10,7 +10,7 @@
     cursor: pointer;
 
     transition-property: transform, opacity;
-    transition-timing-function: $ease-bounce;
+    transition-timing-function: ease-in-out;
     transition-duration: 80ms;
 
     &:hover {

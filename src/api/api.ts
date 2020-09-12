@@ -92,15 +92,11 @@ export async function dewPlants(payload: ActionPlantPayload): Promise<AxiosRespo
 }
 
 export async function imageUpload(payload: ImageUploadPayload) {
-    const response = await API.post('images', payload, {
+    const response = await API.post('upload', payload.formData, {
         headers: {
             'x-access-token': getToken(),
+            'Content-Type': 'multipart/form-data'
         },
     });
     return response;
-
-    // return axios.post(url, formData)
-    //     .then(x => x.data)
-    //     .then(x => x.map(img => Object.assign({},
-    //         img, { url: `${BASE_URL}/images/${img.id}` }))); ???
 }

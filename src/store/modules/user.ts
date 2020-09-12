@@ -219,7 +219,7 @@ class UserModule extends VuexModule {
 
     @Action({ rawError: true })
     async imageUpload(payload: ImageUploadPayload) {
-        await imageUpload(payload);
+        return await imageUpload(payload);
     }
 }
 

@@ -1,5 +1,9 @@
 import { SortBy } from '@/store/modules/settings';
 
+export const getDefaultPlantImage = () => {
+    return require('@/assets/img/mock-plant-2.jpg');
+};
+
 export const positionOptions = [
     {
         name: 'full',
@@ -24,7 +28,8 @@ export const emptyPlantFormData = {
     description: '',
     temperature: [0, 35],
     positionId: 0,
-    water_interval: "1"
+    water_interval: '1',
+    avatar_image: undefined,
 };
 
 export const possibleSortOptions = {

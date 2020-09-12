@@ -13,7 +13,7 @@
         flex-direction: column;
         transition: 80ms;
         transition-property: transform background-color;
-        transition-timing-function: $ease-bounce ease-in-out;
+        transition-timing-function: ease-in-out;
         background-color: rgba($color-white, 0.8);
 
         &.is-dragover {

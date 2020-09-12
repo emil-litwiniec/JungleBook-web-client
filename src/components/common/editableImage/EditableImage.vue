@@ -3,14 +3,14 @@
 		<div class="tile editable-image">
 			<image-display :img-path="imgPath" :plant-id="plantId" />
 			<transition name="fade">
-				<image-upload v-if="isEditMode" />
+				<image-upload v-if="isEditMode" @on-image-uploaded="onImageUploaded" />
 			</transition>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Emit } from "vue-property-decorator";
 import settings from "@/store/modules/settings";
 import ImageUpload from "@/components/common/editableImage/imageUpload/ImageUpload.vue";
 import ImageDisplay from "@/components/common/editableImage/imageDisplay/ImageDisplay.vue";
@@ -28,6 +28,11 @@ export default class EditableImage extends Vue {
 
 	get isEditMode() {
 		return settings.isEditMode;
+	}
+
+	@Emit()
+	onImageUploaded(filename: string) {
+		return filename;
 	}
 }
 </script>

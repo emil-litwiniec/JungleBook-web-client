@@ -17,22 +17,23 @@ export interface Option {
     id: any;
 }
 
-interface SignInFormData {
+export interface SignInFormData {
     email: string;
     password: string;
 }
 
-interface SignUpFormData {
+export interface SignUpFormData {
     email: string;
     password: string;
     confirmPassword: string;
 }
 
-interface PlantFormData {
+export interface PlantFormData {
     name: string;
     scientific_name: string;
     description: string;
     temperature: number[];
     positionId: number;
     water_interval: string;
+    avatar_image: string;
 }

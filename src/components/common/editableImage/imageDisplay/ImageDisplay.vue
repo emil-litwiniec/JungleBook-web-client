@@ -1,6 +1,6 @@
 <template>
 	<div class="image-display">
-		<img :src="imgPath" alt="Plant image" />
+		<img :src="secureImgPath" alt="Plant image" />
 		<div v-if="!isEditMode" class="image-display__menu big-tile__menu">
 			<button class="big-tile__button-block" @click="handleButtonDew">
 				<div class="big-tile__button-container">
@@ -33,6 +33,7 @@ import user, { PlantActionType } from "@/store/modules/user";
 import { Loader } from "@/components/types";
 import ProfileIcon from "@/components/misc/icons/ProfileIcon.vue";
 import LineSeparator from "@/components/misc/LineSeperator.vue";
+import { getDefaultPlantImage } from "@/utils/constants";
 
 @Component({
 	name: "ImageDisplay",
@@ -53,14 +54,18 @@ export default class ImageDisplay extends Vue {
 	}
 
 	handleButtonWater() {
-		console.log(this.plantId);
 		user.actionPlant({
 			data: { plant_ids: [this.plantId] },
 			plantActionType: PlantActionType.WATER,
 		});
 	}
 
+	get secureImgPath() {
+		return !this.imgPath ? getDefaultPlantImage() : this.imgPath;
+	}
+
 	handleButtonFertilize() {
+		// TODO: implement fertilize mechanism
 		console.log("handleFertilize");
 	}
 

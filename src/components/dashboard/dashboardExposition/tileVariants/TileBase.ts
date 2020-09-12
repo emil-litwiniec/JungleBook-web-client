@@ -2,8 +2,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import user, { PlantActionType } from '@/store/modules/user';
 import settings from '@/store/modules/settings';
 import { Plant } from '@/api/types';
-import { formatDays } from '@/utils/format';
+import { formatDays, imageStoragePath } from '@/utils/format';
 const uuidv4 = require('uuid').v4;
+import { getDefaultPlantImage } from '@/utils/constants';
 
 @Component({
     name: 'TileBase',
@@ -19,7 +20,10 @@ export default class TileBase extends Vue {
     }
 
     get imgPath() {
-        return require('@/assets/img/mock-plant-2.jpg');
+        if (!this.plant.avatar_image) {
+            return getDefaultPlantImage();
+        }
+        return imageStoragePath(this.plant.avatar_image);
     }
 
     get isSelected() {
@@ -36,7 +40,7 @@ export default class TileBase extends Vue {
 
     get shouldBeWatered() {
         return this.plant.should_be_watered;
-    } 
+    }
 
     uniqueKey() {
         return uuidv4();

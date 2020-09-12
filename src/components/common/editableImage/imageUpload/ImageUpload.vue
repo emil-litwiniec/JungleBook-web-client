@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch, Ref } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch, Ref, Emit } from "vue-property-decorator";
 import user from "@/store/modules/user";
 import { Loader } from "@/components/types";
 import LoaderAnimation from "@/components/loader/LoaderAnimation.vue";
@@ -89,18 +89,18 @@ export default class ImageUpload extends Vue {
 		this.currentStatus = UploadStatus.SAVING;
 		this.loaderVisible = true;
 		user.imageUpload({ formData })
-			.then((data: any) => {
-				this.uploadedFiles = [].concat(data);
+			.then(({ data }) => {
 				this.currentStatus = UploadStatus.SUCCESS;
-				// load tinted image in the back
+				this.onImageUploaded(data.data.filename);
 			})
 			.catch((err: any) => {
 				this.uploadError = err.response;
 				this.currentStatus = UploadStatus.FAILED;
-				// show error message
+				//TODO: show error message notification
 			})
 			.finally(() => {
 				this.hideLoader();
+				this.currentStatus = UploadStatus.INITIAL;
 			});
 	}
 
@@ -122,6 +122,11 @@ export default class ImageUpload extends Vue {
 
 	get isFailed() {
 		return this.currentStatus === UploadStatus.FAILED;
+	}
+
+	@Emit()
+	onImageUploaded(filename: string) {
+		return filename;
 	}
 
 	handleDragStart(e: Event) {

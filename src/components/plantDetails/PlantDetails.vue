@@ -1,6 +1,11 @@
 <template>
 	<section class="plant-details">
-		<editable-image :img-path="imgPath" :plant-id="plantData.id" class="plant-details__image" />
+		<editable-image
+			:img-path="imgPath"
+			:plant-id="plantData.id"
+			class="plant-details__image"
+			@on-image-uploaded="onImageUploaded"
+		/>
 		<div class="plant-details__info">
 			<div class="info__header">
 				<editable-component
@@ -102,7 +107,7 @@ import user from "@/store/modules/user";
 import settings, { DashboardViews } from "@/store/modules/settings";
 import modal from "@/store/modules/modal";
 import EditableComponent from "@/components/plantDetails/EditableComponent.vue";
-import { formatDays } from "@/utils/format";
+import { formatDays, imageStoragePath } from "@/utils/format";
 import DropdownSelection from "@/components/common/dropdownSelection/DropdownSelection.vue";
 
 import FullLightIcon from "@/components/misc/icons/FullLightIcon.vue";
@@ -114,7 +119,7 @@ import EditableImage from "@/components/common/editableImage/EditableImage.vue";
 import { isEmpty } from "@/utils/utils";
 import EventBus, { BusEvents } from "@/utils/EventBus";
 import { positionOptions, emptyPlantFormData } from "@/utils/constants";
-import { PlantFormData, Option } from "@/components/types";
+import { PlantFormData, Option } from "@/components/types.ts";
 import { RangeSlider } from "../common/rangeSlider/rangeSlider";
 
 @Component({
@@ -154,7 +159,9 @@ export default class PlantDetails extends Vue {
 	}
 
 	get imgPath() {
-		return "https://cdn.gardenista.com/wp-content/uploads/2015/04/fields/bed_monstera_erinboyle_gardenista.jpg";
+		return this.plantFormData.avatar_image
+			? imageStoragePath(this.plantFormData.avatar_image)
+			: undefined;
 	}
 
 	get editMode() {
@@ -222,6 +229,7 @@ export default class PlantDetails extends Vue {
 						position.name == this.plantData.plant_info.position
 				)?.id || 0,
 			water_interval: String(this.plantData.water_interval) || "1",
+			avatar_image: this.plantData.avatar_image,
 		};
 	}
 
@@ -240,6 +248,10 @@ export default class PlantDetails extends Vue {
 		});
 	}
 
+	onImageUploaded(filename: string) {
+		this.plantFormData.avatar_image = filename;
+	}
+
 	saveFormData() {
 		if (!settings.selectedBookId) return;
 
@@ -251,13 +263,13 @@ export default class PlantDetails extends Vue {
 				name: this.plantFormData.name,
 				scientific_name: this.plantFormData.scientific_name,
 				description: this.plantFormData.description,
-				avatar_image: "mock/path.jpeg",
+				avatar_image: this.plantFormData.avatar_image || undefined,
 				plant_info: {
 					temperature: this.plantFormData.temperature,
 					position:
 						positionOptions[this.plantFormData.positionId].name,
 				},
-				water_interval: Number(this.plantFormData.water_interval)
+				water_interval: Number(this.plantFormData.water_interval),
 			});
 			// TODO: show notification after response or error
 		} else {
@@ -268,14 +280,14 @@ export default class PlantDetails extends Vue {
 				scientific_name:
 					this.plantFormData.scientific_name || undefined,
 				description: this.plantFormData.description || undefined,
-				avatar_image: "mock/path.jpeg",
+				avatar_image: this.plantFormData.avatar_image || undefined,
 				plant_info: {
 					temperature: this.plantFormData.temperature || undefined,
 					position: this.plantFormData.positionId
 						? positionOptions[this.plantFormData.positionId].name
 						: undefined,
 				},
-				water_interval: Number(this.plantFormData.water_interval)
+				water_interval: Number(this.plantFormData.water_interval),
 			});
 		}
 	}

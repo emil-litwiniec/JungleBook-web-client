@@ -10,3 +10,7 @@ export const formatDays = (days: number | null | undefined): string => {
             return `${days} days`;
     }
 };
+
+export const imageStoragePath = (filename: string): string => {
+    return `https://jungle-book-storage.s3.eu-west-3.amazonaws.com/${filename}`;
+}
