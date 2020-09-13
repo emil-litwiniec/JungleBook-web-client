@@ -57,9 +57,12 @@
 						</div>
 					</div>
 					<div class="info__days">
-						<div>
+						<div class="relative">
 							<span>Last watered:</span>
 							<span class="days-big">{{formatDays(plantData.days_since_last_watering)}}</span>
+							<div v-if="shouldBeWatered" class="info__danger-icon">
+								<drop-icon color="#eb4a4a"/>
+							</div>
 						</div>
 						<div>
 							<span>Last dewed:</span>
@@ -106,18 +109,21 @@ import { Component, Prop, Vue, Ref, Watch } from "vue-property-decorator";
 import user from "@/store/modules/user";
 import settings, { DashboardViews } from "@/store/modules/settings";
 import modal from "@/store/modules/modal";
+
 import EditableComponent from "@/components/plantDetails/EditableComponent.vue";
-import { formatDays, imageStoragePath } from "@/utils/format";
 import DropdownSelection from "@/components/common/dropdownSelection/DropdownSelection.vue";
 
 import FullLightIcon from "@/components/misc/icons/FullLightIcon.vue";
 import PartialLightIcon from "@/components/misc/icons/PartialLightIcon.vue";
 import ShadyLightIcon from "@/components/misc/icons/ShadyLightIcon.vue";
+import DropIcon from "@/components/misc/icons/DropIcon.vue";
+
 import RangeSliderComponent from "@/components/common/rangeSlider/RangeSliderComponent.vue";
 import EditableImage from "@/components/common/editableImage/EditableImage.vue";
 
 import { isEmpty } from "@/utils/utils";
 import EventBus, { BusEvents } from "@/utils/EventBus";
+import { formatDays, imageStoragePath } from "@/utils/format";
 import { positionOptions, emptyPlantFormData } from "@/utils/constants";
 import { PlantFormData, Option } from "@/components/types.ts";
 import { RangeSlider } from "../common/rangeSlider/rangeSlider";
@@ -130,6 +136,7 @@ import { RangeSlider } from "../common/rangeSlider/rangeSlider";
 		FullLightIcon,
 		PartialLightIcon,
 		ShadyLightIcon,
+		DropIcon,
 		RangeSlider: RangeSliderComponent,
 		EditableImage,
 	},
@@ -173,6 +180,10 @@ export default class PlantDetails extends Vue {
 			return option.id === this.plantFormData.positionId;
 		});
 	}
+
+	get shouldBeWatered() {
+        return this.plantData.should_be_watered;
+    }
 
 	created() {
 		this.resetFormData();
