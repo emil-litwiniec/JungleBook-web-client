@@ -28,7 +28,7 @@ import {
 import { getToken, setToken, removeToken } from '@/utils/cookies';
 import { plants } from '@/utils/fixtures';
 import settings, { SortBy } from '../modules/settings';
-import { sortByNameIncrementally, sortByNameDecrementally, sortByLastWatering, sortByLastDew } from '@/utils/sortBy';
+import { sortByNameIncrementally, sortByNameDecrementally, sortByLastWatering, sortByLastDew, sortNeedWaterFirst } from '@/utils/sortBy';
 import router from '@/router/index';
 
 export enum PlantActionType {
@@ -56,7 +56,7 @@ class UserModule extends VuexModule {
     lastUpdate = '';
 
     books: Book[] = [];
-    plants: Plant[] = plants;
+    plants: Plant[] = [];
 
     settings: Settings | null = null;
 
@@ -72,6 +72,8 @@ class UserModule extends VuexModule {
                 return sortByLastWatering(filteredPlants);
             case SortBy.LAST_DEWED:
                 return sortByLastDew(filteredPlants);
+            case SortBy.NEED_WATER:
+                return sortNeedWaterFirst(filteredPlants)
             default:
                 return filteredPlants;
         }

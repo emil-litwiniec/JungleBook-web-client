@@ -53,4 +53,9 @@ export const possibleSortOptions = {
         label: 'Last dewed',
         id: SortBy.LAST_DEWED,
     },
+    [SortBy.NEED_WATER]: {
+        name: 'needWater',
+        label: 'Need Water',
+        id: SortBy.NEED_WATER
+    }
 };

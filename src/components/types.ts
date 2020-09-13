@@ -9,6 +9,7 @@ export interface SortOptions {
     [SortBy.Z_A]: Option;
     [SortBy.LAST_WATERED]: Option;
     [SortBy.LAST_DEWED]: Option;
+    [SortBy.NEED_WATER]: Option;
 }
 
 export interface Option {

@@ -13,6 +13,7 @@ export enum SortBy {
     Z_A,
     LAST_WATERED,
     LAST_DEWED,
+    NEED_WATER
 }
 
 @Module({

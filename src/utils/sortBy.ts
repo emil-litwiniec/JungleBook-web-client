@@ -35,3 +35,14 @@ export const sortByLastDew = (plants: Plant[]) => {
     const plantsCopy = JSON.parse(JSON.stringify(plants));
     return plantsCopy.sort((a: Plant, b: Plant) => compareTimestamps(a, b, 'last_dew'));
 };
+
+export const sortNeedWaterFirst = (plants: Plant[]) => {
+    const plantsCopy = JSON.parse(JSON.stringify(plants));
+    return plantsCopy.sort((a: Plant, b: Plant) => {
+        if (a.should_be_watered && !b.should_be_watered) return -1;
+
+        if (!a.should_be_watered && b.should_be_watered) return 1;
+
+        return 0;
+    });
+};
