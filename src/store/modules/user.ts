@@ -10,6 +10,7 @@ import {
     dewPlants,
     createPlant,
     updatePlant,
+    deletePlant
 } from '@/api/api';
 import {
     AuthResponse,
@@ -26,9 +27,14 @@ import {
     UpdatePlantPayload,
 } from '@/api/types';
 import { getToken, setToken, removeToken } from '@/utils/cookies';
-import { plants } from '@/utils/fixtures';
 import settings, { SortBy } from '../modules/settings';
-import { sortByNameIncrementally, sortByNameDecrementally, sortByLastWatering, sortByLastDew, sortNeedWaterFirst } from '@/utils/sortBy';
+import {
+    sortByNameIncrementally,
+    sortByNameDecrementally,
+    sortByLastWatering,
+    sortByLastDew,
+    sortNeedWaterFirst,
+} from '@/utils/sortBy';
 import router from '@/router/index';
 
 export enum PlantActionType {
@@ -73,7 +79,7 @@ class UserModule extends VuexModule {
             case SortBy.LAST_DEWED:
                 return sortByLastDew(filteredPlants);
             case SortBy.NEED_WATER:
-                return sortNeedWaterFirst(filteredPlants)
+                return sortNeedWaterFirst(filteredPlants);
             default:
                 return filteredPlants;
         }
@@ -111,7 +117,7 @@ class UserModule extends VuexModule {
         this.email = responseData.email;
         this.firstName = responseData.first_name;
         this.lastName = responseData.last_name;
-        this.avatarImage = responseData.avatar_image;
+        this.avatarImage = responseData.avatar_image || null;
         this.settings = responseData.settings;
         this.books = responseData.books;
         this.plants = allPlants;
@@ -203,6 +209,15 @@ class UserModule extends VuexModule {
     @Action({ rawError: true })
     async updatePlant(payload: UpdatePlantPayload) {
         const response = await updatePlant(payload);
+
+        if (response.data) {
+            this.fetchUserData();
+        }
+    }
+
+    @Action({ rawError: true })
+    async deletePlant(plantId: number) {
+        const response = await deletePlant(plantId);
 
         if (response.data) {
             this.fetchUserData();

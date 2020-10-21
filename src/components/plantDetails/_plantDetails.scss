@@ -290,6 +290,25 @@
             }
         }
     }
+
+    &__delete-btn {
+        button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: auto;
+            margin-top: 2rem;
+        }
+        span {
+            color: $color-gray-dark;
+            margin-right: 2rem;
+        }
+
+        .delete-icon {
+            width: 3rem;
+            height: 3rem;
+        }
+    }
 }
 
 .days-big {

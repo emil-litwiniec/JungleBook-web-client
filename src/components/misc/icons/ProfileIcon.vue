@@ -6,8 +6,8 @@
 		data-icon="user"
 		class="profile-icon"
 		role="img"
-        height="20px"
-        width="20px"
+		height="20px"
+		width="20px"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 448 512"
 	>
@@ -27,6 +27,6 @@ import LogotypePhrase from "./LogotypePhrase.vue";
 	name: "ProfileIcon",
 })
 export default class ProfileIcon extends Vue {
-    @Prop({default: "#f3f3f3"}) readonly color!: string;
+	@Prop({ default: "#f3f3f3" }) readonly color!: string;
 }
 </script>

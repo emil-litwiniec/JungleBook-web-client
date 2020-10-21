@@ -31,7 +31,10 @@
 				<div class="plant-details__stats-container">
 					<div class="info__stats">
 						<div class="info__position">
-							<component :is="`${selectedOption.name}-light-icon`" class="info__icon" />
+							<component
+								:is="`${selectedOption.name}-light-icon`"
+								class="info__icon"
+							/>
 							<dropdown-selection
 								v-if="editMode"
 								class="info__input"
@@ -39,7 +42,9 @@
 								:options="positionOptions"
 								:selectedOption="selectedOption"
 							/>
-							<span v-else class="info__display">{{selectedOption.label}}</span>
+							<span v-else class="info__display">{{
+								selectedOption.label
+							}}</span>
 						</div>
 						<div class="info__temperature">
 							<full-light-icon class="info__icon" />
@@ -50,23 +55,30 @@
 								class="info__input"
 								ref="rangeSliderComponent"
 							/>
-							<span
-								v-else
-								class="info__display"
-							>{{plantFormData.temperature[0]}} - {{plantFormData.temperature[1]}} °C</span>
+							<span v-else class="info__display"
+								>{{ plantFormData.temperature[0] }} -
+								{{ plantFormData.temperature[1] }} °C</span
+							>
 						</div>
 					</div>
 					<div class="info__days">
 						<div class="relative">
 							<span>Last watered:</span>
-							<span class="days-big">{{formatDays(plantData.days_since_last_watering)}}</span>
-							<div v-if="shouldBeWatered" class="info__danger-icon">
-								<drop-icon color="#eb4a4a"/>
+							<span class="days-big">{{
+								formatDays(plantData.days_since_last_watering)
+							}}</span>
+							<div
+								v-if="shouldBeWatered"
+								class="info__danger-icon"
+							>
+								<drop-icon color="#eb4a4a" />
 							</div>
 						</div>
 						<div>
 							<span>Last dewed:</span>
-							<span class="days-big">{{formatDays(plantData.days_since_last_dew)}}</span>
+							<span class="days-big">{{
+								formatDays(plantData.days_since_last_dew)
+							}}</span>
 						</div>
 						<div>
 							<span>Last fertilized:</span>
@@ -76,7 +88,9 @@
 							<span>Water interval (days):</span>
 							<editable-component
 								:edit-mode="editMode"
-								:custom-v-model.sync="plantFormData.water_interval"
+								:custom-v-model.sync="
+									plantFormData.water_interval
+								"
 								tag="span"
 								class="info__water-interval"
 								custom-class="info"
@@ -85,6 +99,18 @@
 								input-placeholder="Enter Water Interval"
 							/>
 						</div>
+					</div>
+					<div
+						v-show="editMode && !isAddPlantMode"
+						class="plant-details__delete-btn"
+					>
+						<button
+							class="button-primary button-primary--transparent"
+							@click="handleDelete"
+						>
+							<!-- <span>Delete</span> -->
+							<delete-icon color="red" />
+						</button>
 					</div>
 				</div>
 				<div class="plant-details__description">
@@ -117,6 +143,7 @@ import FullLightIcon from "@/components/misc/icons/FullLightIcon.vue";
 import PartialLightIcon from "@/components/misc/icons/PartialLightIcon.vue";
 import ShadyLightIcon from "@/components/misc/icons/ShadyLightIcon.vue";
 import DropIcon from "@/components/misc/icons/DropIcon.vue";
+import DeleteIcon from "@/components/misc/icons/DeleteIcon.vue";
 
 import RangeSliderComponent from "@/components/common/rangeSlider/RangeSliderComponent.vue";
 import EditableImage from "@/components/common/editableImage/EditableImage.vue";
@@ -137,6 +164,7 @@ import { RangeSlider } from "../common/rangeSlider/rangeSlider";
 		PartialLightIcon,
 		ShadyLightIcon,
 		DropIcon,
+		DeleteIcon,
 		RangeSlider: RangeSliderComponent,
 		EditableImage,
 	},
@@ -182,8 +210,8 @@ export default class PlantDetails extends Vue {
 	}
 
 	get shouldBeWatered() {
-        return this.plantData.should_be_watered;
-    }
+		return this.plantData.should_be_watered;
+	}
 
 	created() {
 		this.resetFormData();
@@ -256,6 +284,18 @@ export default class PlantDetails extends Vue {
 		modal.SHOW_MODAL({
 			componentName: "InfoModal",
 			message: "Plant's name can't be empty",
+		});
+	}
+
+	handleDelete() {
+		modal.SHOW_MODAL({
+			componentName: "AcceptActionModal",
+			message: `Are you sure you want to delete plant?`,
+			callbackAction: () => {
+				if (!this.plantId) return;
+				user.deletePlant(this.plantId);
+				this.$router.push("/dashboard");
+			},
 		});
 	}
 

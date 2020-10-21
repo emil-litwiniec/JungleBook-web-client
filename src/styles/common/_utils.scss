@@ -42,4 +42,12 @@
             background-color: lighten($color-red, 15);
         }
     }
+
+    &--transparent {
+        background: transparent;
+
+        &:hover {
+            background-color: #eae9e9;
+        }
+    }
 }

@@ -47,7 +47,6 @@ export default class DashboardView extends Vue {
 				this.$router.push("/");
 			})
 			.finally(() => {
-				// setTimeout(() => this.hideLoader(), 1500)
 				this.hideLoader();
 			});
 	}

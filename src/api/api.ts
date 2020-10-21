@@ -91,11 +91,21 @@ export async function dewPlants(payload: ActionPlantPayload): Promise<AxiosRespo
     return response;
 }
 
+export async function deletePlant(plantId: number): Promise<AxiosResponse> {
+    const response = await API.delete(`plant/${plantId}`, {
+        headers: {
+            'x-access-token': getToken(),
+        },
+    });
+
+    return response;
+}
+
 export async function imageUpload(payload: ImageUploadPayload) {
     const response = await API.post('upload', payload.formData, {
         headers: {
             'x-access-token': getToken(),
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
         },
     });
     return response;

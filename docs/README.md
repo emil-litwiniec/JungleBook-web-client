@@ -4,7 +4,8 @@
 
 Web client app for managing your plants.
 
-It consumes JungleBook API: https://github.com/EmilTheSadCat/jungle-book-app
+It consumes JungleBook API: https://github.com/EmilTheSadCat/JungleBook-api
+JungleBook API URL: https://junglebook-api.herokuapp.com/api
 
 You can easily check status of your plants. See if they need water.
 
@@ -65,8 +66,6 @@ Planned featues:
 <sup>Dasbhoard - sign in</sup> </br>
 <img src="images/junglebook-screenshot-6.png" alt="JungleBook dashboard" width="700"/>
 
-
-
 ## Project setup
 
 ```
@@ -103,7 +102,25 @@ npm run lint
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+### Environmental variables
 
+In root folder create `.env` file.
+
+#### Development
+
+```
+
+VUE_APP_API_BASE_URL=http://localhost:5000/api/
+
+```
+
+#### Production
+
+```
+
+VUE_APP_API_BASE_URL=<PRODUCTION_API_URL>
+
+```
 
 ## Links
 
@@ -111,11 +128,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 </br>
 
--   Repository: https://github.com/EmilTheSadCat/jungle-book-web-app
+-   Repository: https://github.com/EmilTheSadCat/JungleBook-web-client
 
--   API Repository: https://github.com/EmilTheSadCat/jungle-book-app
-
-
+-   API Repository: https://github.com/EmilTheSadCat/JungleBook-api
 
 ## Licensing
 

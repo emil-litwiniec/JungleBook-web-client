@@ -36,5 +36,5 @@ export interface PlantFormData {
     temperature: number[];
     positionId: number;
     water_interval: string;
-    avatar_image: string;
+    avatar_image: string | undefined;
 }
